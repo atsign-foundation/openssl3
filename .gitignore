@@ -1,0 +1,19 @@
+# Dart / pub
+.dart_tool/
+.packages
+pubspec.lock
+build/
+*.g.dart.bak
+
+# Native build outputs (CI writes here; never commit binaries)
+/out/
+/openssl-compiled/
+/sqlite-compiled/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
