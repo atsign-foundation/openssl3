@@ -1,0 +1,21 @@
+name: openssl_assets_tool
+description: >-
+  Repository tooling for openssl_assets: builds libcrypto per target, links the
+  distinct-named shared library, verifies exports, and generates manifests,
+  symbol tables and bindings. Not published.
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.10.0
+
+dependencies:
+  args: ^2.6.0
+  code_assets: '>=1.0.0 <3.0.0'
+  crypto: ^3.0.6
+  hooks: ^2.2.0
+  path: ^1.9.0
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.0
