@@ -1,0 +1,7 @@
+tags:
+  hook:
+    description: Tests of hook/build.dart and its helpers; no native library needed.
+  ffi:
+    description: >-
+      Tests that call into the bundled libopenssl3_crypto through the @Native
+      bindings. Require a host build in out/ (dart run tool/bin/build_openssl.dart).

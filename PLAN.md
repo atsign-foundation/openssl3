@@ -367,9 +367,12 @@ handles wrapped in `Finalizer`-backed classes. Raw bindings stay primary.
 
 ### 4.3 Bindings generation (`tool/generate_bindings.dart`)
 
-1. `perl Configure linux-x86_64 <same feature flags>` in the submodule once (`make build_generated`)
-   to materialise the `*.h.in` headers; commit the generated `include/openssl/` snapshot under
-   `packages/openssl3/third_party/openssl_headers/` so the ffigen step is reproducible without Perl.
+1. `tool/bin/generate_bindings.dart` runs `perl Configure <host> … && make build_generated` into
+   `.dart_tool/openssl_build/<host>/` (or reuses an existing build dir) to materialise the
+   `*.h.in` headers. *Changed from the first draft:* no header snapshot is committed; anyone
+   regenerating bindings already needs Perl for the submodule build, and it saves 3 MB of
+   generated headers in git. Two generation-time patches keep ABI-variant types right on every
+   target: `BN_ULONG` and `ossl_ssize_t` become pointer-sized typedefs (`UintPtr`/`IntPtr`).
 2. Entry points: **every** `include/openssl/*.h` from the generated snapshot except `ssl.h`,
    `ssl2.h`, `ssl3.h`, `tls1.h`, `dtls1.h`, `srtp.h`, `quic.h` (libssl, not shipped) and headers for
    features disabled at build time (checked against `configuration.h`'s `OPENSSL_NO_*`).
@@ -397,8 +400,13 @@ handles wrapped in `Finalizer`-backed classes. Raw bindings stay primary.
    `EVP_CIPHER_CTX_set_padding`, …). The post-processor emits `lib/src/macros.dart` with hand-
    written Dart equivalents for a documented list (starting with the memory-BIO and
    `EVP_*_CTX_ctrl` helpers), and the README lists which macros have equivalents.
-8. Expected size: ≈2.5 MB generated Dart, ≈6 900 declarations. Unused `@Native` externals cost
-   nothing at runtime: the AOT compiler tree-shakes them.
+8. Measured (2026-09-06): 3.4 MB generated Dart, 5 702 externals, 10 582 macro constants,
+   301 opaque types, 152 structs, 1 689 `@Deprecated` annotations, doc comment on every public
+   declaration; `dart analyze` of the package takes under a second. Unused `@Native` externals
+   cost nothing at runtime: the AOT compiler tree-shakes them. 94 exported symbols have no
+   binding (`unbound_symbols.g.dart`): functions returning raw function pointers
+   (`*_meth_get_*`, `UI_method_get_*`) and symbols no public header declares (`DSO_*`,
+   `OPENSSL_DIR_*`); a test asserts none of the required symbols is among them.
 
 ### 4.4 at_chops integration
 
