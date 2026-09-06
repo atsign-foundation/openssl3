@@ -19,7 +19,9 @@ final class SealedBox {
   final Uint8List ciphertext;
   final Uint8List tag;
 
-  const SealedBox(this.ciphertext, this.tag);
+  SealedBox(List<int> ciphertext, List<int> tag)
+    : ciphertext = Uint8List.fromList(ciphertext),
+      tag = Uint8List.fromList(tag);
 
   /// Splits `ciphertext || tag` with a [tagLength]-byte tag (16 by default).
   factory SealedBox.fromCombined(List<int> combined, {int tagLength = 16}) {

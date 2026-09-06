@@ -1,0 +1,16 @@
+name: openssl3_example_cli
+description: >-
+  Command-line smoke test for package:openssl3. Build with `dart build cli`
+  (which runs the build hook and bundles libopenssl3_crypto) and run the
+  resulting bundle/bin/openssl3_example_cli.
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.10.0
+
+dependencies:
+  openssl3: any
+
+dev_dependencies:
+  lints: ^6.0.0

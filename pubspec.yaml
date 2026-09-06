@@ -8,6 +8,7 @@ environment:
 workspace:
   - packages/openssl3
   - tool
+  - example/cli
 
 dev_dependencies:
   lints: ^6.0.0
