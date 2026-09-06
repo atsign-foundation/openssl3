@@ -1,0 +1,106 @@
+name: Offline builds
+
+# Proves the air-gapped paths: with GitHub blackholed, `local_path` and a
+# `url_pattern` mirror on localhost both work, a warm cache needs no network,
+# and a wrong sha256 fails closed.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 4 * * 3'
+  workflow_run:
+    workflows: ['Build native libraries']
+    types: [completed]
+    branches: [trunk]
+
+permissions:
+  contents: read
+
+jobs:
+  offline:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            target: linux-x64
+          - runner: macos-15
+            target: macos-arm64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - name: Newest build-natives artifact
+        id: pick
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          id=$(gh run list -R "$GITHUB_REPOSITORY" --workflow build-natives.yml --status success --limit 1 --json databaseId -q '.[0].databaseId')
+          echo "run_id=$id" >> "$GITHUB_OUTPUT"
+      - uses: actions/download-artifact@v4
+        with:
+          name: openssl3-prebuilt
+          path: out/
+          run-id: ${{ steps.pick.outputs.run_id }}
+          github-token: ${{ github.token }}
+      - run: dart pub get
+      - name: Build a manifest for these assets and start a localhost mirror
+        run: |
+          dart run tool/bin/write_manifest.dart --out out --tag vtest --dart-output /tmp/m.dart
+          mkdir -p mirror/vtest && cp out/* mirror/vtest/
+          (cd mirror && python3 -m http.server 8765 >/tmp/mirror.log 2>&1 &)
+          sleep 1
+      - name: Blackhole github.com (simulated air gap)
+        run: |
+          echo '127.0.0.1 github.com objects.githubusercontent.com release-assets.githubusercontent.com' | sudo tee -a /etc/hosts
+          curl -sS -m 5 https://github.com/ && exit 1 || echo "github.com unreachable: good"
+      - name: url_pattern mirror + manifest_override downloads and verifies
+        working-directory: example/cli
+        run: |
+          cat >> ../../pubspec.yaml <<EOF
+                url_pattern: "http://127.0.0.1:8765/\$RELEASE_TAG/\$FILENAME"
+                manifest_override: out/manifest.json
+          EOF
+          sed -i.bak '/test_directory: out/d' ../../pubspec.yaml
+          dart build cli 2>&1 | tee build.log
+          grep -q 'fetching' build.log
+          bin=$(find build -type f -path '*/bundle/bin/*' -name 'openssl3_example_cli*' | head -1); "$bin"
+      - name: Warm cache needs no network at all
+        working-directory: example/cli
+        run: |
+          kill %1 2>/dev/null || pkill -f "http.server 8765" || true
+          rm -rf build
+          dart build cli 2>&1 | tee build2.log
+          grep -q 'using cached' build2.log
+      - name: A tampered mirror fails closed
+        working-directory: example/cli
+        run: |
+          (cd ../../mirror && python3 -m http.server 8765 >/tmp/mirror.log 2>&1 &)
+          sleep 1
+          f=$(ls ../../mirror/vtest/libopenssl3_crypto.*.${{ matrix.target == 'macos-arm64' && 'macos.dylib' || 'linux.so' }} | head -1)
+          printf '\x00' | dd of="$f" bs=1 seek=100 count=1 conv=notrunc
+          rm -rf build "$HOME/.dart_tool" 2>/dev/null || true
+          find .. -path '*shared*' -name 'download-*' -prune -exec rm -rf {} + 2>/dev/null || true
+          set +e; dart build cli > build3.log 2>&1; code=$?; set -e
+          cat build3.log | tail -5
+          test $code -ne 0 && grep -q 'sha256' build3.log
+      - name: local_path (verified against the manifest)
+        working-directory: example/cli
+        run: |
+          cp ../../out/manifest.json /tmp/manifest.json
+          lib=$(ls ../../out/libopenssl3_crypto.*.${{ matrix.target == 'macos-arm64' && 'macos.dylib' || 'linux.so' }} | head -1)
+          python3 - <<EOF
+          import re
+          p='../../pubspec.yaml'; s=open(p).read()
+          s=re.sub(r'\n\s+url_pattern:.*', '', s); s=re.sub(r'\n\s+manifest_override:.*', '', s)
+          s+='\n      local_path: $lib\n      manifest_override: /tmp/manifest.json\n'
+          open(p,'w').write(s)
+          EOF
+          rm -rf build
+          dart build cli
+          bin=$(find build -type f -path '*/bundle/bin/*' -name 'openssl3_example_cli*' | head -1); "$bin"

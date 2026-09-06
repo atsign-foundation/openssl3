@@ -1,0 +1,225 @@
+name: Verify consumers
+
+# Proves the "definition of done" on clean machines: `dart pub add openssl3`
+# style consumption with NO OpenSSL, Perl or C compiler needed at build time,
+# through `dart build cli` and `flutter build` on every desktop OS, iOS
+# simulator and an Android emulator. Uses the prebuilt libraries from the most
+# recent build-natives run (or a release) via `test_directory`, so it can run
+# before a release exists.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '43 3 * * 2'
+  workflow_run:
+    workflows: ['Build native libraries']
+    types: [completed]
+    branches: [trunk]
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    outputs:
+      run_id: ${{ steps.pick.outputs.run_id }}
+    steps:
+      - name: Pick the newest successful build-natives run
+        id: pick
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          id=$(gh run list -R "$GITHUB_REPOSITORY" --workflow build-natives.yml --status success --limit 1 --json databaseId -q '.[0].databaseId')
+          echo "run_id=$id" >> "$GITHUB_OUTPUT"
+
+  dart-cli:
+    name: dart build cli (${{ matrix.name }})
+    needs: fetch
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: linux-x64 debian-slim
+            runner: ubuntu-24.04
+            container: debian:bookworm-slim
+          - name: linux-arm64
+            runner: ubuntu-24.04-arm
+          - name: linux_musl-x64 alpine
+            runner: ubuntu-24.04
+            container: alpine:3.20
+            musl: true
+          - name: macos-arm64
+            runner: macos-15
+          - name: windows-x64
+            runner: windows-2022
+          - name: windows-arm64
+            runner: windows-11-arm
+    runs-on: ${{ matrix.runner }}
+    container: ${{ matrix.container }}
+    steps:
+      - name: Container prerequisites (no compilers, no openssl)
+        if: matrix.container != ''
+        shell: sh
+        run: |
+          if command -v apk >/dev/null; then apk add --no-cache bash curl git unzip gcompat; \
+          else apt-get update && apt-get install -y --no-install-recommends ca-certificates curl git unzip; fi
+          ! command -v cc && ! command -v gcc && ! command -v perl && echo "no toolchain present: good"
+          ! command -v openssl && echo "no openssl binary present: good"
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - uses: actions/download-artifact@v4
+        with:
+          name: openssl3-prebuilt
+          path: out/
+          run-id: ${{ needs.fetch.outputs.run_id }}
+          github-token: ${{ github.token }}
+      - name: Force the musl build where the host is musl
+        if: matrix.musl == true
+        run: |
+          printf '\n      linux_libc: musl\n' >> pubspec.yaml
+          tail -6 pubspec.yaml
+      - run: dart pub get
+      - name: dart build cli + run bundle
+        working-directory: example/cli
+        shell: bash
+        run: |
+          dart build cli
+          bin=$(find build -type f -path '*/bundle/bin/*' -name 'openssl3_example_cli*' | head -1)
+          ls -la "$(dirname "$bin")/../lib"
+          "$bin" --json | tee result.json
+          grep -q '"failures":0' result.json
+      - name: dart compile exe is NOT supported (documented behaviour)
+        working-directory: example/cli
+        shell: bash
+        run: |
+          set +e
+          out=$(dart compile exe bin/openssl3_example_cli.dart -o /tmp/x 2>&1); code=$?
+          set -e
+          echo "$out"
+          echo "$out" | grep -qi "does not support build hooks" || { echo "::warning::dart compile exe behaviour changed; update README"; }
+          echo "::notice::dart compile exe exit=$code (expected non-zero: hooks unsupported, use dart build cli)"
+
+  flutter-desktop:
+    name: flutter build ${{ matrix.platform }}
+    needs: fetch
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macos
+            runner: macos-15
+          - platform: linux
+            runner: ubuntu-24.04
+          - platform: windows
+            runner: windows-2022
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Linux desktop prerequisites
+        if: matrix.platform == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build libgtk-3-dev
+      - uses: actions/download-artifact@v4
+        with:
+          name: openssl3-prebuilt
+          path: out/
+          run-id: ${{ needs.fetch.outputs.run_id }}
+          github-token: ${{ github.token }}
+      - name: Build and run the integration test on the desktop
+        working-directory: example/flutter_app
+        run: |
+          flutter pub get
+          flutter build ${{ matrix.platform }} --debug
+          flutter test integration_test -d ${{ matrix.platform }}
+
+  flutter-ios-simulator:
+    name: flutter build ios (simulator) + integration test
+    needs: fetch
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: openssl3-prebuilt
+          path: out/
+          run-id: ${{ needs.fetch.outputs.run_id }}
+          github-token: ${{ github.token }}
+      - name: Boot a simulator
+        id: sim
+        run: |
+          udid=$(xcrun simctl list devices available -j | python3 -c 'import json,sys; d=json.load(sys.stdin)["devices"]; print(next(x["udid"] for k,v in d.items() if "iOS" in k for x in v if "iPhone" in x["name"]))')
+          xcrun simctl boot "$udid" || true
+          echo "udid=$udid" >> "$GITHUB_OUTPUT"
+      - working-directory: example/flutter_app
+        run: |
+          flutter pub get
+          flutter build ios --simulator --debug
+          flutter test integration_test -d ${{ steps.sim.outputs.udid }}
+      - name: Device build compiles (no signing)
+        working-directory: example/flutter_app
+        run: flutter build ios --release --no-codesign
+
+  flutter-android:
+    name: flutter build apk + emulator integration test
+    needs: fetch
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: openssl3-prebuilt
+          path: out/
+          run-id: ${{ needs.fetch.outputs.run_id }}
+          github-token: ${{ github.token }}
+      - name: Build APK (all ABIs) and check 16 KB alignment of the bundled .so
+        working-directory: example/flutter_app
+        run: |
+          flutter pub get
+          flutter build apk --debug
+          unzip -o build/app/outputs/flutter-apk/app-debug.apk 'lib/*/libopenssl3_crypto.so' -d /tmp/apk
+          ls -la /tmp/apk/lib/*/
+          for so in /tmp/apk/lib/*/libopenssl3_crypto.so; do
+            "$ANDROID_NDK_LATEST_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-readelf" -lW "$so" | awk '/LOAD/ {print FILENAME": "$NF}' FILENAME="$so" | grep -v 0x4000 && exit 1 || true
+          done
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Integration test on an x86_64 emulator (API 35)
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          working-directory: example/flutter_app
+          script: flutter test integration_test -d emulator-5554
