@@ -14,3 +14,4 @@ Statuses: Proposed, Accepted, Superseded.
 | [0007](0007-fail-closed-hashes-and-release-gate.md) | Fail-closed hashing and the release-PR gate | Accepted |
 | [0008](0008-full-libcrypto-abi.md) | Expose the full libcrypto public ABI | Accepted |
 | [0009](0009-libcrypto-only.md) | libcrypto only, no libssl | Accepted |
+| [0010](0010-version-tracks-openssl.md) | Package version tracks the bundled OpenSSL version | Accepted |

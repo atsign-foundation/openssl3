@@ -4,6 +4,48 @@ library;
 import 'dart:convert';
 import 'dart:io';
 
+/// When set, every command runs inside this Docker container via
+/// `docker exec -w <cwd> -e K=V ... <container> <cmd>`. The workspace must be
+/// bind-mounted at the same absolute path inside the container. Used by CI to
+/// build the musl targets in `alpine` the way OpenSSL's own os-zoo.yml does,
+/// while the (glibc-only) Dart tooling stays on the host.
+String? dockerContainer;
+
+/// Environment keys forwarded into the container with `-e` (beyond what the
+/// tool passes explicitly). PATH is deliberately not forwarded.
+const _forwardedEnv = {
+  'ANDROID_NDK_ROOT',
+  'CC',
+  'CFLAGS',
+  'LDFLAGS',
+  'MAKEFLAGS',
+};
+
+(String, List<String>, Directory?, Map<String, String>?) _wrap(
+  String executable,
+  List<String> arguments,
+  Directory? workingDirectory,
+  Map<String, String>? environment,
+) {
+  final container = dockerContainer;
+  if (container == null) {
+    return (executable, arguments, workingDirectory, environment);
+  }
+  final cwd = (workingDirectory ?? Directory.current).absolute.path;
+  final envArgs = <String>[];
+  environment?.forEach((k, v) {
+    if (_forwardedEnv.contains(k) || !Platform.environment.containsKey(k)) {
+      envArgs.addAll(['-e', '$k=$v']);
+    }
+  });
+  return (
+    'docker',
+    ['exec', '-w', cwd, ...envArgs, container, executable, ...arguments],
+    null,
+    null,
+  );
+}
+
 /// Runs [executable] with [arguments], streaming output to stdout/stderr, and
 /// throws if the exit code is non-zero.
 Future<void> run(
@@ -16,13 +58,19 @@ Future<void> run(
   final pretty = [executable, ...arguments].map(_quote).join(' ');
   stdout.writeln(
     '\$ ${workingDirectory == null ? '' : '(cd ${workingDirectory.path}) '}'
-    '$pretty',
+    '$pretty${dockerContainer == null ? '' : '  [in docker $dockerContainer]'}',
   );
-  final process = await Process.start(
+  final (exe, args, cwd, env) = _wrap(
     executable,
     arguments,
-    workingDirectory: workingDirectory?.path,
-    environment: environment,
+    workingDirectory,
+    environment,
+  );
+  final process = await Process.start(
+    exe,
+    args,
+    workingDirectory: cwd?.path,
+    environment: env,
     runInShell: Platform.isWindows,
   );
   final out = <String>[];
@@ -61,11 +109,17 @@ Future<String> capture(
   Directory? workingDirectory,
   Map<String, String>? environment,
 }) async {
-  final result = await Process.run(
+  final (exe, args, cwd, env) = _wrap(
     executable,
     arguments,
-    workingDirectory: workingDirectory?.path,
-    environment: environment,
+    workingDirectory,
+    environment,
+  );
+  final result = await Process.run(
+    exe,
+    args,
+    workingDirectory: cwd?.path,
+    environment: env,
     runInShell: Platform.isWindows,
   );
   if (result.exitCode != 0) {

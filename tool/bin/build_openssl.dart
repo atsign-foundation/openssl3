@@ -14,6 +14,7 @@ import 'dart:isolate';
 
 import 'package:args/args.dart';
 import 'package:openssl3/src/native_build/build.dart';
+import 'package:openssl3/src/native_build/proc.dart';
 import 'package:openssl3/src/native_build/targets.dart';
 import 'package:path/path.dart' as p;
 
@@ -26,6 +27,13 @@ Future<void> main(List<String> args) async {
     ..addFlag('no-asm', negatable: false)
     ..addFlag('reuse-build-dir', negatable: false)
     ..addFlag('skip-verify', negatable: false)
+    ..addOption(
+      'docker',
+      help:
+          'Run every build command inside this running container (the '
+          'workspace must be bind-mounted at the same absolute path); used '
+          'for the musl targets.',
+    )
     ..addFlag('list', negatable: false, help: 'List target ids and exit')
     ..addFlag('help', abbr: 'h', negatable: false);
   final opts = parser.parse(args);
@@ -44,6 +52,7 @@ Future<void> main(List<String> args) async {
     return;
   }
 
+  dockerContainer = opts.option('docker');
   final target = BuildTarget.byId(opts.rest.single);
   final source = Directory(opts.option('source')!);
   if (!File(p.join(source.path, 'Configure')).existsSync()) {

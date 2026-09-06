@@ -1,0 +1,77 @@
+name: Watch upstream OpenSSL releases
+
+# Weekly: if a newer openssl-3.5.x (or the line given on manual dispatch) tag
+# exists, bump the submodule, version, generated symbols/bindings and
+# changelog, and open a PR. Normal CI validates the PR; merging + tagging then
+# follows the release flow (ADR-0007, ADR-0010).
+
+on:
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+    inputs:
+      line:
+        description: 'Release line: X.Y (default: current submodule line) or "latest"'
+        required: false
+        default: ''
+
+permissions: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - name: Install libclang for ffigen
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libclang-dev perl make
+      - run: dart pub get
+      - name: Check upstream and apply bump
+        id: bump
+        env:
+          LINE: ${{ inputs.line }}
+        run: |
+          set -o pipefail
+          args=(--apply)
+          if [ -n "$LINE" ]; then args+=(--line "$LINE"); fi
+          dart run tool/bin/check_upstream.dart "${args[@]}" | tee bump.log
+          grep -E '^(updated|new_version|new_tag|release_notes)=' bump.log >> "$GITHUB_OUTPUT" || true
+      - name: Run tests against the bumped sources
+        if: steps.bump.outputs.updated == 'true'
+        run: |
+          dart run tool/bin/build_openssl.dart linux-x64 --out out
+          dart analyze --fatal-infos
+          cd packages/openssl3 && dart test
+      - name: Open pull request
+        if: steps.bump.outputs.updated == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: chore/openssl-${{ steps.bump.outputs.new_version }}
+          delete-branch: true
+          commit-message: |
+            chore(openssl): bump bundled OpenSSL to ${{ steps.bump.outputs.new_version }}
+
+            Submodule -> ${{ steps.bump.outputs.new_tag }}; regenerated symbols.dart
+            and @Native bindings; package version ${{ steps.bump.outputs.new_version }}+1.
+          title: 'chore(openssl): bump bundled OpenSSL to ${{ steps.bump.outputs.new_version }}'
+          body: |
+            Upstream tag `${{ steps.bump.outputs.new_tag }}` is newer than the pinned submodule.
+
+            - Release notes: ${{ steps.bump.outputs.release_notes }}
+            - Package version: `${{ steps.bump.outputs.new_version }}+1` (ADR-0010)
+            - Regenerated: `lib/src/symbols.dart`, `lib/src/third_party/openssl.g.dart`, `unbound_symbols.g.dart`
+            - CHANGELOG entry added
+
+            Review the generated diff (new/removed symbols), then merge. Tag `v${{ steps.bump.outputs.new_version }}+1`
+            to build natives and cut the release (see CONTRIBUTING.md).
+          labels: openssl-update, dependencies

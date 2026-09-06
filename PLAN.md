@@ -531,6 +531,15 @@ needs, `wasm-opt` DCE allowed). Which one ships is Q13.
 - CHANGELOG (keep-a-changelog), MIGRATION.md, CONTRIBUTING.md (bump OpenSSL: update submodule +
   headers snapshot + regenerate bindings + run build-natives; release hashing flow), `docs/adr/`.
 
+### 6.2 Keeping up with OpenSSL releases
+`openssl-update.yml` runs weekly (and on demand): `tool/bin/check_upstream.dart` lists
+`openssl-3.*` tags, picks the newest on the configured line (default: the submodule's
+major.minor, i.e. the LTS branch; `--line 3.6` or `--line latest` to move), and if it is newer
+than the submodule it bumps the submodule, sets the pubspec version to `<ver>+1`, regenerates
+`symbols.dart` and the bindings, adds a CHANGELOG entry linking the upstream release notes, and the
+workflow opens a PR. Normal CI then builds and tests it; merging and tagging follows §6.
+Dependabot cannot do this: its `gitsubmodule` ecosystem tracks branch heads, not release tags.
+
 ## 8. ADRs to write
 
 1. Prebuilt download over compile-at-consumer (why not `LucazzP/openssl`'s model).
@@ -544,6 +553,7 @@ needs, `wasm-opt` DCE allowed). Which one ships is Q13.
    public headers, deprecated API kept); doc post-processing for pub score.
 9. libcrypto only, no libssl (nothing in at_chops or the brief needs TLS; halves size; can be
    added later as a second asset).
+10. Package version tracks the bundled OpenSSL version (`3.5.8+N`); weekly upstream-tag watcher.
 
 ## 9. Milestones (each a small conventional-commit series, `format`/`analyze --fatal-infos`/`test` green)
 
@@ -572,9 +582,13 @@ needs, `wasm-opt` DCE allowed). Which one ships is Q13.
    `Evp*Dart` typedef names so their migration is import-only, or is the ~45-site mechanical edit in
    at_chops acceptable? **Default: no façade; keep this package's surface small.**
 5. **Minimum OS versions.** **Default: macOS 10.15, iOS 13, Android API 21, glibc = build runner's (2.39), Windows 10.**
-6. **Package versioning vs OpenSSL.** **Default: independent semver starting `0.1.0`**, with
-   `OpenSSLCapabilities.versionString` and CHANGELOG stating the bundled OpenSSL; alternative is
-   `3.5.8+N` style tracking.
+6. ~~Package versioning vs OpenSSL.~~ **Decided 2026-09-06 (maintainer: "allow users to pin to
+   releases"):** the package version *is* the bundled OpenSSL version plus a build counter,
+   `3.5.8+N`. Pub orders build numbers, so `openssl3: 3.5.8+1` pins one exact build,
+   `^3.5.8` follows OpenSSL 3.x (whose API/ABI is stable across minors), and
+   `'>=3.5.0 <3.6.0'` stays on the 3.5 LTS line. A test asserts pubspec version core ==
+   `symbols.dart` ABI version == manifest OpenSSL version. Consequence: the Dart API of this
+   package must stay backwards compatible for as long as OpenSSL 3.x does. ADR-0010.
 7. **First release scope.** Ship `v0.1.0` without web, or block on the wasm stretch? **Default:
    ship native first; web in `0.2.0`.**
 8. **Windows arm64 assembly.** Build `no-asm` on arm64 (safe, slower) — **default** — or install

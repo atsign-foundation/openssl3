@@ -80,6 +80,9 @@ Future<BuildResult> buildTarget(BuildOptions options) async {
   final t = o.target;
   final env = {...Platform.environment, ...o.environment};
   final isWindows = t.os == OS.windows;
+  if (t.os == OS.android) {
+    _prepareAndroidEnv(env);
+  }
 
   if (!o.reuseBuildDir && o.buildDir.existsSync()) {
     o.buildDir.deleteSync(recursive: true);
@@ -433,4 +436,34 @@ final class _Makefile {
     }
     return out;
   }
+}
+
+/// OpenSSL's `android-*` Configure targets need `ANDROID_NDK_ROOT` and the
+/// NDK's `llvm/prebuilt/<host>/bin` on `PATH` (they invoke
+/// `<triple><api>-clang`). GitHub runners expose the NDK as
+/// `ANDROID_NDK_LATEST_HOME` / `ANDROID_NDK_HOME`.
+void _prepareAndroidEnv(Map<String, String> env) {
+  final ndk =
+      env['ANDROID_NDK_ROOT'] ??
+      env['ANDROID_NDK_HOME'] ??
+      env['ANDROID_NDK_LATEST_HOME'];
+  if (ndk == null || !Directory(ndk).existsSync()) {
+    throw StateError(
+      'Android targets need ANDROID_NDK_ROOT (or ANDROID_NDK_HOME / '
+      'ANDROID_NDK_LATEST_HOME) pointing at NDK r27 or newer.',
+    );
+  }
+  env['ANDROID_NDK_ROOT'] = ndk;
+  final hostTag = switch (Platform.operatingSystem) {
+    'linux' => 'linux-x86_64',
+    'macos' => 'darwin-x86_64',
+    'windows' => 'windows-x86_64',
+    final other => throw UnsupportedError('No NDK host tag for $other'),
+  };
+  final bin = p.join(ndk, 'toolchains', 'llvm', 'prebuilt', hostTag, 'bin');
+  if (!Directory(bin).existsSync()) {
+    throw StateError('NDK toolchain directory not found: $bin');
+  }
+  final sep = Platform.isWindows ? ';' : ':';
+  env['PATH'] = '$bin$sep${env['PATH'] ?? ''}';
 }
