@@ -11,7 +11,7 @@ names and ad-hoc codesigns.
 
 ## Decision
 The hook emits thin dylibs per `(os, sdk, arch)`. Framework wrapping and signing are left to
-flutter_tools. `release.yml` additionally publishes `openssl_assets_crypto.xcframework.zip` as a
+flutter_tools. `release.yml` additionally publishes `openssl3_crypto.xcframework.zip` as a
 convenience for non-hooks consumers; the hook never uses it.
 
 ## Consequences

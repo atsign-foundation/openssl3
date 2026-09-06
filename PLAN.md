@@ -1,4 +1,4 @@
-# PLAN — `openssl_assets`: prebuilt OpenSSL 3.5 LTS libcrypto as a Dart code asset
+# PLAN — `openssl3`: prebuilt OpenSSL 3.5 LTS libcrypto as a Dart code asset
 
 Status: **reviewed 2026-09-06; blocking questions answered; implementation started (milestone 1).**
 Date: 2026-09-06.
@@ -24,8 +24,8 @@ produced by CI.
 | `package:sqlite3` 3.5.2 constraints | `sdk >=3.10.0 <4.0.0`, `hooks ^2.2.0`, `code_assets >=1.0.0 <3.0.0`, `native_toolchain_c >=0.17.5 <0.20.0`, `ffigen ^21` (dev) |
 | Flutter iOS/macOS packaging | flutter_tools itself lipo's per-arch dylibs into a fat binary, wraps it in `<name>.framework`, rewrites install names, ad-hoc codesigns (`native_assets_host.dart`) |
 | GitHub-hosted arm64 runners | `ubuntu-24.04-arm`, `ubuntu-22.04-arm`, `windows-11-arm` free for public repos (GitHub changelog 2025-08-07) |
-| pub.dev name availability | `openssl_assets` → 404 (free); `openssl_assets_wasm` also free |
-| Target GitHub repo | remote is `cconstab/openssl3` (public, not a fork); `atsign-foundation/openssl_assets` does not exist yet |
+| pub.dev name availability | `openssl3` → 404 (free); `openssl3_wasm` also free |
+| Target GitHub repo | remote is `cconstab/openssl3` (public, not a fork); `atsign-foundation/openssl3` does not exist yet |
 | at_chops | now lives in `atsign-foundation/at_client_sdk/packages/at_chops` (3.6.1, `sdk ^3.6.0`); FFI tests tagged `@Tags(['ffi'])` |
 | OpenSSL's own public ABI list | `util/libcrypto.num`: 5 926 entries, 1 031 of them `DEPRECATEDIN_*`; `util/mkdef.pl` renders it as a `.def` / version script |
 | Stock libcrypto for scale | Homebrew `libcrypto.3.dylib` (arm64): 4.86 MB, 8 118 exported text symbols |
@@ -89,7 +89,7 @@ a migration. Requirements this adds:
 ```
 consumer app  ──dart build cli / flutter build──►  hooks runner
                                                       │ runs
-                                        openssl_assets/hook/build.dart
+                                        openssl3/hook/build.dart
                                                       │
               ┌───────────────────────────────────────┼─────────────────────────────┐
               │ default                               │ user_defines                │
@@ -103,12 +103,12 @@ consumer app  ──dart build cli / flutter build──►  hooks runner
    into input.outputDirectoryShared/<sha-prefix>/, verify sha256 (fail closed)
               │
               ▼
-   CodeAsset(package: openssl_assets, name: src/third_party/openssl.g.dart,
+   CodeAsset(package: openssl3, name: src/third_party/openssl.g.dart,
              linkMode: DynamicLoadingBundled(), file: <thin per-arch library>)
               │
               ▼
-   Dart:  @Native(assetId: 'package:openssl_assets/src/third_party/openssl.g.dart') externals
-          ├─ lib/openssl_assets.dart   (raw bindings + OpenSSLCapabilities + initNoConfig)
+   Dart:  @Native(assetId: 'package:openssl3/src/third_party/openssl.g.dart') externals
+          ├─ lib/openssl3.dart   (raw bindings + OpenSSLCapabilities + initNoConfig)
           └─ lib/evp.dart              (thin: Aead.aes256Gcm, X25519, MlKem768, MlDsa65, Random)
 ```
 
@@ -151,7 +151,7 @@ It becomes a pub workspace (no melos):
 /                              pubspec.yaml  (workspace root, sdk >=3.10.0)
 ├── PLAN.md  README.md  CHANGELOG.md  MIGRATION.md  CONTRIBUTING.md  LICENSE (BSD-3, keep)
 ├── docs/adr/                  ADR-0001 … (one file per non-obvious decision, list in §8)
-├── packages/openssl_assets/   the published package (see below)
+├── packages/openssl3/   the published package (see below)
 ├── example/
 │   ├── cli/                   Dart CLI: version, AES-256-GCM, AES-256-CTR, X25519, ML-KEM-768 (dart build cli)
 │   └── flutter_app/           Flutter app doing the same four calls on screen
@@ -161,12 +161,12 @@ It becomes a pub workspace (no melos):
 └── .github/workflows/         build-natives.yml release.yml verify.yml offline.yml web.yml ci.yml
 ```
 
-`packages/openssl_assets/`:
+`packages/openssl3/`:
 
 ```
-pubspec.yaml            name: openssl_assets, sdk '>=3.10.0 <4.0.0', platforms: android ios linux macos windows (web later)
+pubspec.yaml            name: openssl3, sdk '>=3.10.0 <4.0.0', platforms: android ios linux macos windows (web later)
 hook/build.dart
-lib/openssl_assets.dart          barrel: bindings + capabilities + initNoConfig
+lib/openssl3.dart          barrel: bindings + capabilities + initNoConfig
 lib/evp.dart                     thin idiomatic layer
 lib/wasm.dart                    (stretch) OpenSSLWasm.load(Uri)
 lib/src/third_party/openssl.g.dart   ffigen output (@Native), full libcrypto public API, doc-annotated (§4.3)
@@ -208,7 +208,7 @@ tarball. Rationale in ADR-0006.
 ### 2.1 Build recipe (identical for CI and `local_build`)
 
 1. `perl Configure <target> no-shared no-module no-legacy no-apps no-tests no-docs no-engine no-dso
-   no-async(where noted) no-ssl-trace no-comp no-zlib --openssldir=/nonexistent/openssl_assets
+   no-async(where noted) no-ssl-trace no-comp no-zlib --openssldir=/nonexistent/openssl3
    --api=3.0 no-deprecated --release`
    - `no-shared` on purpose: we build **`libcrypto.a` only** (`make build_libs` builds
      `libcrypto.a`; `libssl.a` is skipped via `make libcrypto.a` target — verified in
@@ -223,10 +223,10 @@ tarball. Rationale in ADR-0006.
      system libcrypto or from `LucazzP/openssl` may call them. Open question Q10.
    - Keep `asm` on (except wasm and Windows arm64 where the toolchain lacks a working assembler
      flow on the runner — decided per target in the matrix).
-2. **Own link step** (tool/link_asset.dart) produces `libopenssl_assets_crypto.{so,dylib}` /
-   `openssl_assets_crypto.dll` from `libcrypto.a`:
-   - Distinct **file name and SONAME/install-name** (`-Wl,-soname,libopenssl_assets_crypto.so`,
-     `-install_name @rpath/libopenssl_assets_crypto.dylib`). No collision with a process that already
+2. **Own link step** (tool/link_asset.dart) produces `libopenssl3_crypto.{so,dylib}` /
+   `openssl3_crypto.dll` from `libcrypto.a`:
+   - Distinct **file name and SONAME/install-name** (`-Wl,-soname,libopenssl3_crypto.so`,
+     `-install_name @rpath/libopenssl3_crypto.dylib`). No collision with a process that already
      has `libcrypto.so.3` / `libcrypto.3.dylib` loaded; dlopen treats it as a different library.
    - **Export list = OpenSSL's complete public ABI** (§2.4): `perl util/mkdef.pl --name CRYPTO
      --ordinals util/libcrypto.num --version 3.5.8 --OS {linux|windows|darwin}` yields the GNU
@@ -243,8 +243,8 @@ tarball. Rationale in ADR-0006.
      completes it. Import `.lib` produced as a secondary artifact.
    - Apple: thin per-arch Mach-O (see 2.2), `-headerpad_max_install_names`, min versions
      macOS 10.15 / iOS 13 (Flutter's floors), ad-hoc `codesign -s -`.
-3. A 40-line C shim `openssl_assets_shim.c` is linked in. It exposes exactly one extra symbol,
-   `openssl_assets_build_info()`, returning the JSON string embedded at link time (OpenSSL commit,
+3. A 40-line C shim `openssl3_shim.c` is linked in. It exposes exactly one extra symbol,
+   `openssl3_build_info()`, returning the JSON string embedded at link time (OpenSSL commit,
    Configure line, compiler `--version`, flags). That makes the binary self-describing, lets the hook
    cross-check `manifest.dart` at test time, and gives `OpenSSLCapabilities.buildInfo`.
 
@@ -258,20 +258,20 @@ patching Configure or post-processing with `patchelf`/`install_name_tool` (OpenS
 
 `code_assets` 2.0.0 **rejects multi-architecture Mach-O** in the validator, and Flutter builds each
 architecture through a separate hook invocation, then lipo's the thin dylibs into
-`openssl_assets_crypto.framework` itself and codesigns it (`native_assets_host.dart:lipoDylibs`,
+`openssl3_crypto.framework` itself and codesigns it (`native_assets_host.dart:lipoDylibs`,
 `frameworkUri`, `codesignDylib`). So the hook emits **thin per-(os, sdk, arch)** dylibs, and the
 framework wrapping the brief asks for happens in flutter_tools, not in our package.
 
 To still honour the brief for non-hooks consumers, `release.yml` additionally publishes
-`openssl_assets_crypto.xcframework.zip` (device arm64 + simulator arm64/x64 + macOS arm64/x64)
+`openssl3_crypto.xcframework.zip` (device arm64 + simulator arm64/x64 + macOS arm64/x64)
 built with `xcodebuild -create-xcframework` — purely a convenience artifact, unused by the hook.
 ADR-0003.
 
 ### 2.3 Release file naming (single flat directory, like sqlite3)
 
-`libopenssl_assets_crypto.<arch>.<os>.<ext>` where `<os>` ∈ `linux`, `linux_musl`, `macos`, `ios`,
+`libopenssl3_crypto.<arch>.<os>.<ext>` where `<os>` ∈ `linux`, `linux_musl`, `macos`, `ios`,
 `ios_sim`, `android`, `windows`, and `<arch>` uses `Architecture.name` (`x64`, `arm64`, `arm`,
-`riscv64`). Plus `openssl.wasm`, `manifest.json`, `openssl_assets_crypto.xcframework.zip`,
+`riscv64`). Plus `openssl.wasm`, `manifest.json`, `openssl3_crypto.xcframework.zip`,
 `openssl-3.5.8-source.sha256` (hash of the upstream tarball CI actually used).
 
 `manifest.json` entry: `{target, file, sha256, size, openssl_version, openssl_commit, compiler,
@@ -345,10 +345,10 @@ glibc-floor requirement ever appears.
 
 ## 4. Dart API
 
-### 4.1 `package:openssl_assets/openssl_assets.dart`
+### 4.1 `package:openssl3/openssl3.dart`
 
 - Re-exports `src/third_party/openssl.g.dart` (`@Native` externals, asset id
-  `package:openssl_assets/src/third_party/openssl.g.dart`; no `DynamicLibrary` anywhere).
+  `package:openssl3/src/third_party/openssl.g.dart`; no `DynamicLibrary` anywhere).
 - `OpenSSLCapabilities`: `versionString`, `versionNumber`, `hasMlKem768`, `hasMlDsa65`,
   `hasX25519`, `hasAesGcm`, `providerList`, `buildInfo` (from the shim). Probes use
   `EVP_PKEY_CTX_new_from_name` / `EVP_CIPHER_fetch` exactly as at_chops's loader does today, so
@@ -357,7 +357,7 @@ glibc-floor requirement ever appears.
   nullptr)`; idempotent; documented as "call once at startup; `--openssldir` points nowhere".
 - `OpenSSLException` built from `ERR_get_error` / `ERR_error_string_n`.
 
-### 4.2 `package:openssl_assets/evp.dart` (thin, at_chops-sized)
+### 4.2 `package:openssl3/evp.dart` (thin, at_chops-sized)
 
 `Aead.aes256Gcm(key).seal/open(nonce, plaintext, aad)`, `Cipher.aesCtr(key).encrypt/decrypt(iv, data)`
 plus a streaming `CipherStream` (`update`/`finish`) for NoPorts (§0.2), `X25519.keyPair()/agree()`,
@@ -369,7 +369,7 @@ handles wrapped in `Finalizer`-backed classes. Raw bindings stay primary.
 
 1. `perl Configure linux-x86_64 <same feature flags>` in the submodule once (`make build_generated`)
    to materialise the `*.h.in` headers; commit the generated `include/openssl/` snapshot under
-   `packages/openssl_assets/third_party/openssl_headers/` so the ffigen step is reproducible without Perl.
+   `packages/openssl3/third_party/openssl_headers/` so the ffigen step is reproducible without Perl.
 2. Entry points: **every** `include/openssl/*.h` from the generated snapshot except `ssl.h`,
    `ssl2.h`, `ssl3.h`, `tls1.h`, `dtls1.h`, `srtp.h`, `quic.h` (libssl, not shipped) and headers for
    features disabled at build time (checked against `configuration.h`'s `OPENSSL_NO_*`).
@@ -407,7 +407,7 @@ All 45 symbols in §0.1 are inside the export list. Because `@Native` bindings h
 calls cannot be pointed at this package unchanged (`asFunction` type arguments must be static, so a
 generic `lookupFunction` shim is impossible). Proposed at_chops change (their repo, separate PR):
 
-- Add `AtPqc.backend` selection: `openssl_assets` (default when the package is present) vs
+- Add `AtPqc.backend` selection: `openssl3` (default when the package is present) vs
   `systemLibCrypto` (today's probe) vs `pureDart`.
 - Replace `_lib.lookupFunction<X, Y>('sym')` with the generated `sym(...)` externals — a
   mechanical, ~45-site edit; the `*FfiAlgo` bodies are unchanged.
@@ -429,15 +429,15 @@ that mirrors at_chops's typedef names to make that diff smaller.
 |---|---|
 | Resolve target | `input.config.code.targetOS/targetArchitecture`, `code.iOS.targetSdk/targetVersion`, `code.android.targetNdkApi` (all present in `code_assets` 2.0) |
 | Compiled-in table | `lib/src/manifest.dart`: `releaseTag`, `Map<String, AssetInfo>` keyed by release file name |
-| Download + cache | `outputDirectoryShared/download-<sha8>/libopenssl_assets_crypto.<ext>`; re-hash on cache hit; `.tmp` + rename; sha256 mismatch ⇒ throw (fail closed); URL `https://github.com/cconstab/openssl3/releases/download/v<pkgver>/<file>` (see §6.1 on the planned transfer) |
-| Emit | `CodeAsset(package: 'openssl_assets', name: 'src/third_party/openssl.g.dart', linkMode: DynamicLoadingBundled(), file: …)` |
+| Download + cache | `outputDirectoryShared/download-<sha8>/libopenssl3_crypto.<ext>`; re-hash on cache hit; `.tmp` + rename; sha256 mismatch ⇒ throw (fail closed); URL `https://github.com/cconstab/openssl3/releases/download/v<pkgver>/<file>` (see §6.1 on the planned transfer) |
+| Emit | `CodeAsset(package: 'openssl3', name: 'src/third_party/openssl.g.dart', linkMode: DynamicLoadingBundled(), file: …)` |
 | `url_pattern` | `$RELEASE_TAG`/`$FILENAME` template (sqlite3 syntax) |
 | `local_path` | absolute or workspace-relative path (resolved via `userDefines.baseUri`), still sha256-checked **unless** `local_path_unverified: true` — default fails closed |
 | `local_build: true` | §1.2; optional `source_path`; toolchain from `cCompiler` config; logs every command |
 | `system: true` | `DynamicLoadingSystem(Uri.parse(os.libraryFileName('crypto')))`, with `system_name:` override map per OS (sqlite3's `name:` map) |
 | Precedence | `system` > `local_path` > `local_build` > `url_pattern`/default; conflicting combinations throw |
 | Determinism | no network on warm cache; `output.dependencies` lists `local_path`/`source_path`; `info` log states the chosen source and why |
-| Unsupported pair | `UnsupportedError('openssl_assets has no prebuilt libcrypto for <os>/<arch>…')` |
+| Unsupported pair | `UnsupportedError('openssl3 has no prebuilt libcrypto for <os>/<arch>…')` |
 | Test-only | `test_directory:` (CI) — the `PrecompiledForTesting` idea |
 
 Not code assets: when `input.config.buildCodeAssets` is false the hook returns immediately (sqlite3).
@@ -541,7 +541,7 @@ needs, `wasm-opt` DCE allowed). Which one ships is Q13.
 
 1. `chore: convert template repo to pub workspace` — remove melos, root pubspec, gitignore, submodule
    at `openssl-3.5.8`, copy OpenSSL LICENSE/NOTICE, ADR skeleton, this PLAN.
-2. `feat(openssl_assets): package skeleton, manifest/symbols generators, hook with fake download tests`.
+2. `feat(openssl3): package skeleton, manifest/symbols generators, hook with fake download tests`.
 3. `feat(tool): build_openssl.dart + link_asset.dart + verify_exports.dart` — proven locally for
    macOS arm64 (I have Xcode/perl here) before touching CI.
 4. `feat(bindings): headers snapshot + ffigen @Native bindings over all public headers + doc
@@ -581,7 +581,7 @@ needs, `wasm-opt` DCE allowed). Which one ships is Q13.
 11. **Legacy provider.** `no-legacy` currently drops MD4, RC4, DES, Blowfish, CAST, IDEA, SEED,
     RC2, Whirlpool. "Expose all" could be read to include them (+≈300 KB, weak algorithms
     available by default). **Default: stay `no-legacy`**; say if NoPorts needs any of them.
-12. **libssl.** Not built. Adding it later is a second code asset (`libopenssl_assets_ssl`) plus
+12. **libssl.** Not built. Adding it later is a second code asset (`libopenssl3_ssl`) plus
     `ssl.h`-family bindings; roughly doubles size. **Default: libcrypto only for 0.x.**
 13. **Wasm variant.** Full-ABI wasm cannot be dead-code-eliminated and may land well above the
     "few MB" target; a lite variant can. **Default: ship full for API parity, publish lite as a

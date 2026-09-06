@@ -1,4 +1,4 @@
-/// Builds one prebuilt `libopenssl_assets_crypto` for a target id.
+/// Builds one prebuilt `libopenssl3_crypto` for a target id.
 ///
 /// Usage (from the repository root):
 ///
@@ -10,10 +10,11 @@
 library;
 
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:args/args.dart';
-import 'package:openssl_assets_tool/build.dart';
-import 'package:openssl_assets_tool/targets.dart';
+import 'package:openssl3/src/native_build/build.dart';
+import 'package:openssl3/src/native_build/targets.dart';
 import 'package:path/path.dart' as p;
 
 Future<void> main(List<String> args) async {
@@ -61,6 +62,7 @@ Future<void> main(List<String> args) async {
             p.join('.dart_tool', 'openssl_build', target.id),
       ),
       outDir: Directory(opts.option('out')!),
+      packageRoot: await _packageRoot(),
       noAsm: opts.flag('no-asm'),
       reuseBuildDir: opts.flag('reuse-build-dir'),
       skipVerify: opts.flag('skip-verify'),
@@ -68,4 +70,12 @@ Future<void> main(List<String> args) async {
     ),
   );
   stdout.writeln(result.library.path);
+}
+
+/// The openssl3 package root, resolved through the package config so this
+/// works from any working directory inside the workspace.
+Future<Directory> _packageRoot() async {
+  final lib = await Isolate.resolvePackageUri(Uri.parse('package:openssl3/'));
+  if (lib == null) throw StateError('package:openssl3 not resolvable');
+  return Directory.fromUri(lib).parent;
 }

@@ -1,4 +1,4 @@
-/// Generates `packages/openssl_assets/lib/src/symbols.dart` from OpenSSL's
+/// Generates `packages/openssl3/lib/src/symbols.dart` from OpenSSL's
 /// `util/libcrypto.num` and a generated `configuration.h`.
 ///
 ///     dart run tool/bin/gen_symbols.dart --configuration-h <path>
@@ -12,7 +12,7 @@ library;
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:openssl_assets_tool/abi.dart';
+import 'package:openssl3/src/native_build/abi.dart';
 import 'package:path/path.dart' as p;
 
 Future<void> main(List<String> args) async {
@@ -22,10 +22,7 @@ Future<void> main(List<String> args) async {
       'configuration-h',
       help: 'Generated include/openssl/configuration.h from a build',
     )
-    ..addOption(
-      'output',
-      defaultsTo: 'packages/openssl_assets/lib/src/symbols.dart',
-    )
+    ..addOption('output', defaultsTo: 'packages/openssl3/lib/src/symbols.dart')
     ..addFlag('check', negatable: false, help: 'Fail if output is stale');
   final opts = parser.parse(args);
 

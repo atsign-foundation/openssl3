@@ -1,9 +1,10 @@
-name: openssl_assets
+name: openssl3
 description: >-
   Prebuilt OpenSSL 3.5 LTS libcrypto for Dart and Flutter, bundled as a code
   asset via build hooks. No OpenSSL, Perl or C toolchain needed at build time.
 version: 0.1.0-dev.1
-repository: https://github.com/cconstab/openssl3/tree/trunk/packages/openssl_assets
+repository: https://github.com/cconstab/openssl3
+homepage: https://github.com/cconstab/openssl3/tree/trunk/packages/openssl3
 issue_tracker: https://github.com/cconstab/openssl3/issues
 resolution: workspace
 

@@ -3,12 +3,12 @@
 Status: Accepted (2026-09-06)
 
 ## Context
-The brief allows either a separate `openssl_assets_wasm` package or conditional imports inside one
+The brief allows either a separate `openssl3_wasm` package or conditional imports inside one
 package. `package:sqlite3` ships `sqlite3/wasm.dart` in the same package and serves `sqlite3.wasm`
 as a release download.
 
 ## Decision
-One package: `package:openssl_assets/wasm.dart` with `OpenSSLWasm.load(Uri)`, and `evp.dart`
+One package: `package:openssl3/wasm.dart` with `OpenSSLWasm.load(Uri)`, and `evp.dart`
 implemented over `dart:ffi` or `dart:js_interop` via conditional imports. `openssl.wasm` is a
 GitHub release asset that apps serve themselves; it is not in the pub tarball.
 

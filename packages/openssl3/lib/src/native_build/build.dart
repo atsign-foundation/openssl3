@@ -14,6 +14,7 @@ import 'package:path/path.dart' as p;
 
 import 'abi.dart';
 import 'proc.dart';
+import 'required_symbols.dart';
 import 'targets.dart';
 import 'verify.dart';
 
@@ -38,11 +39,15 @@ final class BuildOptions {
   /// Extra environment for Configure/make (e.g. `ANDROID_NDK_ROOT`).
   final Map<String, String> environment;
 
+  /// Root of the `openssl3` package (holds `src/native/openssl3_shim.c`).
+  final Directory packageRoot;
+
   const BuildOptions({
     required this.target,
     required this.source,
     required this.buildDir,
     required this.outDir,
+    required this.packageRoot,
     this.noAsm = false,
     this.reuseBuildDir = false,
     this.skipVerify = false,
@@ -65,6 +70,7 @@ Future<BuildResult> buildTarget(BuildOptions options) async {
     source: options.source.absolute,
     buildDir: options.buildDir.absolute,
     outDir: options.outDir.absolute,
+    packageRoot: options.packageRoot.absolute,
     noAsm: options.noAsm,
     reuseBuildDir: options.reuseBuildDir,
     skipVerify: options.skipVerify,
@@ -128,10 +134,10 @@ Future<BuildResult> buildTarget(BuildOptions options) async {
     platform: t.abiPlatform,
     disabled: disabled,
   ).map((e) => e.name).toList()..sort();
-  const shimSymbol = 'openssl_assets_build_info';
+  const shimSymbol = 'openssl3_build_info';
   final allExports = [...exported, shimSymbol];
 
-  final exportFile = File(p.join(o.buildDir.path, 'openssl_assets.exports'));
+  final exportFile = File(p.join(o.buildDir.path, 'openssl3.exports'));
   exportFile.writeAsStringSync(switch (t.objectFormat) {
     ObjectFormat.elf => renderVersionScript(allExports),
     ObjectFormat.machO => renderMachOExportList(allExports),
@@ -177,17 +183,19 @@ Future<BuildResult> buildTarget(BuildOptions options) async {
     'exported_symbols': allExports.length,
     'host': '${Platform.operatingSystem} ${Platform.operatingSystemVersion}',
   };
-  final infoC = File(p.join(o.buildDir.path, 'openssl_assets_build_info.c'));
+  final infoC = File(p.join(o.buildDir.path, 'openssl3_build_info.c'));
   infoC.writeAsStringSync(
-    'const char openssl_assets_build_info_json[] = '
+    'const char openssl3_build_info_json[] = '
     '${_cStringLiteral(jsonEncode(buildInfo))};\n',
   );
-  final shimC = File(p.join(_toolRoot(), 'native', 'openssl_assets_shim.c'));
+  final shimC = File(
+    p.join(o.packageRoot.path, 'src', 'native', 'openssl3_shim.c'),
+  );
 
   // 6. Compile shim objects and link.
   final objExt = isWindows ? '.obj' : '.o';
-  final shimObj = p.join(o.buildDir.path, 'openssl_assets_shim$objExt');
-  final infoObj = p.join(o.buildDir.path, 'openssl_assets_build_info$objExt');
+  final shimObj = p.join(o.buildDir.path, 'openssl3_shim$objExt');
+  final infoObj = p.join(o.buildDir.path, 'openssl3_build_info$objExt');
   final archFlags = mk.archFlags(mk.words('CFLAGS') + mk.words('CNF_CFLAGS'));
   final output = File(p.join(o.buildDir.path, t.installedFileName));
 
@@ -324,7 +332,7 @@ Future<BuildResult> buildTarget(BuildOptions options) async {
       output,
       target: t,
       expectedExports: allExports.toSet(),
-      requiredSymbols: readRequiredSymbols(),
+      requiredSymbols: requiredSymbols,
     );
   }
 
@@ -342,29 +350,6 @@ Future<BuildResult> buildTarget(BuildOptions options) async {
     'sha256 ${buildInfo['sha256']})',
   );
   return BuildResult(released, buildInfo);
-}
-
-/// Reads `required_symbols.txt` next to the tool package.
-Set<String> readRequiredSymbols() =>
-    File(p.join(_toolRoot(), 'required_symbols.txt'))
-        .readAsLinesSync()
-        .map((l) => l.trim())
-        .where((l) => l.isNotEmpty && !l.startsWith('#'))
-        .toSet();
-
-String _toolRoot() {
-  // This file lives at <tool>/lib/build.dart.
-  final here = File.fromUri(Platform.script).parent;
-  // When run as `dart run tool/bin/x.dart`, Platform.script is the bin file.
-  for (final dir in [here, here.parent, Directory.current]) {
-    if (File(p.join(dir.path, 'required_symbols.txt')).existsSync()) {
-      return dir.path;
-    }
-    if (File(p.join(dir.path, 'tool', 'required_symbols.txt')).existsSync()) {
-      return p.join(dir.path, 'tool');
-    }
-  }
-  throw StateError('Cannot locate tool/ directory from ${Platform.script}');
 }
 
 String _readVersion(Directory source) {

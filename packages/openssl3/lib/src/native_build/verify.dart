@@ -1,4 +1,4 @@
-/// Post-link verification of a built `libopenssl_assets_crypto`.
+/// Post-link verification of a built `libopenssl3_crypto`.
 ///
 /// Checks, per object format:
 /// - the set of exported symbols equals the expected ABI list (+ shim);

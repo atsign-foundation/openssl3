@@ -11,11 +11,11 @@ name, and the other properties would require patching Configure or post-processi
 
 ## Decision
 Configure OpenSSL with `no-shared`, build `libcrypto.a` (`make build_libs`), then link
-`libopenssl_assets_crypto.{so,dylib}` / `openssl_assets_crypto.dll` ourselves
+`libopenssl3_crypto.{so,dylib}` / `openssl3_crypto.dll` ourselves
 (`tool/link_asset.dart`) with: `-soname` / `-install_name`, the export list from ADR-0008,
 `-Wl,-Bsymbolic`, `-Wl,-z,max-page-size=16384` (Android), `/MT` (Windows; `CFLAGS` is appended
 after the config's `/MD` in `windows-makefile.tmpl`, and cl takes the last `/M*`), plus a tiny C
-shim exporting `openssl_assets_build_info()`.
+shim exporting `openssl3_build_info()`.
 
 ## Consequences
 - One place controls naming, exports and platform flags; identical for CI and `local_build`.

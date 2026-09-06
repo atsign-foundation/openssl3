@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:openssl_assets_tool/abi.dart';
-import 'package:openssl_assets_tool/targets.dart';
+import 'package:openssl3/src/native_build/abi.dart';
+import 'package:openssl3/src/native_build/required_symbols.dart';
+import 'package:openssl3/src/native_build/targets.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -116,7 +117,7 @@ EXPORTS
   });
 
   group('real libcrypto.num', () {
-    final numFile = File('../third_party/openssl/util/libcrypto.num');
+    final numFile = File('../../third_party/openssl/util/libcrypto.num');
 
     test(
       'parses every line',
@@ -132,11 +133,7 @@ EXPORTS
       'required symbols are all in the ABI list',
       () {
         final names = AbiEntry.parseFile(numFile).map((e) => e.name).toSet();
-        final required = File('required_symbols.txt')
-            .readAsLinesSync()
-            .map((l) => l.trim())
-            .where((l) => l.isNotEmpty && !l.startsWith('#'));
-        expect(required.where((s) => !names.contains(s)), isEmpty);
+        expect(requiredSymbols.where((s) => !names.contains(s)), isEmpty);
       },
       skip: numFile.existsSync() ? false : 'submodule not checked out',
     );
@@ -148,32 +145,33 @@ EXPORTS
       expect(ids.length, BuildTarget.all.length);
       final files = BuildTarget.all.map((t) => t.releaseFileName).toSet();
       expect(files.length, BuildTarget.all.length);
+      expect(ids, SupportedTarget.all.map((t) => t.id).toSet());
     });
 
     test('naming', () {
       expect(
         BuildTarget.byId('macos-arm64').releaseFileName,
-        'libopenssl_assets_crypto.arm64.macos.dylib',
+        'libopenssl3_crypto.arm64.macos.dylib',
       );
       expect(
         BuildTarget.byId('windows-x64').releaseFileName,
-        'openssl_assets_crypto.x64.windows.dll',
+        'openssl3_crypto.x64.windows.dll',
       );
       expect(
         BuildTarget.byId('ios_sim-x64').releaseFileName,
-        'libopenssl_assets_crypto.x64.ios_sim.dylib',
+        'libopenssl3_crypto.x64.ios_sim.dylib',
       );
       expect(
         BuildTarget.byId('linux_musl-arm64').releaseFileName,
-        'libopenssl_assets_crypto.arm64.linux_musl.so',
+        'libopenssl3_crypto.arm64.linux_musl.so',
       );
       expect(
         BuildTarget.byId('android-arm').installName,
-        'libopenssl_assets_crypto.so',
+        'libopenssl3_crypto.so',
       );
       expect(
         BuildTarget.byId('ios-arm64').installName,
-        '@rpath/libopenssl_assets_crypto.dylib',
+        '@rpath/libopenssl3_crypto.dylib',
       );
     });
 

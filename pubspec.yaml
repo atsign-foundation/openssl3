@@ -1,13 +1,22 @@
-name: openssl_assets_workspace
-description: Pub workspace for the openssl_assets package and its examples.
+name: openssl3_workspace
+description: Pub workspace for the openssl3 package and its examples.
 publish_to: none
 
 environment:
   sdk: ^3.10.0
 
 workspace:
-  - packages/openssl_assets
+  - packages/openssl3
   - tool
 
 dev_dependencies:
   lints: ^6.0.0
+
+# The openssl3 hook refuses to run without verified binaries (ADR-0007). Inside
+# this repository there is no release to download from, so tests and examples
+# use the libraries produced by `dart run tool/bin/build_openssl.dart <target>`
+# into out/ (each with its .json sidecar carrying the sha256).
+hooks:
+  user_defines:
+    openssl3:
+      test_directory: out
