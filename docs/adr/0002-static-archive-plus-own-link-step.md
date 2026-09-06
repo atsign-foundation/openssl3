@@ -13,9 +13,10 @@ name, and the other properties would require patching Configure or post-processi
 Configure OpenSSL with `no-shared`, build `libcrypto.a` (`make build_libs`), then link
 `libopenssl3_crypto.{so,dylib}` / `openssl3_crypto.dll` ourselves
 (`tool/link_asset.dart`) with: `-soname` / `-install_name`, the export list from ADR-0008,
-`-Wl,-Bsymbolic`, `-Wl,-z,max-page-size=16384` (Android), `/MT` (Windows; `CFLAGS` is appended
-after the config's `/MD` in `windows-makefile.tmpl`, and cl takes the last `/M*`), plus a tiny C
-shim exporting `openssl3_build_info()`.
+`-Wl,-Bsymbolic`, `-Wl,-z,max-page-size=16384` (Android), static CRT on Windows (OpenSSL's
+`VC-*` configs already compile `no-shared` static libraries with `/MT /Zl`, so the DLL we link
+from `libcrypto.lib` plus `/DEFAULTLIB:libcmt.lib` gets the static runtime with no flag
+overrides), plus a tiny C shim exporting `openssl3_build_info()`.
 
 ## Consequences
 - One place controls naming, exports and platform flags; identical for CI and `local_build`.

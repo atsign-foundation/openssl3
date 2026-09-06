@@ -237,10 +237,10 @@ tarball. Rationale in ADR-0006.
    - `-Wl,-Bsymbolic` on ELF (sqlite3's fix for dart-lang/native#2724).
    - Android: `-Wl,-z,max-page-size=16384` (16 KB pages; `15-android.conf` does not add it), NDK
      r27, `__ANDROID_API__=21`, link `-lm -ldl` only.
-   - Windows: static CRT. OpenSSL's `VC-*` configs put `/MD` in `CNF_CFLAGS`; `CFLAGS` is appended
-     *after* it in `windows-makefile.tmpl` (`LIB_CFLAGS = … $(CNF_CFLAGS) $(CFLAGS)`), and cl takes
-     the last `/M*` flag, so `CFLAGS=/MT` wins for the `.a`; our `link /DLL /DEF:… /MT`-built shim
-     completes it. Import `.lib` produced as a secondary artifact.
+   - Windows: static CRT. With `no-shared`, OpenSSL's `VC-*` configs compile the static library
+     with `/MT /Zl` already (`10-main.conf`, `lib_cflags`), so no flag override is needed; our
+     `link /DLL /DEF:… /DEFAULTLIB:libcmt.lib` step completes it. Import `.lib` produced as a
+     secondary artifact.
    - Apple: thin per-arch Mach-O (see 2.2), `-headerpad_max_install_names`, min versions
      macOS 10.15 / iOS 13 (Flutter's floors), ad-hoc `codesign -s -`.
 3. A 40-line C shim `openssl3_shim.c` is linked in. It exposes exactly one extra symbol,

@@ -50,11 +50,12 @@ sealed class BinarySource {
     bool flag(String key) => switch (d[key]) {
       null => false,
       final bool b => b,
-      final String s => s == 'true',
+      'true' => true,
+      'false' => false,
       final other => throw ArgumentError.value(
         other,
         key,
-        'Expected a boolean',
+        'Expected true or false',
       ),
     };
 
