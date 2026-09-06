@@ -1,0 +1,273 @@
+name: Build native libraries
+
+# Builds libopenssl3_crypto for every supported target with the toolchains the
+# OpenSSL project itself uses (ADR-0004), verifies each binary, and merges the
+# results plus manifest.json into one `openssl3-prebuilt` artifact.
+# Called by release.yml; also runs on demand and when the build pipeline or
+# the pinned OpenSSL changes.
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        description: 'Release tag to record in manifest.json (empty = none)'
+        type: string
+        default: ''
+      attest:
+        description: 'Attest build provenance'
+        type: boolean
+        default: false
+    outputs:
+      artifact_id:
+        description: 'Artifact id of the merged prebuilt libraries'
+        value: ${{ jobs.merge.outputs.artifact_id }}
+  workflow_dispatch:
+  push:
+    branches: [trunk]
+    paths:
+      - 'third_party/openssl'
+      - 'packages/openssl3/lib/src/native_build/**'
+      - 'packages/openssl3/src/native/**'
+      - 'tool/**'
+      - '.github/workflows/build-natives.yml'
+
+permissions: {}
+
+env:
+  # OpenSSL 3.5.x needs nothing newer; keep Dart at the SDK floor + 1 line.
+  DART_SDK: stable
+
+jobs:
+  linux-glibc:
+    name: ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: linux-x64
+            runner: ubuntu-24.04
+          - target: linux-arm64
+            runner: ubuntu-24.04-arm
+          - target: linux-riscv64
+            runner: ubuntu-24.04
+            cross: gcc-riscv64-linux-gnu
+            qemu: qemu-user
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ env.DART_SDK }}
+      - name: Install cross toolchain
+        if: matrix.cross != ''
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ${{ matrix.cross }} ${{ matrix.qemu }}
+      - run: dart pub get
+      - name: Build
+        run: dart run tool/bin/build_openssl.dart ${{ matrix.target }} --out out
+      - name: Smoke test (native)
+        if: matrix.cross == ''
+        run: |
+          gcc -O2 -o smoke tool/native/smoke_dlopen.c -ldl
+          ./smoke out/libopenssl3_crypto.*.linux.so
+      - name: Smoke test (qemu-user)
+        if: matrix.target == 'linux-riscv64'
+        env:
+          QEMU_CPU: rv64,v=true,vext_spec=v1.0
+        run: |
+          riscv64-linux-gnu-gcc -O2 -o smoke tool/native/smoke_dlopen.c -ldl
+          qemu-riscv64 -L /usr/riscv64-linux-gnu ./smoke out/libopenssl3_crypto.riscv64.linux.so
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-${{ matrix.target }}
+          path: out/
+          if-no-files-found: error
+          retention-days: 3
+
+  linux-musl:
+    name: ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: linux_musl-x64
+            runner: ubuntu-24.04
+          - target: linux_musl-arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ env.DART_SDK }}
+      - run: dart pub get
+      # The Dart SDK is glibc-only, so the tooling stays on the host and drives
+      # perl/gcc/binutils inside an alpine container mounted at the same path
+      # (os-zoo.yml style, ADR-0004).
+      - name: Start alpine build container
+        run: |
+          docker run -d --name buildbox -v "$PWD:$PWD" -w "$PWD" alpine:3.20 sleep infinity
+          docker exec buildbox apk add --no-cache build-base perl linux-headers binutils
+      - name: Build
+        run: dart run tool/bin/build_openssl.dart ${{ matrix.target }} --out out --docker buildbox
+      - name: Smoke test (inside alpine)
+        run: |
+          docker exec -w "$PWD" buildbox gcc -O2 -o smoke tool/native/smoke_dlopen.c -ldl
+          docker exec -w "$PWD" buildbox ./smoke out/libopenssl3_crypto.*.linux_musl.so
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-${{ matrix.target }}
+          path: out/
+          if-no-files-found: error
+          retention-days: 3
+
+  apple:
+    name: macOS + iOS
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ env.DART_SDK }}
+      - run: dart pub get
+      - name: Build all Apple targets
+        run: |
+          for t in macos-arm64 macos-x64 ios-arm64 ios_sim-arm64 ios_sim-x64; do
+            dart run tool/bin/build_openssl.dart "$t" --out out
+          done
+      - name: Smoke test (host arch)
+        run: |
+          clang -O2 -o smoke tool/native/smoke_dlopen.c
+          ./smoke out/libopenssl3_crypto.arm64.macos.dylib
+      - name: xcframework (convenience artifact)
+        run: tool/ci/make_xcframework.sh out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-apple
+          path: out/
+          if-no-files-found: error
+          retention-days: 3
+
+  android:
+    name: Android
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ env.DART_SDK }}
+      - run: dart pub get
+      - name: Build all Android ABIs
+        env:
+          ANDROID_NDK_ROOT: ${{ env.ANDROID_NDK_LATEST_HOME }}
+        run: |
+          "$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/bin/clang" --version | head -1
+          for t in android-arm64 android-arm android-x64; do
+            dart run tool/bin/build_openssl.dart "$t" --out out
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-android
+          path: out/
+          if-no-files-found: error
+          retention-days: 3
+
+  windows:
+    name: ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: windows-x64
+            msvc_arch: x64
+          - target: windows-arm64
+            msvc_arch: amd64_arm64
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ env.DART_SDK }}
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ matrix.msvc_arch }}
+      - uses: ilammy/setup-nasm@v1
+      - name: Perl
+        run: |
+          perl --version | Select-String -Pattern "This is perl"
+          echo "C:\Strawberry\perl\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
+      - run: dart pub get
+      - name: Build
+        run: dart run tool/bin/build_openssl.dart ${{ matrix.target }} --out out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-${{ matrix.target }}
+          path: out/
+          if-no-files-found: error
+          retention-days: 3
+
+  merge:
+    name: Merge + manifest
+    needs: [linux-glibc, linux-musl, apple, android, windows]
+    runs-on: ubuntu-24.04
+    outputs:
+      artifact_id: ${{ steps.upload.outputs.artifact-id }}
+    permissions:
+      id-token: write
+      attestations: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ env.DART_SDK }}
+      - run: dart pub get
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: native-*
+          path: out/
+          merge-multiple: true
+      - name: Write manifest.json (all targets required)
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          ls -la out/
+          args=(--out out --require-all --dart-output /tmp/manifest.dart)
+          if [ -n "$TAG" ]; then args+=(--tag "$TAG"); fi
+          dart run tool/bin/write_manifest.dart "${args[@]}"
+          cat out/manifest.json
+      - name: Attest build provenance
+        if: inputs.attest
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            out/*.so
+            out/*.dylib
+            out/*.dll
+            out/*.zip
+            out/manifest.json
+      - uses: actions/upload-artifact@v4
+        id: upload
+        with:
+          name: openssl3-prebuilt
+          path: out/
+          if-no-files-found: error
+          retention-days: 14

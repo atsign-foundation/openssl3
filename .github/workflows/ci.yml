@@ -1,0 +1,100 @@
+name: CI
+
+# Per-OS: build the host libcrypto, run every test (hook + FFI through the
+# @Native bindings), build and run the example CLI with `dart build cli`.
+# Plus formatting, analysis, generated-file freshness and pana.
+
+on:
+  push:
+    branches: [trunk]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  static:
+    name: Format, analyze, generated files
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - name: libclang for ffigen freshness check
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libclang-dev
+      - run: dart pub get
+      - run: dart format --output=none --set-exit-if-changed .
+      - run: dart analyze --fatal-infos
+      - name: symbols.dart and bindings are up to date
+        run: |
+          dart run tool/bin/generate_bindings.dart --check
+          dart run tool/bin/gen_symbols.dart --check \
+            --configuration-h .dart_tool/openssl_build/linux-x64/include/openssl/configuration.h
+      - name: Hook and unit tests (no native library needed)
+        working-directory: packages/openssl3
+        run: dart test --exclude-tags ffi
+
+  pana:
+    name: pub points
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - run: dart pub global activate pana
+      - name: pana (target 160/160)
+        working-directory: packages/openssl3
+        run: dart pub global run pana --no-warning --exit-code-threshold 0 .
+
+  native:
+    name: Build + test (${{ matrix.target }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: linux-x64
+            runner: ubuntu-24.04
+          - target: linux-arm64
+            runner: ubuntu-24.04-arm
+          - target: macos-arm64
+            runner: macos-15
+          - target: windows-x64
+            runner: windows-2022
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - uses: ilammy/msvc-dev-cmd@v1
+        if: runner.os == 'Windows'
+        with:
+          arch: x64
+      - uses: ilammy/setup-nasm@v1
+        if: runner.os == 'Windows'
+      - run: dart pub get
+      - name: Build host libcrypto
+        run: dart run tool/bin/build_openssl.dart ${{ matrix.target }} --out out
+      - name: All tests, including FFI through the hook-bundled library
+        working-directory: packages/openssl3
+        run: dart test
+      - name: Example CLI via dart build cli
+        working-directory: example/cli
+        shell: bash
+        run: |
+          dart build cli
+          bin=$(find build -type f -path '*/bundle/bin/*' -name 'openssl3_example_cli*' | head -1)
+          ls -la "$(dirname "$bin")/../lib"
+          "$bin"
