@@ -1,0 +1,32 @@
+name: openssl3_example_flutter
+description: Flutter smoke test for package:openssl3 (bundled OpenSSL 3.5 libcrypto via build hooks).
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.11.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+  openssl3:
+    path: ../../packages/openssl3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+# Inside this repository there is no GitHub release to download from yet, so
+# the hook takes the library from ../../out (built with
+# `dart run tool/bin/build_openssl.dart <target>`). Consumers of the published
+# package do not need this block.
+hooks:
+  user_defines:
+    openssl3:
+      test_directory: ../../out

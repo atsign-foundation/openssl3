@@ -1,29 +1,43 @@
 <a href="https://atsign.com#gh-light-mode-only"><img width=250px src="https://atsign.com/wp-content/uploads/2022/05/atsign-logo-horizontal-color2022.svg#gh-light-mode-only" alt="The Atsign Foundation"></a><a href="https://atsign.com#gh-dark-mode-only"><img width=250px src="https://atsign.com/wp-content/uploads/2023/08/atsign-logo-horizontal-reverse2022-Color.svg#gh-dark-mode-only" alt="The Atsign Foundation"></a>
 
-## Some useful content templates for publishing packages
+# openssl3
 
-This repo provides content templates for repos that will publish packages to pub.dev.
+Prebuilt OpenSSL 3.5 LTS `libcrypto` for Dart and Flutter, delivered as a
+[code asset](https://dart.dev/tools/hooks) by the `openssl3` pub package, with
+`@Native` bindings for the complete public libcrypto API.
 
-You will find sample markdown content in the following files:
-1. [PACKAGE_README.md](PACKAGE_README.md)
-2. [PACKAGE_EXAMPLE.md](PACKAGE_EXAMPLE.md)
-3. [PACKAGE_CONTRIBUTING.md](CONTRIBUTING.md)
+**Package documentation:** [packages/openssl3/README.md](packages/openssl3/README.md)
 
-## Usage
+## Repository layout
 
-As these are simple markdown files, the easiest way to use them is to copy the raw markdown
-and paste them into the corresponing files in the project for your package. The template 
-includes comments explaining the content structure to be helpful.
+| Path | What |
+|---|---|
+| [`packages/openssl3/`](packages/openssl3/) | the published package: `hook/build.dart`, generated bindings, `evp.dart`, the native build pipeline |
+| [`tool/`](tool/) | CLIs used by CI and maintainers: build a target, generate symbols/bindings/manifest, watch upstream |
+| [`example/cli/`](example/cli/) | Dart CLI smoke test (`dart build cli`) |
+| [`example/flutter_app/`](example/flutter_app/) | Flutter smoke app with an integration test |
+| [`third_party/openssl`](third_party/openssl) | git submodule pinned to the bundled OpenSSL tag |
+| [`docs/adr/`](docs/adr/) | architecture decision records |
+| [`PLAN.md`](PLAN.md) | the design, target matrix, CI design and decision log |
 
-## Contributions are welcome
+## How a release works
 
-Please feel free to submit issues or enhancement requests for these templates. We aim to 
-continuously improve everything we do appreciate any contributions. See [CONTRIBUTING.md](CONTRIBUTING.md) 
-for details on how to do this.
+1. CI builds `libopenssl3_crypto` for 15 targets from the pinned OpenSSL tag,
+   verifies each binary (exported ABI, SONAME, dependencies, Android page
+   alignment) and attaches them plus `manifest.json` to a GitHub release.
+2. The sha256 of every asset is compiled into the package
+   (`lib/src/manifest.dart`) through an automated PR; the hook refuses anything
+   that does not match.
+3. Consumers run `dart pub add openssl3` and build. No OpenSSL, Perl or C
+   compiler is needed on their machine.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the exact steps, and
+[MIGRATION.md](MIGRATION.md) if you come from a system `libcrypto` or from
+`package:openssl`.
 
 ## Maintainers
 
-Created by:
-[Colin Constable](https://github.com/cconstab)
-[Chris Swan](https://github.com/cpswan)
-[Gary Casey](https://github.com/gkc)
+Created by
+[Colin Constable](https://github.com/cconstab),
+[Chris Swan](https://github.com/cpswan),
+[Gary Casey](https://github.com/gkc).

@@ -1,6 +1,7 @@
 # PLAN — `openssl3`: prebuilt OpenSSL 3.5 LTS libcrypto as a Dart code asset
 
-Status: **reviewed 2026-09-06; blocking questions answered; implementation started (milestone 1).**
+Status: **implemented through milestone 9 on 2026-09-06 (see §12 for what is proven, what is not,
+and what remains).**
 Date: 2026-09-06.
 
 Everything below is grounded in sources read today. Where I borrowed a design I say from where.
@@ -195,11 +196,13 @@ tarball. Rationale in ADR-0006.
   `openssl-3.5.8.tar.gz` release tarball (its sha256 is *also* recorded in `manifest.dart` by CI,
   never typed by hand) into `outputDirectoryShared`, or uses `source_path:` if the user points at a
   checkout. This mirrors sqlite3's `DownloadAmalgamation` + `source: source, path:`.
-- `native_toolchain_c` is used for **toolchain discovery** (`input.config.code.cCompiler`,
-  Android NDK clang, MSVC env) and for compiling the small shim/linker step; OpenSSL itself is
-  configured with `perl Configure … && make build_libs` because it is not a flat list of `.c`
-  files `CBuilder` can drive. Documented loudly in README ("requires Perl 5 + C toolchain +
-  ~10 minutes").
+- `native_toolchain_c` ended up **not** being a dependency: the pipeline drives `perl Configure`,
+  `make libcrypto.a` and the final link with the compiler OpenSSL's own Makefile selected, which
+  also covers the shim objects, so `CBuilder` had nothing left to do. Dropping it also removed
+  a dependency chain that constrained which Flutter stable releases can resolve the package
+  (hooks ≥ 2.1 → record_use 1.x → meta 1.19, unavailable before Flutter 3.47). `local_build`
+  will reuse `input.config.code.cCompiler` for toolchain discovery when it lands. README
+  documents "requires Perl 5 + C toolchain + ~10 minutes".
 
 ---
 
@@ -626,3 +629,39 @@ Dependabot cannot do this: its `gitsubmodule` ecosystem tracks branch heads, not
 - The verify matrix costs ~40 runner-minutes per run; scheduled nightly + on release, not on every PR.
 - App Store review has previously rejected unsigned/ad-hoc dylibs in odd layouts; we rely on
   flutter_tools' framework/codesign path, which sqlite3 already ships through the App Store.
+
+---
+
+## 12. Status (2026-09-06, end of first implementation session)
+
+**Proven locally (macOS arm64 host)**
+- Pipeline builds all five Apple targets (macos-arm64/x64, ios-arm64, ios_sim-arm64/x64): 4.8–5.4 MB
+  thin dylibs, 5 729 exports each, install name `@rpath/libopenssl3_crypto.dylib`, ad-hoc signed.
+- Bundled 3.5.8 loads beside Homebrew OpenSSL 3.6.3 in one process without interference.
+- 73 package tests pass, including FFI tests through the hook-supplied asset: GCM spec vector,
+  RFC 8439, NIST CTR (128/192/256), RFC 7748, and ML-KEM-768 / ML-DSA-65 fixtures produced by
+  python-cryptography (same seed → same public key; OpenSSL decapsulates/verifies python output).
+- `dart build cli` bundles `bin/` + `lib/libopenssl3_crypto.dylib`; the example reports 0 failures.
+  `dart compile exe` refuses with "does not support build hooks, use dart build".
+- `flutter build macos` + `flutter test integration_test -d macos` pass; Flutter wrapped the dylib
+  as `openssl3_crypto.framework` itself (ADR-0003 confirmed).
+- `local_build: true` through the hook compiles, verifies and bundles in ~20 s on this machine.
+- pana: 150/160 locally; the last 10 points are the repository-URL check, which needs the
+  commits pushed so the remote contains `packages/openssl3/pubspec.yaml`.
+
+**Written but not yet exercised (needs CI or other hosts)**
+- Linux glibc/musl, Android, Windows builds (`build-natives.yml`), riscv64 under qemu, the Alpine
+  docker-exec path (being exercised locally via Docker at the time of writing), Windows arm64.
+- `release.yml` two-step flow, `verify.yml`, `offline.yml`, `openssl-update.yml`.
+
+**Not started**
+- Web/WASM (§6 web.yml, `wasm.dart`): stretch goal, design unchanged.
+- at_chops PR in `at_client_sdk` (§4.4): needs this package published or a path dependency.
+- Web platform badge (depends on WASM).
+
+**Decisions taken during implementation (all reversible before first publish)**
+- Package/pub name `openssl3`; library `libopenssl3_crypto`; user-defines key `openssl3`.
+- Version = bundled OpenSSL version + build (`3.5.8+N`), ADR-0010; currently `3.5.8-dev.1`.
+- Full libcrypto ABI exported and bound (ADR-0008); `native_toolchain_c` not a dependency.
+- `hooks '>=2.0.0 <3.0.0'` so Flutter 3.41/3.44 stable can resolve the package.
+- Release tags spell the build with a dash (`v3.5.8-1`) because git refs cannot contain `+`.
