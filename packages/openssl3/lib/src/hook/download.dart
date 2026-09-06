@@ -107,7 +107,7 @@ Future<File> obtainBundledLibrary(
         input,
         target,
         expectedSha256: info.sha256,
-        fetch: () => _download(uri, source.manifest.releaseTag),
+        fetch: () => downloadStream(uri, source.manifest.releaseTag),
         description: uri.toString(),
       );
 
@@ -166,8 +166,8 @@ Future<File> obtainBundledLibrary(
       );
 
     case LocalBuild():
-      throw UnsupportedError(
-        'openssl3: local_build is not implemented yet in this version.',
+      throw ArgumentError(
+        'LocalBuild is handled by buildLocally() in local_build.dart',
       );
   }
 }
@@ -248,7 +248,8 @@ Future<File> _copyToShared(
   return to;
 }
 
-Stream<Uint8List> _download(Uri uri, String? releaseTag) async* {
+/// Streams [uri] with proxy support; throws [CouldNotDownloadException].
+Stream<Uint8List> downloadStream(Uri uri, String? releaseTag) async* {
   final client = HttpClient()
     ..findProxy = HttpClient.findProxyFromEnvironment
     ..userAgent = 'openssl3 hook (release ${releaseTag ?? 'dev'})';

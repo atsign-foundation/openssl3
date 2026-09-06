@@ -12,6 +12,7 @@ import 'package:code_assets/code_assets.dart';
 import 'package:hooks/hooks.dart';
 import 'package:openssl3/src/hook/binary_source.dart';
 import 'package:openssl3/src/hook/download.dart';
+import 'package:openssl3/src/hook/local_build.dart';
 import 'package:openssl3/src/hook/supported_targets.dart';
 
 void main(List<String> args) async {
@@ -38,12 +39,16 @@ void main(List<String> args) async {
     }
 
     final target = resolveTarget(input);
-    final file = await obtainBundledLibrary(
-      input,
-      output,
-      source as BundledSource,
-      target,
-    );
+    final file = switch (source) {
+      LocalBuild() => await buildLocally(input, output, source, target),
+      BundledSource() => await obtainBundledLibrary(
+        input,
+        output,
+        source,
+        target,
+      ),
+      SystemLibrary() => throw StateError('handled above'),
+    };
     stdout.writeln(
       'openssl3: bundling ${target.releaseFileName} for ${target.id} '
       'as ${target.installedFileName}',

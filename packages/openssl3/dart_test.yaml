@@ -5,3 +5,6 @@ tags:
     description: >-
       Tests that call into the bundled libopenssl3_crypto through the @Native
       bindings. Require a host build in out/ (dart run tool/bin/build_openssl.dart).
+  local_build:
+    description: Compiles OpenSSL from the submodule through the hook (minutes).
+    skip: "Slow. Run with: dart test -t local_build --run-skipped"

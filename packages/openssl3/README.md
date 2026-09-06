@@ -160,9 +160,21 @@ resulting `dart build cli` bundle has no dependency on the image's OpenSSL.
 
 ### Building from source (`local_build`)
 
-Not available yet in this version; planned for the next release. Until then use
-`local_path` with a library you built via this repository's
-`tool/bin/build_openssl.dart`.
+```yaml
+hooks:
+  user_defines:
+    openssl3:
+      local_build: true
+      source_path: ../openssl        # optional: an OpenSSL source tree
+```
+
+Compiles libcrypto on your machine with exactly the pipeline CI uses (same
+Configure flags, same link step, same verification). **Requires Perl 5,
+`make`/`nmake` and the platform C toolchain, and takes several minutes**; the
+result is cached in the hook's shared directory. Without `source_path` the
+pinned `openssl-<version>.tar.gz` is downloaded from GitHub and verified
+against the sha256 recorded in the package; a checkout of this repository
+(no release yet) must pass `source_path`. Android needs `ANDROID_NDK_ROOT`.
 
 ## Symbol-clash avoidance
 

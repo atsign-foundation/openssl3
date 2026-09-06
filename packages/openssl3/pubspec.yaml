@@ -3,8 +3,8 @@ description: >-
   Prebuilt OpenSSL 3.5 LTS libcrypto for Dart and Flutter, bundled as a code
   asset via build hooks. No OpenSSL, Perl or C toolchain needed at build time.
 version: 3.5.8-dev.1
-repository: https://github.com/cconstab/openssl3
-homepage: https://github.com/cconstab/openssl3/tree/trunk/packages/openssl3
+repository: https://github.com/cconstab/openssl3/tree/trunk/packages/openssl3
+homepage: https://github.com/cconstab/openssl3
 issue_tracker: https://github.com/cconstab/openssl3/issues
 resolution: workspace
 
@@ -25,12 +25,13 @@ topics:
   - native-assets
 
 dependencies:
-  code_assets: '>=1.0.0 <3.0.0'
+  # hooks 2.0.x still resolves with Flutter 3.41/3.44 stable (meta 1.17/1.18);
+  # 2.1+ needs meta 1.19 (Flutter >= 3.47). Keep the floor at 2.0.
+  code_assets: '>=1.1.0 <3.0.0'
   crypto: ^3.0.6
   ffi: ^2.1.0
-  hooks: ^2.2.0
+  hooks: '>=2.0.0 <3.0.0'
   meta: ^1.9.0
-  native_toolchain_c: '>=0.17.5 <0.20.0'
   path: ^1.9.0
 
 dev_dependencies:

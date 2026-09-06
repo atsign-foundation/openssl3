@@ -1,1 +1,10 @@
-include: ../../analysis_options.yaml
+# Self-contained on purpose: pana analyses the published tarball, where the
+# repository root options file does not exist. Keep in sync with
+# ../../analysis_options.yaml.
+include: package:lints/recommended.yaml
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
