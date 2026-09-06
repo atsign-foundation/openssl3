@@ -223,3 +223,23 @@ jobs:
           target: google_apis
           working-directory: example/flutter_app
           script: flutter test integration_test -d emulator-5554
+
+  local-build:
+    name: local_build from source (${{ matrix.runner }})
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-24.04, macos-15]
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - run: dart pub get
+      - name: Compile libcrypto through the hook (source_path = submodule)
+        working-directory: packages/openssl3
+        run: dart test -t local_build --run-skipped

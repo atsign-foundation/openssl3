@@ -245,6 +245,14 @@ jobs:
           pattern: native-*
           path: out/
           merge-multiple: true
+      - name: Record the upstream source tarball sha256 (for local_build)
+        run: |
+          ver=$(python3 -c "import json,glob; print(json.load(open(glob.glob('out/*.json')[0]))['openssl_version'])")
+          curl -sSfL -o "openssl-$ver.tar.gz" "https://github.com/openssl/openssl/releases/download/openssl-$ver/openssl-$ver.tar.gz"
+          curl -sSfL -o upstream.sha256 "https://github.com/openssl/openssl/releases/download/openssl-$ver/openssl-$ver.tar.gz.sha256"
+          echo "upstream says: $(cat upstream.sha256)"
+          sha256sum "openssl-$ver.tar.gz" | tee "out/openssl-$ver.tar.gz.sha256"
+          test "$(awk '{print $1}' upstream.sha256)" = "$(awk '{print $1}' out/openssl-$ver.tar.gz.sha256)"
       - name: Write manifest.json (all targets required)
         env:
           TAG: ${{ inputs.tag }}
@@ -264,6 +272,7 @@ jobs:
             out/*.dll
             out/*.zip
             out/manifest.json
+            out/*.sha256
       - uses: actions/upload-artifact@v4
         id: upload
         with:

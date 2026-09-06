@@ -7,3 +7,14 @@ updates:
       interval: "daily"
     cooldown:
       default-days: 7
+  # Dart workspace (packages/openssl3, tool, example/cli resolve from the root)
+  - package-ecosystem: "pub"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+  - package-ecosystem: "pub"
+    directory: "/example/flutter_app"
+    schedule:
+      interval: "weekly"

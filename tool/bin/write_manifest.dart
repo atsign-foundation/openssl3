@@ -99,11 +99,25 @@ Future<void> main(List<String> args) async {
     }
   }
 
+  // The upstream tarball hash lets `local_build` verify its download. CI
+  // writes out/openssl-<version>.tar.gz.sha256 ("<hex>  <name>" or "<hex>").
+  var tarballSha = opts.option('source-tarball-sha256');
+  final shaFile = File(
+    p.join(out.path, 'openssl-${versions.single}.tar.gz.sha256'),
+  );
+  if (tarballSha == null && shaFile.existsSync()) {
+    tarballSha = shaFile.readAsStringSync().trim().split(RegExp(r'\s+')).first;
+  }
+  if (tarballSha != null && !RegExp(r'^[0-9a-f]{64}$').hasMatch(tarballSha)) {
+    stderr.writeln('Invalid source tarball sha256: $tarballSha');
+    exit(65);
+  }
+
   final manifest = Manifest(
     releaseTag: tag,
     opensslVersion: versions.single,
     opensslCommit: commits.length == 1 ? commits.single : null,
-    sourceTarballSha256: opts.option('source-tarball-sha256'),
+    sourceTarballSha256: tarballSha,
     assets: assets,
   );
 

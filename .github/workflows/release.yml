@@ -75,7 +75,7 @@ jobs:
         run: |
           gh release create --draft --verify-tag "$TAG" --title "$TAG" \
             --notes "Draft: prebuilt OpenSSL libcrypto for package:openssl3 $TAG. Published once the release-hashes PR merges." \
-            out/*.so out/*.dylib out/*.dll out/*.zip out/manifest.json out/*.json
+            out/*.so out/*.dylib out/*.dll out/*.zip out/manifest.json out/*.json out/*.sha256
       - name: Open the release-hashes PR
         uses: peter-evans/create-pull-request@v7
         with:
