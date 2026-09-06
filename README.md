@@ -24,8 +24,6 @@ for details on how to do this.
 ## Maintainers
 
 Created by:
+[Colin Constable](https://github.com/cconstab)
 [Chris Swan](https://github.com/cpswan)
-[Cynthia Peter](https://github.com/CynthiaPeter)
 [Gary Casey](https://github.com/gkc)
-[Kevin Nickels](https://github.com/nickelskevin)
-[Minnu](https://github.com/yahu1031)
