@@ -162,12 +162,9 @@ Future<BuildResult> buildTarget(BuildOptions options) async {
 
   // 5. Build-info shim.
   final version = _readVersion(o.source);
-  final commit = await tryCapture('git', [
-    '-C',
-    o.source.path,
-    'rev-parse',
-    'HEAD',
-  ]);
+  // Always on the host (never through the docker wrapper): the container has
+  // no git, and the checkout is the host's anyway.
+  final commit = await _gitCommit(o.source);
   final ldflags = <String>[...t.ldflags];
   final buildInfo = <String, Object?>{
     'target': t.id,
@@ -466,4 +463,20 @@ void _prepareAndroidEnv(Map<String, String> env) {
   }
   final sep = Platform.isWindows ? ';' : ':';
   env['PATH'] = '$bin$sep${env['PATH'] ?? ''}';
+}
+
+Future<String?> _gitCommit(Directory source) async {
+  try {
+    final r = await Process.run('git', [
+      '-C',
+      source.path,
+      'rev-parse',
+      'HEAD',
+    ]);
+    if (r.exitCode != 0) return null;
+    final out = (r.stdout as String).trim();
+    return RegExp(r'^[0-9a-f]{40}$').hasMatch(out) ? out : null;
+  } on ProcessException {
+    return null;
+  }
 }
