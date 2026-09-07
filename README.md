@@ -36,6 +36,13 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the exact steps, and
 [MIGRATION.md](MIGRATION.md) if you come from a system `libcrypto` or from
 `package:openssl`.
 
+## Why "openssl3"
+
+Named after [`package:sqlite3`](https://pub.dev/packages/sqlite3), whose
+build-hook design (prebuilt library downloaded by sha256, hashes pinned by CI,
+never by hand) this repository ports to OpenSSL. Library plus major version, as
+sqlite3 did.
+
 ## Maintainers
 
 Created by

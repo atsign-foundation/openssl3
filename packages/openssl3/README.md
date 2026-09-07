@@ -19,6 +19,14 @@ operations most apps need (AES-GCM/CTR, X25519, ML-KEM-768, ML-DSA-65).
 The library is named `libopenssl3_crypto` and never collides with a system
 `libcrypto.so.3` / `libcrypto.3.dylib` already loaded in the process.
 
+### Why "openssl3"
+
+The name follows [`package:sqlite3`](https://pub.dev/packages/sqlite3): the C
+library plus its major version. That package pioneered the approach used here,
+a build hook that downloads a sha256-pinned prebuilt library and emits it as a
+code asset, with hashes that only ever enter the repository through CI. This
+package is, gratefully, a port of that design to OpenSSL.
+
 ## Install
 
 ```sh
@@ -170,6 +178,26 @@ package. Either way the process's libc is musl, so the hook detects it
 (`/etc/alpine-release` or `ld-musl-*`) and uses the musl-linked build; when
 cross-building for Alpine from a glibc host, set `linux_libc: musl`. The
 resulting `dart build cli` bundle has no dependency on the image's OpenSSL.
+
+### Deploying a `dart build cli` bundle (.deb, tarballs)
+
+`dart build cli` writes `bundle/bin/<exe>` and `bundle/lib/libopenssl3_crypto.so`
+(`.dylib` on macOS, `.dll` on Windows). The executable loads the library by the
+relative path `../lib/libopenssl3_crypto.so`, resolved against the directory of
+the **real** executable (symlinks are followed first). So keep `bin/` and `lib/`
+as siblings wherever you install:
+
+| Executable | Library |
+|---|---|
+| `/usr/local/bin/myapp` | `/usr/local/lib/libopenssl3_crypto.so` |
+| `/usr/bin/myapp` | `/usr/lib/libopenssl3_crypto.so` |
+| `/opt/myapp/bin/myapp` (+ symlink in `/usr/bin`) | `/opt/myapp/lib/libopenssl3_crypto.so` |
+
+The library is opened by that full path, so `ldconfig`, `LD_LIBRARY_PATH` and
+`rpath` are not involved, and its SONAME cannot collide with the system
+`libcrypto.so.3`. Debian policy reserves `/usr/local` for the administrator, so
+a `.deb` should use one of the last two layouts. Bundles are per architecture:
+build the Raspberry Pi package on `linux-arm`/`linux-arm64`, not on your laptop.
 
 ### Building from source (`local_build`)
 
