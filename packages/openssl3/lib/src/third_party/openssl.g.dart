@@ -643,7 +643,7 @@ external ffi.Pointer<ASN1_ITEM> ASN1_FBOOLEAN_it();
 @ffi.Native<
   ffi.Pointer<ASN1_GENERALIZEDTIME> Function(
     ffi.Pointer<ASN1_GENERALIZEDTIME>,
-    time_t,
+    openssl3_time_t,
     ffi.Int,
     ffi.Long,
   )
@@ -692,7 +692,7 @@ external int ASN1_GENERALIZEDTIME_print(
 @ffi.Native<
   ffi.Pointer<ASN1_GENERALIZEDTIME> Function(
     ffi.Pointer<ASN1_GENERALIZEDTIME>,
-    time_t,
+    openssl3_time_t,
   )
 >()
 external ffi.Pointer<ASN1_GENERALIZEDTIME> ASN1_GENERALIZEDTIME_set(
@@ -1142,13 +1142,13 @@ external int ASN1_STRING_print_ex(
 /// OpenSSL function `ASN1_STRING_print_ex_fp`. Manual: https://docs.openssl.org/3.5/man3/ASN1_STRING_print_ex/
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ASN1_STRING>,
     ffi.UnsignedLong,
   )
 >()
 external int ASN1_STRING_print_ex_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ASN1_STRING> str,
   int flags,
 );
@@ -1239,7 +1239,7 @@ external ffi.Pointer<ASN1_ITEM> ASN1_TBOOLEAN_it();
 @ffi.Native<
   ffi.Pointer<ASN1_TIME> Function(
     ffi.Pointer<ASN1_TIME>,
-    time_t,
+    openssl3_time_t,
     ffi.Int,
     ffi.Long,
   )
@@ -1256,7 +1256,7 @@ external ffi.Pointer<ASN1_TIME> ASN1_TIME_adj(
 external int ASN1_TIME_check(ffi.Pointer<ASN1_TIME> t);
 
 /// OpenSSL function `ASN1_TIME_cmp_time_t`. Manual: https://docs.openssl.org/3.5/man3/ASN1_TIME_set/
-@ffi.Native<ffi.Int Function(ffi.Pointer<ASN1_TIME>, time_t)>()
+@ffi.Native<ffi.Int Function(ffi.Pointer<ASN1_TIME>, openssl3_time_t)>()
 external int ASN1_TIME_cmp_time_t(ffi.Pointer<ASN1_TIME> s, int t);
 
 /// OpenSSL function `ASN1_TIME_compare`. Manual: https://docs.openssl.org/3.5/man3/ASN1_TIME_set/
@@ -1304,7 +1304,10 @@ external int ASN1_TIME_normalize(ffi.Pointer<ASN1_TIME> s);
 
 /// OpenSSL function `ASN1_TIME_print`. Manual: https://docs.openssl.org/3.5/man3/ASN1_TIME_set/
 @ffi.Native<ffi.Int Function(ffi.Pointer<BIO>, ffi.Pointer<ASN1_TIME>)>()
-external int ASN1_TIME_print(ffi.Pointer<BIO> bp, ffi.Pointer<ASN1_TIME> tm$1);
+external int ASN1_TIME_print(
+  ffi.Pointer<BIO> bp,
+  ffi.Pointer<ASN1_TIME> openssl3_tm$1,
+);
 
 /// OpenSSL function `ASN1_TIME_print_ex`. Manual: https://docs.openssl.org/3.5/man3/ASN1_TIME_set/
 @ffi.Native<
@@ -1312,12 +1315,14 @@ external int ASN1_TIME_print(ffi.Pointer<BIO> bp, ffi.Pointer<ASN1_TIME> tm$1);
 >()
 external int ASN1_TIME_print_ex(
   ffi.Pointer<BIO> bp,
-  ffi.Pointer<ASN1_TIME> tm$1,
+  ffi.Pointer<ASN1_TIME> openssl3_tm$1,
   int flags,
 );
 
 /// OpenSSL function `ASN1_TIME_set`. Manual: https://docs.openssl.org/3.5/man3/ASN1_TIME_set/
-@ffi.Native<ffi.Pointer<ASN1_TIME> Function(ffi.Pointer<ASN1_TIME>, time_t)>()
+@ffi.Native<
+  ffi.Pointer<ASN1_TIME> Function(ffi.Pointer<ASN1_TIME>, openssl3_time_t)
+>()
 external ffi.Pointer<ASN1_TIME> ASN1_TIME_set(ffi.Pointer<ASN1_TIME> s, int t);
 
 /// OpenSSL function `ASN1_TIME_set_string`. Manual: https://docs.openssl.org/3.5/man3/ASN1_TIME_set/
@@ -1345,10 +1350,6 @@ external ffi.Pointer<ASN1_GENERALIZEDTIME> ASN1_TIME_to_generalizedtime(
   ffi.Pointer<ASN1_TIME> t,
   ffi.Pointer<ffi.Pointer<ASN1_GENERALIZEDTIME>> out,
 );
-
-/// OpenSSL function `ASN1_TIME_to_tm`. Manual: https://docs.openssl.org/3.5/man3/ASN1_TIME_set/
-@ffi.Native<ffi.Int Function(ffi.Pointer<ASN1_TIME>, ffi.Pointer<tm>)>()
-external int ASN1_TIME_to_tm(ffi.Pointer<ASN1_TIME> s, ffi.Pointer<tm> tm$1);
 
 /// OpenSSL function `ASN1_TYPE_cmp`. Manual: https://docs.openssl.org/3.5/man3/ASN1_TYPE_get/
 @ffi.Native<ffi.Int Function(ffi.Pointer<ASN1_TYPE>, ffi.Pointer<ASN1_TYPE>)>()
@@ -1491,7 +1492,7 @@ external int ASN1_UNIVERSALSTRING_to_string(
 @ffi.Native<
   ffi.Pointer<ASN1_UTCTIME> Function(
     ffi.Pointer<ASN1_UTCTIME>,
-    time_t,
+    openssl3_time_t,
     ffi.Int,
     ffi.Long,
   )
@@ -1508,7 +1509,7 @@ external ffi.Pointer<ASN1_UTCTIME> ASN1_UTCTIME_adj(
 external int ASN1_UTCTIME_check(ffi.Pointer<ASN1_UTCTIME> a);
 
 /// OpenSSL function `ASN1_UTCTIME_cmp_time_t`. Manual: https://docs.openssl.org/3.5/man3/ASN1_TIME_set/
-@ffi.Native<ffi.Int Function(ffi.Pointer<ASN1_UTCTIME>, time_t)>()
+@ffi.Native<ffi.Int Function(ffi.Pointer<ASN1_UTCTIME>, openssl3_time_t)>()
 external int ASN1_UTCTIME_cmp_time_t(ffi.Pointer<ASN1_UTCTIME> s, int t);
 
 /// OpenSSL function `ASN1_UTCTIME_dup`. Manual: https://docs.openssl.org/3.5/man3/ASN1_TIME_set/
@@ -1538,7 +1539,7 @@ external int ASN1_UTCTIME_print(
 
 /// OpenSSL function `ASN1_UTCTIME_set`. Manual: https://docs.openssl.org/3.5/man3/ASN1_TIME_set/
 @ffi.Native<
-  ffi.Pointer<ASN1_UTCTIME> Function(ffi.Pointer<ASN1_UTCTIME>, time_t)
+  ffi.Pointer<ASN1_UTCTIME> Function(ffi.Pointer<ASN1_UTCTIME>, openssl3_time_t)
 >()
 external ffi.Pointer<ASN1_UTCTIME> ASN1_UTCTIME_set(
   ffi.Pointer<ASN1_UTCTIME> s,
@@ -1659,14 +1660,14 @@ external ffi.Pointer<ffi.Void> ASN1_d2i_bio(
   ffi.Pointer<ffi.Void> Function(
     ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function()>>,
     ffi.Pointer<d2i_of_void>,
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<ffi.Void>>,
   )
 >()
 external ffi.Pointer<ffi.Void> ASN1_d2i_fp(
   ffi.Pointer<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function()>> xnew,
   ffi.Pointer<d2i_of_void> d2i,
-  ffi.Pointer<FILE> in$,
+  ffi.Pointer<openssl3_FILE> in$,
   ffi.Pointer<ffi.Pointer<ffi.Void>> x,
 );
 
@@ -1763,13 +1764,13 @@ external int ASN1_i2d_bio(
 @ffi.Native<
   ffi.Int Function(
     ffi.Pointer<i2d_of_void>,
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external int ASN1_i2d_fp(
   ffi.Pointer<i2d_of_void> i2d,
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Void> x,
 );
 
@@ -1845,13 +1846,13 @@ external ffi.Pointer<ASN1_VALUE> ASN1_item_d2i_ex(
 @ffi.Native<
   ffi.Pointer<ffi.Void> Function(
     ffi.Pointer<ASN1_ITEM>,
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<ffi.Void> ASN1_item_d2i_fp(
   ffi.Pointer<ASN1_ITEM> it,
-  ffi.Pointer<FILE> in$,
+  ffi.Pointer<openssl3_FILE> in$,
   ffi.Pointer<ffi.Void> x,
 );
 
@@ -1859,7 +1860,7 @@ external ffi.Pointer<ffi.Void> ASN1_item_d2i_fp(
 @ffi.Native<
   ffi.Pointer<ffi.Void> Function(
     ffi.Pointer<ASN1_ITEM>,
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Void>,
     ffi.Pointer<OSSL_LIB_CTX>,
     ffi.Pointer<ffi.Char>,
@@ -1867,7 +1868,7 @@ external ffi.Pointer<ffi.Void> ASN1_item_d2i_fp(
 >()
 external ffi.Pointer<ffi.Void> ASN1_item_d2i_fp_ex(
   ffi.Pointer<ASN1_ITEM> it,
-  ffi.Pointer<FILE> in$,
+  ffi.Pointer<openssl3_FILE> in$,
   ffi.Pointer<ffi.Void> x,
   ffi.Pointer<OSSL_LIB_CTX> libctx,
   ffi.Pointer<ffi.Char> propq,
@@ -2004,13 +2005,13 @@ external int ASN1_item_i2d_bio(
 @ffi.Native<
   ffi.Int Function(
     ffi.Pointer<ASN1_ITEM>,
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external int ASN1_item_i2d_fp(
   ffi.Pointer<ASN1_ITEM> it,
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Void> x,
 );
 
@@ -3161,10 +3162,10 @@ external int BIO_dump_cb(
 
 /// OpenSSL function `BIO_dump_fp`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 @ffi.Native<
-  ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<ffi.Void>, ffi.Int)
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<ffi.Void>, ffi.Int)
 >()
 external int BIO_dump_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Void> s,
   int len,
 );
@@ -3217,10 +3218,15 @@ external int BIO_dump_indent_cb(
 
 /// OpenSSL function `BIO_dump_indent_fp`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 @ffi.Native<
-  ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<ffi.Void>, ffi.Int, ffi.Int)
+  ffi.Int Function(
+    ffi.Pointer<openssl3_FILE>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Int,
+    ffi.Int,
+  )
 >()
 external int BIO_dump_indent_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Void> s,
   int len,
   int indent,
@@ -4152,8 +4158,11 @@ external ffi.Pointer<BIO> BIO_new_file(
 );
 
 /// OpenSSL function `BIO_new_fp`. Manual: https://docs.openssl.org/3.5/man3/BIO_s_file/
-@ffi.Native<ffi.Pointer<BIO> Function(ffi.Pointer<FILE>, ffi.Int)>()
-external ffi.Pointer<BIO> BIO_new_fp(ffi.Pointer<FILE> stream, int close_flag);
+@ffi.Native<ffi.Pointer<BIO> Function(ffi.Pointer<openssl3_FILE>, ffi.Int)>()
+external ffi.Pointer<BIO> BIO_new_fp(
+  ffi.Pointer<openssl3_FILE> stream,
+  int close_flag,
+);
 
 /// OpenSSL function `BIO_new_from_core_bio`. Manual: https://docs.openssl.org/3.5/man3/BIO_s_core/
 @ffi.Native<
@@ -4537,7 +4546,7 @@ external int BIO_socket_ioctl(int fd, int type, ffi.Pointer<ffi.Void> arg);
 external int BIO_socket_nbio(int fd, int mode);
 
 /// OpenSSL function `BIO_socket_wait`. Manual: https://docs.openssl.org/3.5/man3/BIO_socket_wait/
-@ffi.Native<ffi.Int Function(ffi.Int, ffi.Int, time_t)>()
+@ffi.Native<ffi.Int Function(ffi.Int, ffi.Int, openssl3_time_t)>()
 external int BIO_socket_wait(int fd, int for_read, int max_time);
 
 /// OpenSSL function `BIO_test_flags`. Manual: https://docs.openssl.org/3.5/man3/BIO_set_flags/
@@ -4552,34 +4561,10 @@ external int BIO_up_ref(ffi.Pointer<BIO> a);
 @ffi.Native<ffi.Void Function(ffi.Pointer<BIO>)>()
 external void BIO_vfree(ffi.Pointer<BIO> a);
 
-/// OpenSSL function `BIO_vprintf`. Manual: https://docs.openssl.org/3.5/man3/BIO_printf/
-@ffi.Native<
-  ffi.Int Function(ffi.Pointer<BIO>, ffi.Pointer<ffi.Char>, va_list)
->()
-external int BIO_vprintf(
-  ffi.Pointer<BIO> bio,
-  ffi.Pointer<ffi.Char> format,
-  va_list args,
-);
-
-/// OpenSSL function `BIO_vsnprintf`. Manual: https://docs.openssl.org/3.5/man3/BIO_printf/
-@ffi.Native<
-  ffi.Int Function(
-    ffi.Pointer<ffi.Char>,
-    ffi.Size,
-    ffi.Pointer<ffi.Char>,
-    va_list,
-  )
->()
-external int BIO_vsnprintf(
-  ffi.Pointer<ffi.Char> buf,
-  int n,
-  ffi.Pointer<ffi.Char> format,
-  va_list args,
-);
-
 /// OpenSSL function `BIO_wait`. Manual: https://docs.openssl.org/3.5/man3/BIO_socket_wait/
-@ffi.Native<ffi.Int Function(ffi.Pointer<BIO>, time_t, ffi.UnsignedInt)>()
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<BIO>, openssl3_time_t, ffi.UnsignedInt)
+>()
 external int BIO_wait(ffi.Pointer<BIO> bio, int max_time, int nap_milliseconds);
 
 /// OpenSSL function `BIO_write`. Manual: https://docs.openssl.org/3.5/man3/BIO_read/
@@ -6517,8 +6502,8 @@ external ffi.Pointer<ffi.Char> BN_options();
 external int BN_print(ffi.Pointer<BIO> bio, ffi.Pointer<BIGNUM> a);
 
 /// OpenSSL function `BN_print_fp`. Manual: https://docs.openssl.org/3.5/man3/BN_bn2bin/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<BIGNUM>)>()
-external int BN_print_fp(ffi.Pointer<FILE> fp, ffi.Pointer<BIGNUM> a);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<BIGNUM>)>()
+external int BN_print_fp(ffi.Pointer<openssl3_FILE> fp, ffi.Pointer<BIGNUM> a);
 
 /// OpenSSL function `BN_priv_rand`. Manual: https://docs.openssl.org/3.5/man3/BN_rand/
 @ffi.Native<ffi.Int Function(ffi.Pointer<BIGNUM>, ffi.Int, ffi.Int, ffi.Int)>()
@@ -7476,7 +7461,7 @@ external int CMS_RecipientEncryptedKey_cert_cmp(
 external int CMS_RecipientEncryptedKey_get0_id(
   ffi.Pointer<CMS_RecipientEncryptedKey> rek,
   ffi.Pointer<ffi.Pointer<ASN1_OCTET_STRING>> keyid,
-  ffi.Pointer<ffi.Pointer<ASN1_GENERALIZEDTIME>> tm$1,
+  ffi.Pointer<ffi.Pointer<ASN1_GENERALIZEDTIME>> openssl3_tm$1,
   ffi.Pointer<ffi.Pointer<CMS_OtherKeyAttribute>> other,
   ffi.Pointer<ffi.Pointer<X509_NAME>> issuer,
   ffi.Pointer<ffi.Pointer<ASN1_INTEGER>> sno,
@@ -8795,11 +8780,11 @@ external int CONF_dump_bio(
 
 /// OpenSSL function `CONF_dump_fp`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 @ffi.Native<
-  ffi.Int Function(ffi.Pointer<lhash_st_CONF_VALUE>, ffi.Pointer<FILE>)
+  ffi.Int Function(ffi.Pointer<lhash_st_CONF_VALUE>, ffi.Pointer<openssl3_FILE>)
 >()
 external int CONF_dump_fp(
   ffi.Pointer<lhash_st_CONF_VALUE> conf,
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
 );
 
 /// OpenSSL function `CONF_free`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
@@ -8923,13 +8908,13 @@ external ffi.Pointer<lhash_st_CONF_VALUE> CONF_load_bio(
 @ffi.Native<
   ffi.Pointer<lhash_st_CONF_VALUE> Function(
     ffi.Pointer<lhash_st_CONF_VALUE>,
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Long>,
   )
 >()
 external ffi.Pointer<lhash_st_CONF_VALUE> CONF_load_fp(
   ffi.Pointer<lhash_st_CONF_VALUE> conf,
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Long> eline,
 );
 
@@ -9150,37 +9135,6 @@ external int CRYPTO_128_wrap_pad(
   block128_f block,
 );
 
-/// OpenSSL function `CRYPTO_THREAD_cleanup_local`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
-@ffi.Native<ffi.Int Function(ffi.Pointer<CRYPTO_THREAD_LOCAL>)>()
-external int CRYPTO_THREAD_cleanup_local(ffi.Pointer<CRYPTO_THREAD_LOCAL> key);
-
-/// OpenSSL function `CRYPTO_THREAD_compare_id`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
-@ffi.Native<ffi.Int Function(CRYPTO_THREAD_ID, CRYPTO_THREAD_ID)>()
-external int CRYPTO_THREAD_compare_id(CRYPTO_THREAD_ID a, CRYPTO_THREAD_ID b);
-
-/// OpenSSL function `CRYPTO_THREAD_get_current_id`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
-@ffi.Native<CRYPTO_THREAD_ID Function()>()
-external CRYPTO_THREAD_ID CRYPTO_THREAD_get_current_id();
-
-/// OpenSSL function `CRYPTO_THREAD_get_local`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
-@ffi.Native<ffi.Pointer<ffi.Void> Function(ffi.Pointer<CRYPTO_THREAD_LOCAL>)>()
-external ffi.Pointer<ffi.Void> CRYPTO_THREAD_get_local(
-  ffi.Pointer<CRYPTO_THREAD_LOCAL> key,
-);
-
-/// OpenSSL function `CRYPTO_THREAD_init_local`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
-@ffi.Native<
-  ffi.Int Function(
-    ffi.Pointer<CRYPTO_THREAD_LOCAL>,
-    ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>,
-  )
->()
-external int CRYPTO_THREAD_init_local(
-  ffi.Pointer<CRYPTO_THREAD_LOCAL> key,
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>
-  cleanup,
-);
-
 /// OpenSSL function `CRYPTO_THREAD_lock_free`. Manual: https://docs.openssl.org/3.5/man3/CRYPTO_THREAD_run_once/
 @ffi.Native<ffi.Void Function(ffi.Pointer<CRYPTO_RWLOCK>)>()
 external void CRYPTO_THREAD_lock_free(ffi.Pointer<CRYPTO_RWLOCK> lock);
@@ -9192,27 +9146,6 @@ external ffi.Pointer<CRYPTO_RWLOCK> CRYPTO_THREAD_lock_new();
 /// OpenSSL function `CRYPTO_THREAD_read_lock`. Manual: https://docs.openssl.org/3.5/man3/CRYPTO_THREAD_run_once/
 @ffi.Native<ffi.Int Function(ffi.Pointer<CRYPTO_RWLOCK>)>()
 external int CRYPTO_THREAD_read_lock(ffi.Pointer<CRYPTO_RWLOCK> lock);
-
-/// OpenSSL function `CRYPTO_THREAD_run_once`. Manual: https://docs.openssl.org/3.5/man3/CRYPTO_THREAD_run_once/
-@ffi.Native<
-  ffi.Int Function(
-    ffi.Pointer<CRYPTO_ONCE>,
-    ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>,
-  )
->()
-external int CRYPTO_THREAD_run_once(
-  ffi.Pointer<CRYPTO_ONCE> once,
-  ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>> init,
-);
-
-/// OpenSSL function `CRYPTO_THREAD_set_local`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
-@ffi.Native<
-  ffi.Int Function(ffi.Pointer<CRYPTO_THREAD_LOCAL>, ffi.Pointer<ffi.Void>)
->()
-external int CRYPTO_THREAD_set_local(
-  ffi.Pointer<CRYPTO_THREAD_LOCAL> key,
-  ffi.Pointer<ffi.Void> val,
-);
 
 /// OpenSSL function `CRYPTO_THREAD_unlock`. Manual: https://docs.openssl.org/3.5/man3/CRYPTO_THREAD_run_once/
 @ffi.Native<ffi.Int Function(ffi.Pointer<CRYPTO_RWLOCK>)>()
@@ -12389,8 +12322,11 @@ external int DHparams_print(ffi.Pointer<BIO> bp, ffi.Pointer<DH> x);
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<DH>)>()
-external int DHparams_print_fp(ffi.Pointer<FILE> fp, ffi.Pointer<DH> x);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<DH>)>()
+external int DHparams_print_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<DH> x,
+);
 
 /// OpenSSL function `DIRECTORYSTRING_free`. Manual: https://docs.openssl.org/3.5/man3/X509_dup/
 @ffi.Native<ffi.Void Function(ffi.Pointer<ASN1_STRING>)>()
@@ -13346,8 +13282,14 @@ external int DSA_print(ffi.Pointer<BIO> bp, ffi.Pointer<DSA> x, int off);
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<DSA>, ffi.Int)>()
-external int DSA_print_fp(ffi.Pointer<FILE> bp, ffi.Pointer<DSA> x, int off);
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<DSA>, ffi.Int)
+>()
+external int DSA_print_fp(
+  ffi.Pointer<openssl3_FILE> bp,
+  ffi.Pointer<DSA> x,
+  int off,
+);
 
 /// OpenSSL function `DSA_security_bits`. Manual: https://docs.openssl.org/3.5/man3/DSA_size/
 @Deprecated(
@@ -13542,8 +13484,11 @@ external int DSAparams_print(ffi.Pointer<BIO> bp, ffi.Pointer<DSA> x);
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<DSA>)>()
-external int DSAparams_print_fp(ffi.Pointer<FILE> fp, ffi.Pointer<DSA> x);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<DSA>)>()
+external int DSAparams_print_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<DSA> x,
+);
 
 @Deprecated(
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
@@ -13932,10 +13877,10 @@ external int ECPKParameters_print(
 )
 @Deprecated('Deprecated')
 @ffi.Native<
-  ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<EC_GROUP>, ffi.Int)
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<EC_GROUP>, ffi.Int)
 >()
 external int ECPKParameters_print_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<EC_GROUP> x,
   int off,
 );
@@ -13959,9 +13904,9 @@ external int ECParameters_print(ffi.Pointer<BIO> bp, ffi.Pointer<EC_KEY> key);
 /// \param  key  EC_KEY object
 /// \return 1 on success and 0 if an error occurred
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<EC_KEY>)>()
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<EC_KEY>)>()
 external int ECParameters_print_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<EC_KEY> key,
 );
 
@@ -15649,9 +15594,11 @@ external int EC_KEY_print(
 /// \param  off  line offset
 /// \return 1 on success and 0 if an error occurred
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<EC_KEY>, ffi.Int)>()
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<EC_KEY>, ffi.Int)
+>()
 external int EC_KEY_print_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<EC_KEY> key,
   int off,
 );
@@ -16664,10 +16611,6 @@ external void ERR_add_error_txt(
   ffi.Pointer<ffi.Char> txt,
 );
 
-/// OpenSSL function `ERR_add_error_vdata`. Manual: https://docs.openssl.org/3.5/man3/ERR_put_error/
-@ffi.Native<ffi.Void Function(ffi.Int, va_list)>()
-external void ERR_add_error_vdata(int num, va_list args);
-
 /// OpenSSL function `ERR_clear_error`. Manual: https://docs.openssl.org/3.5/man3/ERR_clear_error/
 @ffi.Native<ffi.Void Function()>()
 external void ERR_clear_error();
@@ -17187,8 +17130,8 @@ external void ERR_print_errors_cb(
 );
 
 /// OpenSSL function `ERR_print_errors_fp`. Manual: https://docs.openssl.org/3.5/man3/ERR_print_errors/
-@ffi.Native<ffi.Void Function(ffi.Pointer<FILE>)>()
-external void ERR_print_errors_fp(ffi.Pointer<FILE> fp);
+@ffi.Native<ffi.Void Function(ffi.Pointer<openssl3_FILE>)>()
+external void ERR_print_errors_fp(ffi.Pointer<openssl3_FILE> fp);
 
 /// OpenSSL function `ERR_reason_error_string`. Manual: https://docs.openssl.org/3.5/man3/ERR_error_string/
 @ffi.Native<ffi.Pointer<ffi.Char> Function(ffi.UnsignedLong)>()
@@ -17235,17 +17178,6 @@ external int ERR_set_mark();
 /// OpenSSL function `ERR_unload_strings`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 @ffi.Native<ffi.Int Function(ffi.Int, ffi.Pointer<ERR_STRING_DATA>)>()
 external int ERR_unload_strings(int lib, ffi.Pointer<ERR_STRING_DATA> str);
-
-/// OpenSSL function `ERR_vset_error`. Manual: https://docs.openssl.org/3.5/man3/ERR_new/
-@ffi.Native<
-  ffi.Void Function(ffi.Int, ffi.Int, ffi.Pointer<ffi.Char>, va_list)
->()
-external void ERR_vset_error(
-  int lib,
-  int reason,
-  ffi.Pointer<ffi.Char> fmt,
-  va_list args,
-);
 
 /// OpenSSL function `ESS_CERT_ID_V2_dup`. Manual: https://docs.openssl.org/3.5/man3/X509_dup/
 @ffi.Native<ffi.Pointer<ESS_CERT_ID_V2> Function(ffi.Pointer<ESS_CERT_ID_V2>)>()
@@ -25364,14 +25296,14 @@ external int EVP_PKEY_print_params(
 /// OpenSSL function `EVP_PKEY_print_params_fp`. Manual: https://docs.openssl.org/3.5/man3/EVP_PKEY_print_private/
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<EVP_PKEY>,
     ffi.Int,
     ffi.Pointer<ASN1_PCTX>,
   )
 >()
 external int EVP_PKEY_print_params_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<EVP_PKEY> pkey,
   int indent,
   ffi.Pointer<ASN1_PCTX> pctx,
@@ -25396,14 +25328,14 @@ external int EVP_PKEY_print_private(
 /// OpenSSL function `EVP_PKEY_print_private_fp`. Manual: https://docs.openssl.org/3.5/man3/EVP_PKEY_print_private/
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<EVP_PKEY>,
     ffi.Int,
     ffi.Pointer<ASN1_PCTX>,
   )
 >()
 external int EVP_PKEY_print_private_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<EVP_PKEY> pkey,
   int indent,
   ffi.Pointer<ASN1_PCTX> pctx,
@@ -25428,14 +25360,14 @@ external int EVP_PKEY_print_public(
 /// OpenSSL function `EVP_PKEY_print_public_fp`. Manual: https://docs.openssl.org/3.5/man3/EVP_PKEY_print_private/
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<EVP_PKEY>,
     ffi.Int,
     ffi.Pointer<ASN1_PCTX>,
   )
 >()
 external int EVP_PKEY_print_public_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<EVP_PKEY> pkey,
   int indent,
   ffi.Pointer<ASN1_PCTX> pctx,
@@ -28251,8 +28183,11 @@ external ffi.Pointer<CONF_METHOD> NCONF_default();
 external int NCONF_dump_bio(ffi.Pointer<CONF> conf, ffi.Pointer<BIO> out);
 
 /// OpenSSL function `NCONF_dump_fp`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
-@ffi.Native<ffi.Int Function(ffi.Pointer<CONF>, ffi.Pointer<FILE>)>()
-external int NCONF_dump_fp(ffi.Pointer<CONF> conf, ffi.Pointer<FILE> out);
+@ffi.Native<ffi.Int Function(ffi.Pointer<CONF>, ffi.Pointer<openssl3_FILE>)>()
+external int NCONF_dump_fp(
+  ffi.Pointer<CONF> conf,
+  ffi.Pointer<openssl3_FILE> out,
+);
 
 /// OpenSSL function `NCONF_free`. Manual: https://docs.openssl.org/3.5/man3/NCONF_new_ex/
 @ffi.Native<ffi.Void Function(ffi.Pointer<CONF>)>()
@@ -28340,11 +28275,15 @@ external int NCONF_load_bio(
 
 /// OpenSSL function `NCONF_load_fp`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 @ffi.Native<
-  ffi.Int Function(ffi.Pointer<CONF>, ffi.Pointer<FILE>, ffi.Pointer<ffi.Long>)
+  ffi.Int Function(
+    ffi.Pointer<CONF>,
+    ffi.Pointer<openssl3_FILE>,
+    ffi.Pointer<ffi.Long>,
+  )
 >()
 external int NCONF_load_fp(
   ffi.Pointer<CONF> conf,
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Long> eline,
 );
 
@@ -30098,10 +30037,12 @@ external ffi.Pointer<OPENSSL_LHASH> OPENSSL_LH_new(
   'Deprecated since OpenSSL 3.1.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Void Function(ffi.Pointer<OPENSSL_LHASH>, ffi.Pointer<FILE>)>()
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<OPENSSL_LHASH>, ffi.Pointer<openssl3_FILE>)
+>()
 external void OPENSSL_LH_node_stats(
   ffi.Pointer<OPENSSL_LHASH> lh,
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
 );
 
 /// OpenSSL function `OPENSSL_LH_node_stats_bio`. Manual: https://docs.openssl.org/3.5/man3/OPENSSL_LH_stats/
@@ -30120,10 +30061,12 @@ external void OPENSSL_LH_node_stats_bio(
   'Deprecated since OpenSSL 3.1.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Void Function(ffi.Pointer<OPENSSL_LHASH>, ffi.Pointer<FILE>)>()
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<OPENSSL_LHASH>, ffi.Pointer<openssl3_FILE>)
+>()
 external void OPENSSL_LH_node_usage_stats(
   ffi.Pointer<OPENSSL_LHASH> lh,
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
 );
 
 /// OpenSSL function `OPENSSL_LH_node_usage_stats_bio`. Manual: https://docs.openssl.org/3.5/man3/OPENSSL_LH_stats/
@@ -30183,10 +30126,12 @@ external ffi.Pointer<OPENSSL_LHASH> OPENSSL_LH_set_thunks(
   'Deprecated since OpenSSL 3.1.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Void Function(ffi.Pointer<OPENSSL_LHASH>, ffi.Pointer<FILE>)>()
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<OPENSSL_LHASH>, ffi.Pointer<openssl3_FILE>)
+>()
 external void OPENSSL_LH_stats(
   ffi.Pointer<OPENSSL_LHASH> lh,
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
 );
 
 /// OpenSSL function `OPENSSL_LH_stats_bio`. Manual: https://docs.openssl.org/3.5/man3/OPENSSL_LH_stats/
@@ -30306,37 +30251,6 @@ external void OPENSSL_fork_parent();
 @Deprecated('Deprecated')
 @ffi.Native<ffi.Void Function()>()
 external void OPENSSL_fork_prepare();
-
-/// OpenSSL function `OPENSSL_gmtime`. Manual: https://docs.openssl.org/3.5/man3/OPENSSL_gmtime/
-@ffi.Native<ffi.Pointer<tm> Function(ffi.Pointer<time_t>, ffi.Pointer<tm>)>()
-external ffi.Pointer<tm> OPENSSL_gmtime(
-  ffi.Pointer<time_t> timer,
-  ffi.Pointer<tm> result,
-);
-
-/// OpenSSL function `OPENSSL_gmtime_adj`. Manual: https://docs.openssl.org/3.5/man3/OPENSSL_gmtime/
-@ffi.Native<ffi.Int Function(ffi.Pointer<tm>, ffi.Int, ffi.Long)>()
-external int OPENSSL_gmtime_adj(
-  ffi.Pointer<tm> tm$1,
-  int offset_day,
-  int offset_sec,
-);
-
-/// OpenSSL function `OPENSSL_gmtime_diff`. Manual: https://docs.openssl.org/3.5/man3/OPENSSL_gmtime/
-@ffi.Native<
-  ffi.Int Function(
-    ffi.Pointer<ffi.Int>,
-    ffi.Pointer<ffi.Int>,
-    ffi.Pointer<tm>,
-    ffi.Pointer<tm>,
-  )
->()
-external int OPENSSL_gmtime_diff(
-  ffi.Pointer<ffi.Int> pday,
-  ffi.Pointer<ffi.Int> psec,
-  ffi.Pointer<tm> from,
-  ffi.Pointer<tm> to,
-);
 
 /// OpenSSL function `OPENSSL_hexchar2int`. Manual: https://docs.openssl.org/3.5/man3/OPENSSL_hexchar2int/
 @ffi.Native<ffi.Int Function(ffi.UnsignedChar)>()
@@ -33161,11 +33075,11 @@ external int OSSL_DECODER_from_data(
 
 /// OpenSSL function `OSSL_DECODER_from_fp`. Manual: https://docs.openssl.org/3.5/man3/OSSL_DECODER_from_bio/
 @ffi.Native<
-  ffi.Int Function(ffi.Pointer<OSSL_DECODER_CTX>, ffi.Pointer<FILE>)
+  ffi.Int Function(ffi.Pointer<OSSL_DECODER_CTX>, ffi.Pointer<openssl3_FILE>)
 >()
 external int OSSL_DECODER_from_fp(
   ffi.Pointer<OSSL_DECODER_CTX> ctx,
-  ffi.Pointer<FILE> in$,
+  ffi.Pointer<openssl3_FILE> in$,
 );
 
 /// OpenSSL function `OSSL_DECODER_get0_description`. Manual: https://docs.openssl.org/3.5/man3/OSSL_DECODER/
@@ -33630,11 +33544,11 @@ external int OSSL_ENCODER_to_data(
 
 /// OpenSSL function `OSSL_ENCODER_to_fp`. Manual: https://docs.openssl.org/3.5/man3/OSSL_ENCODER_to_bio/
 @ffi.Native<
-  ffi.Int Function(ffi.Pointer<OSSL_ENCODER_CTX>, ffi.Pointer<FILE>)
+  ffi.Int Function(ffi.Pointer<OSSL_ENCODER_CTX>, ffi.Pointer<openssl3_FILE>)
 >()
 external int OSSL_ENCODER_to_fp(
   ffi.Pointer<OSSL_ENCODER_CTX> ctx,
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
 );
 
 /// OpenSSL function `OSSL_ENCODER_up_ref`. Manual: https://docs.openssl.org/3.5/man3/OSSL_ENCODER/
@@ -34829,7 +34743,11 @@ external int OSSL_PARAM_BLD_push_size_t(
 
 /// OpenSSL function `OSSL_PARAM_BLD_push_time_t`. Manual: https://docs.openssl.org/3.5/man3/OSSL_PARAM_BLD/
 @ffi.Native<
-  ffi.Int Function(ffi.Pointer<OSSL_PARAM_BLD>, ffi.Pointer<ffi.Char>, time_t)
+  ffi.Int Function(
+    ffi.Pointer<OSSL_PARAM_BLD>,
+    ffi.Pointer<ffi.Char>,
+    openssl3_time_t,
+  )
 >()
 external int OSSL_PARAM_BLD_push_time_t(
   ffi.Pointer<OSSL_PARAM_BLD> bld,
@@ -35042,10 +34960,12 @@ external OSSL_PARAM OSSL_PARAM_construct_size_t(
 );
 
 /// OpenSSL function `OSSL_PARAM_construct_time_t`. Manual: https://docs.openssl.org/3.5/man3/OSSL_PARAM_int/
-@ffi.Native<OSSL_PARAM Function(ffi.Pointer<ffi.Char>, ffi.Pointer<time_t>)>()
+@ffi.Native<
+  OSSL_PARAM Function(ffi.Pointer<ffi.Char>, ffi.Pointer<openssl3_time_t>)
+>()
 external OSSL_PARAM OSSL_PARAM_construct_time_t(
   ffi.Pointer<ffi.Char> key,
-  ffi.Pointer<time_t> buf,
+  ffi.Pointer<openssl3_time_t> buf,
 );
 
 /// OpenSSL function `OSSL_PARAM_construct_uint`. Manual: https://docs.openssl.org/3.5/man3/OSSL_PARAM_int/
@@ -35214,10 +35134,12 @@ external int OSSL_PARAM_get_size_t(
 );
 
 /// OpenSSL function `OSSL_PARAM_get_time_t`. Manual: https://docs.openssl.org/3.5/man3/OSSL_PARAM_int/
-@ffi.Native<ffi.Int Function(ffi.Pointer<OSSL_PARAM>, ffi.Pointer<time_t>)>()
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<OSSL_PARAM>, ffi.Pointer<openssl3_time_t>)
+>()
 external int OSSL_PARAM_get_time_t(
   ffi.Pointer<OSSL_PARAM> p,
-  ffi.Pointer<time_t> val,
+  ffi.Pointer<openssl3_time_t> val,
 );
 
 /// OpenSSL function `OSSL_PARAM_get_uint`. Manual: https://docs.openssl.org/3.5/man3/OSSL_PARAM_int/
@@ -35394,7 +35316,7 @@ external int OSSL_PARAM_set_octet_string(
 external int OSSL_PARAM_set_size_t(ffi.Pointer<OSSL_PARAM> p, int val);
 
 /// OpenSSL function `OSSL_PARAM_set_time_t`. Manual: https://docs.openssl.org/3.5/man3/OSSL_PARAM_int/
-@ffi.Native<ffi.Int Function(ffi.Pointer<OSSL_PARAM>, time_t)>()
+@ffi.Native<ffi.Int Function(ffi.Pointer<OSSL_PARAM>, openssl3_time_t)>()
 external int OSSL_PARAM_set_time_t(ffi.Pointer<OSSL_PARAM> p, int val);
 
 /// OpenSSL function `OSSL_PARAM_set_uint`. Manual: https://docs.openssl.org/3.5/man3/OSSL_PARAM_int/
@@ -36490,18 +36412,6 @@ external ffi.Pointer<OSSL_STORE_LOADER> OSSL_STORE_unregister_loader(
   ffi.Pointer<ffi.Char> scheme,
 );
 
-/// OpenSSL function `OSSL_STORE_vctrl`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
-@Deprecated(
-  'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
-)
-@Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<OSSL_STORE_CTX>, ffi.Int, va_list)>()
-external int OSSL_STORE_vctrl(
-  ffi.Pointer<OSSL_STORE_CTX> ctx,
-  int cmd,
-  va_list args,
-);
-
 /// OpenSSL function `OSSL_TARGETING_INFORMATION_free`. Manual: https://docs.openssl.org/3.5/man3/X509_dup/
 @ffi.Native<ffi.Void Function(ffi.Pointer<OSSL_TARGETING_INFORMATION>)>()
 external void OSSL_TARGETING_INFORMATION_free(
@@ -36840,7 +36750,7 @@ external ffi.Pointer<PBKDF2PARAM> PBMAC1_get1_pbkdf2_param(
   ffi.Pointer<ffi.Void> Function(
     ffi.Pointer<d2i_of_void>,
     ffi.Pointer<ffi.Char>,
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<ffi.Void>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
@@ -36849,7 +36759,7 @@ external ffi.Pointer<PBKDF2PARAM> PBMAC1_get1_pbkdf2_param(
 external ffi.Pointer<ffi.Void> PEM_ASN1_read(
   ffi.Pointer<d2i_of_void> d2i,
   ffi.Pointer<ffi.Char> name,
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<ffi.Void>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -36880,7 +36790,7 @@ external ffi.Pointer<ffi.Void> PEM_ASN1_read_bio(
   ffi.Int Function(
     ffi.Pointer<i2d_of_void>,
     ffi.Pointer<ffi.Char>,
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Void>,
     ffi.Pointer<EVP_CIPHER>,
     ffi.Pointer<ffi.UnsignedChar>,
@@ -36892,7 +36802,7 @@ external ffi.Pointer<ffi.Void> PEM_ASN1_read_bio(
 external int PEM_ASN1_write(
   ffi.Pointer<i2d_of_void> i2d,
   ffi.Pointer<ffi.Char> name,
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Void> x,
   ffi.Pointer<EVP_CIPHER> enc,
   ffi.Pointer<ffi.UnsignedChar> kstr,
@@ -36995,14 +36905,14 @@ external int PEM_SignUpdate(
 /// OpenSSL function `PEM_X509_INFO_read`. Manual: https://docs.openssl.org/3.5/man3/PEM_X509_INFO_read_bio_ex/
 @ffi.Native<
   ffi.Pointer<stack_st_X509_INFO> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<stack_st_X509_INFO>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<stack_st_X509_INFO> PEM_X509_INFO_read(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<stack_st_X509_INFO> sk,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37047,7 +36957,7 @@ external ffi.Pointer<stack_st_X509_INFO> PEM_X509_INFO_read_bio_ex(
 /// OpenSSL function `PEM_X509_INFO_read_ex`. Manual: https://docs.openssl.org/3.5/man3/PEM_X509_INFO_read_bio_ex/
 @ffi.Native<
   ffi.Pointer<stack_st_X509_INFO> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<stack_st_X509_INFO>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
@@ -37056,7 +36966,7 @@ external ffi.Pointer<stack_st_X509_INFO> PEM_X509_INFO_read_bio_ex(
   )
 >()
 external ffi.Pointer<stack_st_X509_INFO> PEM_X509_INFO_read_ex(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<stack_st_X509_INFO> sk,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37196,7 +37106,7 @@ external void PEM_proc_type(ffi.Pointer<ffi.Char> buf, int type);
 /// OpenSSL function `PEM_read`. Manual: https://docs.openssl.org/3.5/man3/PEM_read/
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<ffi.Char>>,
     ffi.Pointer<ffi.Pointer<ffi.Char>>,
     ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>,
@@ -37204,7 +37114,7 @@ external void PEM_proc_type(ffi.Pointer<ffi.Char> buf, int type);
   )
 >()
 external int PEM_read(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<ffi.Char>> name,
   ffi.Pointer<ffi.Pointer<ffi.Char>> header,
   ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>> data,
@@ -37218,14 +37128,14 @@ external int PEM_read(
 @Deprecated('Deprecated')
 @ffi.Native<
   ffi.Pointer<DH> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<DH>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<DH> PEM_read_DHparams(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<DH>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37238,14 +37148,14 @@ external ffi.Pointer<DH> PEM_read_DHparams(
 @Deprecated('Deprecated')
 @ffi.Native<
   ffi.Pointer<DSA> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<DSA>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<DSA> PEM_read_DSAPrivateKey(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<DSA>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37258,14 +37168,14 @@ external ffi.Pointer<DSA> PEM_read_DSAPrivateKey(
 @Deprecated('Deprecated')
 @ffi.Native<
   ffi.Pointer<DSA> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<DSA>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<DSA> PEM_read_DSA_PUBKEY(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<DSA>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37278,14 +37188,14 @@ external ffi.Pointer<DSA> PEM_read_DSA_PUBKEY(
 @Deprecated('Deprecated')
 @ffi.Native<
   ffi.Pointer<DSA> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<DSA>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<DSA> PEM_read_DSAparams(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<DSA>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37298,14 +37208,14 @@ external ffi.Pointer<DSA> PEM_read_DSAparams(
 @Deprecated('Deprecated')
 @ffi.Native<
   ffi.Pointer<EC_GROUP> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<EC_GROUP>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<EC_GROUP> PEM_read_ECPKParameters(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<EC_GROUP>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37318,14 +37228,14 @@ external ffi.Pointer<EC_GROUP> PEM_read_ECPKParameters(
 @Deprecated('Deprecated')
 @ffi.Native<
   ffi.Pointer<EC_KEY> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<EC_KEY>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<EC_KEY> PEM_read_ECPrivateKey(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<EC_KEY>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37338,14 +37248,14 @@ external ffi.Pointer<EC_KEY> PEM_read_ECPrivateKey(
 @Deprecated('Deprecated')
 @ffi.Native<
   ffi.Pointer<EC_KEY> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<EC_KEY>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<EC_KEY> PEM_read_EC_PUBKEY(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<EC_KEY>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37354,14 +37264,14 @@ external ffi.Pointer<EC_KEY> PEM_read_EC_PUBKEY(
 /// OpenSSL function `PEM_read_NETSCAPE_CERT_SEQUENCE`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_CMS/
 @ffi.Native<
   ffi.Pointer<NETSCAPE_CERT_SEQUENCE> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<NETSCAPE_CERT_SEQUENCE>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<NETSCAPE_CERT_SEQUENCE> PEM_read_NETSCAPE_CERT_SEQUENCE(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<NETSCAPE_CERT_SEQUENCE>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37370,14 +37280,14 @@ external ffi.Pointer<NETSCAPE_CERT_SEQUENCE> PEM_read_NETSCAPE_CERT_SEQUENCE(
 /// OpenSSL function `PEM_read_PKCS7`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @ffi.Native<
   ffi.Pointer<PKCS7> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<PKCS7>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<PKCS7> PEM_read_PKCS7(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<PKCS7>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37386,14 +37296,14 @@ external ffi.Pointer<PKCS7> PEM_read_PKCS7(
 /// OpenSSL function `PEM_read_PKCS8`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_CMS/
 @ffi.Native<
   ffi.Pointer<X509_SIG> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<X509_SIG>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<X509_SIG> PEM_read_PKCS8(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<X509_SIG>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37402,14 +37312,14 @@ external ffi.Pointer<X509_SIG> PEM_read_PKCS8(
 /// OpenSSL function `PEM_read_PKCS8_PRIV_KEY_INFO`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_CMS/
 @ffi.Native<
   ffi.Pointer<PKCS8_PRIV_KEY_INFO> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<PKCS8_PRIV_KEY_INFO>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<PKCS8_PRIV_KEY_INFO> PEM_read_PKCS8_PRIV_KEY_INFO(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<PKCS8_PRIV_KEY_INFO>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37418,14 +37328,14 @@ external ffi.Pointer<PKCS8_PRIV_KEY_INFO> PEM_read_PKCS8_PRIV_KEY_INFO(
 /// OpenSSL function `PEM_read_PUBKEY`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @ffi.Native<
   ffi.Pointer<EVP_PKEY> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<EVP_PKEY>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<EVP_PKEY> PEM_read_PUBKEY(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<EVP_PKEY>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37434,7 +37344,7 @@ external ffi.Pointer<EVP_PKEY> PEM_read_PUBKEY(
 /// OpenSSL function `PEM_read_PUBKEY_ex`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @ffi.Native<
   ffi.Pointer<EVP_PKEY> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<EVP_PKEY>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
@@ -37443,7 +37353,7 @@ external ffi.Pointer<EVP_PKEY> PEM_read_PUBKEY(
   )
 >()
 external ffi.Pointer<EVP_PKEY> PEM_read_PUBKEY_ex(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<EVP_PKEY>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37454,14 +37364,14 @@ external ffi.Pointer<EVP_PKEY> PEM_read_PUBKEY_ex(
 /// OpenSSL function `PEM_read_PrivateKey`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @ffi.Native<
   ffi.Pointer<EVP_PKEY> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<EVP_PKEY>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<EVP_PKEY> PEM_read_PrivateKey(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<EVP_PKEY>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37470,7 +37380,7 @@ external ffi.Pointer<EVP_PKEY> PEM_read_PrivateKey(
 /// OpenSSL function `PEM_read_PrivateKey_ex`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @ffi.Native<
   ffi.Pointer<EVP_PKEY> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<EVP_PKEY>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
@@ -37479,7 +37389,7 @@ external ffi.Pointer<EVP_PKEY> PEM_read_PrivateKey(
   )
 >()
 external ffi.Pointer<EVP_PKEY> PEM_read_PrivateKey_ex(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<EVP_PKEY>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37494,14 +37404,14 @@ external ffi.Pointer<EVP_PKEY> PEM_read_PrivateKey_ex(
 @Deprecated('Deprecated')
 @ffi.Native<
   ffi.Pointer<RSA> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<RSA>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<RSA> PEM_read_RSAPrivateKey(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<RSA>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37514,14 +37424,14 @@ external ffi.Pointer<RSA> PEM_read_RSAPrivateKey(
 @Deprecated('Deprecated')
 @ffi.Native<
   ffi.Pointer<RSA> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<RSA>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<RSA> PEM_read_RSAPublicKey(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<RSA>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37534,14 +37444,14 @@ external ffi.Pointer<RSA> PEM_read_RSAPublicKey(
 @Deprecated('Deprecated')
 @ffi.Native<
   ffi.Pointer<RSA> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<RSA>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<RSA> PEM_read_RSA_PUBKEY(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<RSA>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37550,14 +37460,14 @@ external ffi.Pointer<RSA> PEM_read_RSA_PUBKEY(
 /// OpenSSL function `PEM_read_X509`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @ffi.Native<
   ffi.Pointer<X509> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<X509>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<X509> PEM_read_X509(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<X509>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37566,14 +37476,14 @@ external ffi.Pointer<X509> PEM_read_X509(
 /// OpenSSL function `PEM_read_X509_ACERT`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @ffi.Native<
   ffi.Pointer<X509_ACERT> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<X509_ACERT>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<X509_ACERT> PEM_read_X509_ACERT(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<X509_ACERT>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37582,14 +37492,14 @@ external ffi.Pointer<X509_ACERT> PEM_read_X509_ACERT(
 /// OpenSSL function `PEM_read_X509_AUX`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @ffi.Native<
   ffi.Pointer<X509> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<X509>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<X509> PEM_read_X509_AUX(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<X509>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37598,14 +37508,14 @@ external ffi.Pointer<X509> PEM_read_X509_AUX(
 /// OpenSSL function `PEM_read_X509_CRL`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @ffi.Native<
   ffi.Pointer<X509_CRL> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<X509_CRL>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<X509_CRL> PEM_read_X509_CRL(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<X509_CRL>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37614,14 +37524,14 @@ external ffi.Pointer<X509_CRL> PEM_read_X509_CRL(
 /// OpenSSL function `PEM_read_X509_PUBKEY`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_CMS/
 @ffi.Native<
   ffi.Pointer<X509_PUBKEY> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<X509_PUBKEY>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<X509_PUBKEY> PEM_read_X509_PUBKEY(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<X509_PUBKEY>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -37630,14 +37540,14 @@ external ffi.Pointer<X509_PUBKEY> PEM_read_X509_PUBKEY(
 /// OpenSSL function `PEM_read_X509_REQ`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @ffi.Native<
   ffi.Pointer<X509_REQ> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<X509_REQ>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<X509_REQ> PEM_read_X509_REQ(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<ffi.Pointer<X509_REQ>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -38144,7 +38054,7 @@ external int PEM_read_bio_ex(
 /// OpenSSL function `PEM_write`. Manual: https://docs.openssl.org/3.5/man3/PEM_read/
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Char>,
     ffi.Pointer<ffi.Char>,
     ffi.Pointer<ffi.UnsignedChar>,
@@ -38152,7 +38062,7 @@ external int PEM_read_bio_ex(
   )
 >()
 external int PEM_write(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Char> name,
   ffi.Pointer<ffi.Char> hdr,
   ffi.Pointer<ffi.UnsignedChar> data,
@@ -38164,16 +38074,22 @@ external int PEM_write(
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<DH>)>()
-external int PEM_write_DHparams(ffi.Pointer<FILE> out, ffi.Pointer<DH> x);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<DH>)>()
+external int PEM_write_DHparams(
+  ffi.Pointer<openssl3_FILE> out,
+  ffi.Pointer<DH> x,
+);
 
 /// OpenSSL function `PEM_write_DHxparams`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_CMS/
 @Deprecated(
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<DH>)>()
-external int PEM_write_DHxparams(ffi.Pointer<FILE> out, ffi.Pointer<DH> x);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<DH>)>()
+external int PEM_write_DHxparams(
+  ffi.Pointer<openssl3_FILE> out,
+  ffi.Pointer<DH> x,
+);
 
 /// OpenSSL function `PEM_write_DSAPrivateKey`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @Deprecated(
@@ -38182,7 +38098,7 @@ external int PEM_write_DHxparams(ffi.Pointer<FILE> out, ffi.Pointer<DH> x);
 @Deprecated('Deprecated')
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<DSA>,
     ffi.Pointer<EVP_CIPHER>,
     ffi.Pointer<ffi.UnsignedChar>,
@@ -38192,7 +38108,7 @@ external int PEM_write_DHxparams(ffi.Pointer<FILE> out, ffi.Pointer<DH> x);
   )
 >()
 external int PEM_write_DSAPrivateKey(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<DSA> x,
   ffi.Pointer<EVP_CIPHER> enc,
   ffi.Pointer<ffi.UnsignedChar> kstr,
@@ -38206,25 +38122,33 @@ external int PEM_write_DSAPrivateKey(
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<DSA>)>()
-external int PEM_write_DSA_PUBKEY(ffi.Pointer<FILE> out, ffi.Pointer<DSA> x);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<DSA>)>()
+external int PEM_write_DSA_PUBKEY(
+  ffi.Pointer<openssl3_FILE> out,
+  ffi.Pointer<DSA> x,
+);
 
 /// OpenSSL function `PEM_write_DSAparams`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @Deprecated(
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<DSA>)>()
-external int PEM_write_DSAparams(ffi.Pointer<FILE> out, ffi.Pointer<DSA> x);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<DSA>)>()
+external int PEM_write_DSAparams(
+  ffi.Pointer<openssl3_FILE> out,
+  ffi.Pointer<DSA> x,
+);
 
 /// OpenSSL function `PEM_write_ECPKParameters`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_CMS/
 @Deprecated(
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<EC_GROUP>)>()
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<EC_GROUP>)
+>()
 external int PEM_write_ECPKParameters(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<EC_GROUP> x,
 );
 
@@ -38235,7 +38159,7 @@ external int PEM_write_ECPKParameters(
 @Deprecated('Deprecated')
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<EC_KEY>,
     ffi.Pointer<EVP_CIPHER>,
     ffi.Pointer<ffi.UnsignedChar>,
@@ -38245,7 +38169,7 @@ external int PEM_write_ECPKParameters(
   )
 >()
 external int PEM_write_ECPrivateKey(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<EC_KEY> x,
   ffi.Pointer<EVP_CIPHER> enc,
   ffi.Pointer<ffi.UnsignedChar> kstr,
@@ -38259,30 +38183,44 @@ external int PEM_write_ECPrivateKey(
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<EC_KEY>)>()
-external int PEM_write_EC_PUBKEY(ffi.Pointer<FILE> out, ffi.Pointer<EC_KEY> x);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<EC_KEY>)>()
+external int PEM_write_EC_PUBKEY(
+  ffi.Pointer<openssl3_FILE> out,
+  ffi.Pointer<EC_KEY> x,
+);
 
 /// OpenSSL function `PEM_write_NETSCAPE_CERT_SEQUENCE`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_CMS/
 @ffi.Native<
-  ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<NETSCAPE_CERT_SEQUENCE>)
+  ffi.Int Function(
+    ffi.Pointer<openssl3_FILE>,
+    ffi.Pointer<NETSCAPE_CERT_SEQUENCE>,
+  )
 >()
 external int PEM_write_NETSCAPE_CERT_SEQUENCE(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<NETSCAPE_CERT_SEQUENCE> x,
 );
 
 /// OpenSSL function `PEM_write_PKCS7`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<PKCS7>)>()
-external int PEM_write_PKCS7(ffi.Pointer<FILE> out, ffi.Pointer<PKCS7> x);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<PKCS7>)>()
+external int PEM_write_PKCS7(
+  ffi.Pointer<openssl3_FILE> out,
+  ffi.Pointer<PKCS7> x,
+);
 
 /// OpenSSL function `PEM_write_PKCS8`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_CMS/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509_SIG>)>()
-external int PEM_write_PKCS8(ffi.Pointer<FILE> out, ffi.Pointer<X509_SIG> x);
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509_SIG>)
+>()
+external int PEM_write_PKCS8(
+  ffi.Pointer<openssl3_FILE> out,
+  ffi.Pointer<X509_SIG> x,
+);
 
 /// OpenSSL function `PEM_write_PKCS8PrivateKey`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<EVP_PKEY>,
     ffi.Pointer<EVP_CIPHER>,
     ffi.Pointer<ffi.Char>,
@@ -38292,7 +38230,7 @@ external int PEM_write_PKCS8(ffi.Pointer<FILE> out, ffi.Pointer<X509_SIG> x);
   )
 >()
 external int PEM_write_PKCS8PrivateKey(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<EVP_PKEY> x,
   ffi.Pointer<EVP_CIPHER> enc,
   ffi.Pointer<ffi.Char> kstr,
@@ -38304,7 +38242,7 @@ external int PEM_write_PKCS8PrivateKey(
 /// OpenSSL function `PEM_write_PKCS8PrivateKey_nid`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<EVP_PKEY>,
     ffi.Int,
     ffi.Pointer<ffi.Char>,
@@ -38314,7 +38252,7 @@ external int PEM_write_PKCS8PrivateKey(
   )
 >()
 external int PEM_write_PKCS8PrivateKey_nid(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<EVP_PKEY> x,
   int nid,
   ffi.Pointer<ffi.Char> kstr,
@@ -38325,28 +38263,33 @@ external int PEM_write_PKCS8PrivateKey_nid(
 
 /// OpenSSL function `PEM_write_PKCS8_PRIV_KEY_INFO`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_CMS/
 @ffi.Native<
-  ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<PKCS8_PRIV_KEY_INFO>)
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<PKCS8_PRIV_KEY_INFO>)
 >()
 external int PEM_write_PKCS8_PRIV_KEY_INFO(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<PKCS8_PRIV_KEY_INFO> x,
 );
 
 /// OpenSSL function `PEM_write_PUBKEY`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<EVP_PKEY>)>()
-external int PEM_write_PUBKEY(ffi.Pointer<FILE> out, ffi.Pointer<EVP_PKEY> x);
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<EVP_PKEY>)
+>()
+external int PEM_write_PUBKEY(
+  ffi.Pointer<openssl3_FILE> out,
+  ffi.Pointer<EVP_PKEY> x,
+);
 
 /// OpenSSL function `PEM_write_PUBKEY_ex`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<EVP_PKEY>,
     ffi.Pointer<OSSL_LIB_CTX>,
     ffi.Pointer<ffi.Char>,
   )
 >()
 external int PEM_write_PUBKEY_ex(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<EVP_PKEY> x,
   ffi.Pointer<OSSL_LIB_CTX> libctx,
   ffi.Pointer<ffi.Char> propq,
@@ -38355,7 +38298,7 @@ external int PEM_write_PUBKEY_ex(
 /// OpenSSL function `PEM_write_PrivateKey`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<EVP_PKEY>,
     ffi.Pointer<EVP_CIPHER>,
     ffi.Pointer<ffi.UnsignedChar>,
@@ -38365,7 +38308,7 @@ external int PEM_write_PUBKEY_ex(
   )
 >()
 external int PEM_write_PrivateKey(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<EVP_PKEY> x,
   ffi.Pointer<EVP_CIPHER> enc,
   ffi.Pointer<ffi.UnsignedChar> kstr,
@@ -38377,7 +38320,7 @@ external int PEM_write_PrivateKey(
 /// OpenSSL function `PEM_write_PrivateKey_ex`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<EVP_PKEY>,
     ffi.Pointer<EVP_CIPHER>,
     ffi.Pointer<ffi.UnsignedChar>,
@@ -38389,7 +38332,7 @@ external int PEM_write_PrivateKey(
   )
 >()
 external int PEM_write_PrivateKey_ex(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<EVP_PKEY> x,
   ffi.Pointer<EVP_CIPHER> enc,
   ffi.Pointer<ffi.UnsignedChar> kstr,
@@ -38407,7 +38350,7 @@ external int PEM_write_PrivateKey_ex(
 @Deprecated('Deprecated')
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<RSA>,
     ffi.Pointer<EVP_CIPHER>,
     ffi.Pointer<ffi.UnsignedChar>,
@@ -38417,7 +38360,7 @@ external int PEM_write_PrivateKey_ex(
   )
 >()
 external int PEM_write_RSAPrivateKey(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<RSA> x,
   ffi.Pointer<EVP_CIPHER> enc,
   ffi.Pointer<ffi.UnsignedChar> kstr,
@@ -38431,51 +38374,79 @@ external int PEM_write_RSAPrivateKey(
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<RSA>)>()
-external int PEM_write_RSAPublicKey(ffi.Pointer<FILE> out, ffi.Pointer<RSA> x);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<RSA>)>()
+external int PEM_write_RSAPublicKey(
+  ffi.Pointer<openssl3_FILE> out,
+  ffi.Pointer<RSA> x,
+);
 
 /// OpenSSL function `PEM_write_RSA_PUBKEY`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
 @Deprecated(
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<RSA>)>()
-external int PEM_write_RSA_PUBKEY(ffi.Pointer<FILE> out, ffi.Pointer<RSA> x);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<RSA>)>()
+external int PEM_write_RSA_PUBKEY(
+  ffi.Pointer<openssl3_FILE> out,
+  ffi.Pointer<RSA> x,
+);
 
 /// OpenSSL function `PEM_write_X509`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509>)>()
-external int PEM_write_X509(ffi.Pointer<FILE> out, ffi.Pointer<X509> x);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509>)>()
+external int PEM_write_X509(
+  ffi.Pointer<openssl3_FILE> out,
+  ffi.Pointer<X509> x,
+);
 
 /// OpenSSL function `PEM_write_X509_ACERT`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509_ACERT>)>()
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509_ACERT>)
+>()
 external int PEM_write_X509_ACERT(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<X509_ACERT> x,
 );
 
 /// OpenSSL function `PEM_write_X509_AUX`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509>)>()
-external int PEM_write_X509_AUX(ffi.Pointer<FILE> out, ffi.Pointer<X509> x);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509>)>()
+external int PEM_write_X509_AUX(
+  ffi.Pointer<openssl3_FILE> out,
+  ffi.Pointer<X509> x,
+);
 
 /// OpenSSL function `PEM_write_X509_CRL`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509_CRL>)>()
-external int PEM_write_X509_CRL(ffi.Pointer<FILE> out, ffi.Pointer<X509_CRL> x);
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509_CRL>)
+>()
+external int PEM_write_X509_CRL(
+  ffi.Pointer<openssl3_FILE> out,
+  ffi.Pointer<X509_CRL> x,
+);
 
 /// OpenSSL function `PEM_write_X509_PUBKEY`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_CMS/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509_PUBKEY>)>()
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509_PUBKEY>)
+>()
 external int PEM_write_X509_PUBKEY(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<X509_PUBKEY> x,
 );
 
 /// OpenSSL function `PEM_write_X509_REQ`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509_REQ>)>()
-external int PEM_write_X509_REQ(ffi.Pointer<FILE> out, ffi.Pointer<X509_REQ> x);
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509_REQ>)
+>()
+external int PEM_write_X509_REQ(
+  ffi.Pointer<openssl3_FILE> out,
+  ffi.Pointer<X509_REQ> x,
+);
 
 /// OpenSSL function `PEM_write_X509_REQ_NEW`. Manual: https://docs.openssl.org/3.5/man3/PEM_read_bio_PrivateKey/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509_REQ>)>()
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509_REQ>)
+>()
 external int PEM_write_X509_REQ_NEW(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<X509_REQ> x,
 );
 
@@ -43872,8 +43843,14 @@ external int RSA_print(ffi.Pointer<BIO> bp, ffi.Pointer<RSA> r, int offset);
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<RSA>, ffi.Int)>()
-external int RSA_print_fp(ffi.Pointer<FILE> fp, ffi.Pointer<RSA> r, int offset);
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<RSA>, ffi.Int)
+>()
+external int RSA_print_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<RSA> r,
+  int offset,
+);
 
 /// OpenSSL function `RSA_private_decrypt`. Manual: https://docs.openssl.org/3.5/man3/RSA_public_encrypt/
 @Deprecated(
@@ -48080,14 +48057,14 @@ external int X509V3_EXT_print(
 /// OpenSSL function `X509V3_EXT_print_fp`. Manual: https://docs.openssl.org/3.5/man3/X509V3_EXT_print/
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<X509_EXTENSION>,
     ffi.Int,
     ffi.Int,
   )
 >()
 external int X509V3_EXT_print_fp(
-  ffi.Pointer<FILE> out,
+  ffi.Pointer<openssl3_FILE> out,
   ffi.Pointer<X509_EXTENSION> ext,
   int flag,
   int indent,
@@ -49389,21 +49366,26 @@ external int X509_CRL_print_ex(
 );
 
 /// OpenSSL function `X509_CRL_print_fp`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509_CRL>)>()
-external int X509_CRL_print_fp(ffi.Pointer<FILE> bp, ffi.Pointer<X509_CRL> x);
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509_CRL>)
+>()
+external int X509_CRL_print_fp(
+  ffi.Pointer<openssl3_FILE> bp,
+  ffi.Pointer<X509_CRL> x,
+);
 
 /// OpenSSL function `X509_CRL_set1_lastUpdate`. Manual: https://docs.openssl.org/3.5/man3/X509_get0_notBefore/
 @ffi.Native<ffi.Int Function(ffi.Pointer<X509_CRL>, ffi.Pointer<ASN1_TIME>)>()
 external int X509_CRL_set1_lastUpdate(
   ffi.Pointer<X509_CRL> x,
-  ffi.Pointer<ASN1_TIME> tm$1,
+  ffi.Pointer<ASN1_TIME> openssl3_tm$1,
 );
 
 /// OpenSSL function `X509_CRL_set1_nextUpdate`. Manual: https://docs.openssl.org/3.5/man3/X509_get0_notBefore/
 @ffi.Native<ffi.Int Function(ffi.Pointer<X509_CRL>, ffi.Pointer<ASN1_TIME>)>()
 external int X509_CRL_set1_nextUpdate(
   ffi.Pointer<X509_CRL> x,
-  ffi.Pointer<ASN1_TIME> tm$1,
+  ffi.Pointer<ASN1_TIME> openssl3_tm$1,
 );
 
 /// OpenSSL function `X509_CRL_set_default_method`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
@@ -50383,14 +50365,14 @@ external int X509_NAME_print_ex(
 /// OpenSSL function `X509_NAME_print_ex_fp`. Manual: https://docs.openssl.org/3.5/man3/X509_NAME_print_ex/
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<X509_NAME>,
     ffi.Int,
     ffi.UnsignedLong,
   )
 >()
 external int X509_NAME_print_ex_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<X509_NAME> nm,
   int indent,
   int flags,
@@ -50992,8 +50974,13 @@ external int X509_REQ_print_ex(
 );
 
 /// OpenSSL function `X509_REQ_print_fp`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509_REQ>)>()
-external int X509_REQ_print_fp(ffi.Pointer<FILE> bp, ffi.Pointer<X509_REQ> req);
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509_REQ>)
+>()
+external int X509_REQ_print_fp(
+  ffi.Pointer<openssl3_FILE> bp,
+  ffi.Pointer<X509_REQ> req,
+);
 
 /// OpenSSL function `X509_REQ_set0_distinguishing_id`. Manual: https://docs.openssl.org/3.5/man3/X509_get0_distinguishing_id/
 @ffi.Native<
@@ -51237,7 +51224,7 @@ external ffi.Pointer<X509_REVOKED> X509_REVOKED_new();
 >()
 external int X509_REVOKED_set_revocationDate(
   ffi.Pointer<X509_REVOKED> r,
-  ffi.Pointer<ASN1_TIME> tm$1,
+  ffi.Pointer<ASN1_TIME> openssl3_tm$1,
 );
 
 /// OpenSSL function `X509_REVOKED_set_serialNumber`. Manual: https://docs.openssl.org/3.5/man3/X509_CRL_get0_by_serial/
@@ -51815,7 +51802,11 @@ external int X509_STORE_CTX_set_purpose(
 
 /// OpenSSL function `X509_STORE_CTX_set_time`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 @ffi.Native<
-  ffi.Void Function(ffi.Pointer<X509_STORE_CTX>, ffi.UnsignedLong, time_t)
+  ffi.Void Function(
+    ffi.Pointer<X509_STORE_CTX>,
+    ffi.UnsignedLong,
+    openssl3_time_t,
+  )
 >()
 external void X509_STORE_CTX_set_time(
   ffi.Pointer<X509_STORE_CTX> ctx,
@@ -52460,7 +52451,7 @@ external int X509_VERIFY_PARAM_get_purpose(
 );
 
 /// OpenSSL function `X509_VERIFY_PARAM_get_time`. Manual: https://docs.openssl.org/3.5/man3/X509_VERIFY_PARAM_set_flags/
-@ffi.Native<time_t Function(ffi.Pointer<X509_VERIFY_PARAM>)>()
+@ffi.Native<openssl3_time_t Function(ffi.Pointer<X509_VERIFY_PARAM>)>()
 external int X509_VERIFY_PARAM_get_time(ffi.Pointer<X509_VERIFY_PARAM> param);
 
 /// OpenSSL function `X509_VERIFY_PARAM_inherit`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
@@ -52628,7 +52619,9 @@ external int X509_VERIFY_PARAM_set_purpose(
 );
 
 /// OpenSSL function `X509_VERIFY_PARAM_set_time`. Manual: https://docs.openssl.org/3.5/man3/X509_VERIFY_PARAM_set_flags/
-@ffi.Native<ffi.Void Function(ffi.Pointer<X509_VERIFY_PARAM>, time_t)>()
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<X509_VERIFY_PARAM>, openssl3_time_t)
+>()
 external void X509_VERIFY_PARAM_set_time(
   ffi.Pointer<X509_VERIFY_PARAM> param,
   int t,
@@ -52896,8 +52889,13 @@ external int X509_cmp(ffi.Pointer<X509> a, ffi.Pointer<X509> b);
 external int X509_cmp_current_time(ffi.Pointer<ASN1_TIME> s);
 
 /// OpenSSL function `X509_cmp_time`. Manual: https://docs.openssl.org/3.5/man3/X509_cmp_time/
-@ffi.Native<ffi.Int Function(ffi.Pointer<ASN1_TIME>, ffi.Pointer<time_t>)>()
-external int X509_cmp_time(ffi.Pointer<ASN1_TIME> s, ffi.Pointer<time_t> t);
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<ASN1_TIME>, ffi.Pointer<openssl3_time_t>)
+>()
+external int X509_cmp_time(
+  ffi.Pointer<ASN1_TIME> s,
+  ffi.Pointer<openssl3_time_t> t,
+);
 
 /// OpenSSL function `X509_cmp_timeframe`. Manual: https://docs.openssl.org/3.5/man3/X509_cmp_time/
 @ffi.Native<
@@ -53528,22 +53526,22 @@ external int X509_print_ex(
 /// OpenSSL function `X509_print_ex_fp`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<X509>,
     ffi.UnsignedLong,
     ffi.UnsignedLong,
   )
 >()
 external int X509_print_ex_fp(
-  ffi.Pointer<FILE> bp,
+  ffi.Pointer<openssl3_FILE> bp,
   ffi.Pointer<X509> x,
   int nmflag,
   int cflag,
 );
 
 /// OpenSSL function `X509_print_fp`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509>)>()
-external int X509_print_fp(ffi.Pointer<FILE> bp, ffi.Pointer<X509> x);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509>)>()
+external int X509_print_fp(ffi.Pointer<openssl3_FILE> bp, ffi.Pointer<X509> x);
 
 /// OpenSSL function `X509_pubkey_digest`. Manual: https://docs.openssl.org/3.5/man3/X509_digest/
 @ffi.Native<
@@ -53582,14 +53580,14 @@ external void X509_set0_distinguishing_id(
 @ffi.Native<ffi.Int Function(ffi.Pointer<X509>, ffi.Pointer<ASN1_TIME>)>()
 external int X509_set1_notAfter(
   ffi.Pointer<X509> x,
-  ffi.Pointer<ASN1_TIME> tm$1,
+  ffi.Pointer<ASN1_TIME> openssl3_tm$1,
 );
 
 /// OpenSSL function `X509_set1_notBefore`. Manual: https://docs.openssl.org/3.5/man3/X509_get0_notBefore/
 @ffi.Native<ffi.Int Function(ffi.Pointer<X509>, ffi.Pointer<ASN1_TIME>)>()
 external int X509_set1_notBefore(
   ffi.Pointer<X509> x,
-  ffi.Pointer<ASN1_TIME> tm$1,
+  ffi.Pointer<ASN1_TIME> openssl3_tm$1,
 );
 
 /// OpenSSL function `X509_set_ex_data`. Manual: https://docs.openssl.org/3.5/man3/BIO_get_ex_new_index/
@@ -53702,13 +53700,13 @@ external int X509_supported_extension(ffi.Pointer<X509_EXTENSION> ex);
   ffi.Pointer<ASN1_TIME> Function(
     ffi.Pointer<ASN1_TIME>,
     ffi.Long,
-    ffi.Pointer<time_t>,
+    ffi.Pointer<openssl3_time_t>,
   )
 >()
 external ffi.Pointer<ASN1_TIME> X509_time_adj(
   ffi.Pointer<ASN1_TIME> s,
   int adj,
-  ffi.Pointer<time_t> t,
+  ffi.Pointer<openssl3_time_t> t,
 );
 
 /// OpenSSL function `X509_time_adj_ex`. Manual: https://docs.openssl.org/3.5/man3/X509_cmp_time/
@@ -53717,14 +53715,14 @@ external ffi.Pointer<ASN1_TIME> X509_time_adj(
     ffi.Pointer<ASN1_TIME>,
     ffi.Int,
     ffi.Long,
-    ffi.Pointer<time_t>,
+    ffi.Pointer<openssl3_time_t>,
   )
 >()
 external ffi.Pointer<ASN1_TIME> X509_time_adj_ex(
   ffi.Pointer<ASN1_TIME> s,
   int offset_day,
   int offset_sec,
-  ffi.Pointer<time_t> t,
+  ffi.Pointer<openssl3_time_t> t,
 );
 
 /// OpenSSL function `X509_to_X509_REQ`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
@@ -55020,10 +55018,13 @@ external ffi.Pointer<DSA> d2i_DSAPrivateKey_bio(
 )
 @Deprecated('Deprecated')
 @ffi.Native<
-  ffi.Pointer<DSA> Function(ffi.Pointer<FILE>, ffi.Pointer<ffi.Pointer<DSA>>)
+  ffi.Pointer<DSA> Function(
+    ffi.Pointer<openssl3_FILE>,
+    ffi.Pointer<ffi.Pointer<DSA>>,
+  )
 >()
 external ffi.Pointer<DSA> d2i_DSAPrivateKey_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<DSA>> dsa,
 );
 
@@ -55082,10 +55083,13 @@ external ffi.Pointer<DSA> d2i_DSA_PUBKEY_bio(
 )
 @Deprecated('Deprecated')
 @ffi.Native<
-  ffi.Pointer<DSA> Function(ffi.Pointer<FILE>, ffi.Pointer<ffi.Pointer<DSA>>)
+  ffi.Pointer<DSA> Function(
+    ffi.Pointer<openssl3_FILE>,
+    ffi.Pointer<ffi.Pointer<DSA>>,
+  )
 >()
 external ffi.Pointer<DSA> d2i_DSA_PUBKEY_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<DSA>> dsa,
 );
 
@@ -55222,12 +55226,12 @@ external ffi.Pointer<EC_KEY> d2i_ECPrivateKey_bio(
 @Deprecated('Deprecated')
 @ffi.Native<
   ffi.Pointer<EC_KEY> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<EC_KEY>>,
   )
 >()
 external ffi.Pointer<EC_KEY> d2i_ECPrivateKey_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<EC_KEY>> eckey,
 );
 
@@ -55272,12 +55276,12 @@ external ffi.Pointer<EC_KEY> d2i_EC_PUBKEY_bio(
 @Deprecated('Deprecated')
 @ffi.Native<
   ffi.Pointer<EC_KEY> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<EC_KEY>>,
   )
 >()
 external ffi.Pointer<EC_KEY> d2i_EC_PUBKEY_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<EC_KEY>> eckey,
 );
 
@@ -56626,12 +56630,12 @@ external ffi.Pointer<PKCS12> d2i_PKCS12_bio(
 /// OpenSSL function `d2i_PKCS12_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
   ffi.Pointer<PKCS12> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<PKCS12>>,
   )
 >()
 external ffi.Pointer<PKCS12> d2i_PKCS12_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<PKCS12>> p12,
 );
 
@@ -56787,12 +56791,12 @@ external ffi.Pointer<PKCS7> d2i_PKCS7_bio(
 /// OpenSSL function `d2i_PKCS7_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
   ffi.Pointer<PKCS7> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<PKCS7>>,
   )
 >()
 external ffi.Pointer<PKCS7> d2i_PKCS7_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<PKCS7>> p7,
 );
 
@@ -56815,14 +56819,14 @@ external ffi.Pointer<EVP_PKEY> d2i_PKCS8PrivateKey_bio(
 /// OpenSSL function `d2i_PKCS8PrivateKey_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_PKCS8PrivateKey_bio/
 @ffi.Native<
   ffi.Pointer<EVP_PKEY> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<EVP_PKEY>>,
     ffi.Pointer<pem_password_cb>,
     ffi.Pointer<ffi.Void>,
   )
 >()
 external ffi.Pointer<EVP_PKEY> d2i_PKCS8PrivateKey_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<EVP_PKEY>> x,
   ffi.Pointer<pem_password_cb> cb,
   ffi.Pointer<ffi.Void> u,
@@ -56857,12 +56861,12 @@ external ffi.Pointer<PKCS8_PRIV_KEY_INFO> d2i_PKCS8_PRIV_KEY_INFO_bio(
 /// OpenSSL function `d2i_PKCS8_PRIV_KEY_INFO_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
   ffi.Pointer<PKCS8_PRIV_KEY_INFO> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<PKCS8_PRIV_KEY_INFO>>,
   )
 >()
 external ffi.Pointer<PKCS8_PRIV_KEY_INFO> d2i_PKCS8_PRIV_KEY_INFO_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<PKCS8_PRIV_KEY_INFO>> p8inf,
 );
 
@@ -56881,12 +56885,12 @@ external ffi.Pointer<X509_SIG> d2i_PKCS8_bio(
 /// OpenSSL function `d2i_PKCS8_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
   ffi.Pointer<X509_SIG> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<X509_SIG>>,
   )
 >()
 external ffi.Pointer<X509_SIG> d2i_PKCS8_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<X509_SIG>> p8,
 );
 
@@ -57037,14 +57041,14 @@ external ffi.Pointer<EVP_PKEY> d2i_PUBKEY_ex_bio(
 /// OpenSSL function `d2i_PUBKEY_ex_fp`. Manual: https://docs.openssl.org/3.5/man3/X509_PUBKEY_new/
 @ffi.Native<
   ffi.Pointer<EVP_PKEY> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<EVP_PKEY>>,
     ffi.Pointer<OSSL_LIB_CTX>,
     ffi.Pointer<ffi.Char>,
   )
 >()
 external ffi.Pointer<EVP_PKEY> d2i_PUBKEY_ex_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<EVP_PKEY>> a,
   ffi.Pointer<OSSL_LIB_CTX> libctx,
   ffi.Pointer<ffi.Char> propq,
@@ -57053,12 +57057,12 @@ external ffi.Pointer<EVP_PKEY> d2i_PUBKEY_ex_fp(
 /// OpenSSL function `d2i_PUBKEY_fp`. Manual: https://docs.openssl.org/3.5/man3/X509_PUBKEY_new/
 @ffi.Native<
   ffi.Pointer<EVP_PKEY> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<EVP_PKEY>>,
   )
 >()
 external ffi.Pointer<EVP_PKEY> d2i_PUBKEY_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<EVP_PKEY>> a,
 );
 
@@ -57129,14 +57133,14 @@ external ffi.Pointer<EVP_PKEY> d2i_PrivateKey_ex_bio(
 /// OpenSSL function `d2i_PrivateKey_ex_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_PrivateKey/
 @ffi.Native<
   ffi.Pointer<EVP_PKEY> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<EVP_PKEY>>,
     ffi.Pointer<OSSL_LIB_CTX>,
     ffi.Pointer<ffi.Char>,
   )
 >()
 external ffi.Pointer<EVP_PKEY> d2i_PrivateKey_ex_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<EVP_PKEY>> a,
   ffi.Pointer<OSSL_LIB_CTX> libctx,
   ffi.Pointer<ffi.Char> propq,
@@ -57145,12 +57149,12 @@ external ffi.Pointer<EVP_PKEY> d2i_PrivateKey_ex_fp(
 /// OpenSSL function `d2i_PrivateKey_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_PrivateKey/
 @ffi.Native<
   ffi.Pointer<EVP_PKEY> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<EVP_PKEY>>,
   )
 >()
 external ffi.Pointer<EVP_PKEY> d2i_PrivateKey_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<EVP_PKEY>> a,
 );
 
@@ -57207,10 +57211,13 @@ external ffi.Pointer<RSA> d2i_RSAPrivateKey_bio(
 )
 @Deprecated('Deprecated')
 @ffi.Native<
-  ffi.Pointer<RSA> Function(ffi.Pointer<FILE>, ffi.Pointer<ffi.Pointer<RSA>>)
+  ffi.Pointer<RSA> Function(
+    ffi.Pointer<openssl3_FILE>,
+    ffi.Pointer<ffi.Pointer<RSA>>,
+  )
 >()
 external ffi.Pointer<RSA> d2i_RSAPrivateKey_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<RSA>> rsa,
 );
 
@@ -57251,10 +57258,13 @@ external ffi.Pointer<RSA> d2i_RSAPublicKey_bio(
 )
 @Deprecated('Deprecated')
 @ffi.Native<
-  ffi.Pointer<RSA> Function(ffi.Pointer<FILE>, ffi.Pointer<ffi.Pointer<RSA>>)
+  ffi.Pointer<RSA> Function(
+    ffi.Pointer<openssl3_FILE>,
+    ffi.Pointer<ffi.Pointer<RSA>>,
+  )
 >()
 external ffi.Pointer<RSA> d2i_RSAPublicKey_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<RSA>> rsa,
 );
 
@@ -57323,10 +57333,13 @@ external ffi.Pointer<RSA> d2i_RSA_PUBKEY_bio(
 )
 @Deprecated('Deprecated')
 @ffi.Native<
-  ffi.Pointer<RSA> Function(ffi.Pointer<FILE>, ffi.Pointer<ffi.Pointer<RSA>>)
+  ffi.Pointer<RSA> Function(
+    ffi.Pointer<openssl3_FILE>,
+    ffi.Pointer<ffi.Pointer<RSA>>,
+  )
 >()
 external ffi.Pointer<RSA> d2i_RSA_PUBKEY_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<RSA>> rsa,
 );
 
@@ -57429,12 +57442,12 @@ external ffi.Pointer<TS_MSG_IMPRINT> d2i_TS_MSG_IMPRINT_bio(
 /// OpenSSL function `d2i_TS_MSG_IMPRINT_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
   ffi.Pointer<TS_MSG_IMPRINT> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<TS_MSG_IMPRINT>>,
   )
 >()
 external ffi.Pointer<TS_MSG_IMPRINT> d2i_TS_MSG_IMPRINT_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<TS_MSG_IMPRINT>> a,
 );
 
@@ -57467,12 +57480,12 @@ external ffi.Pointer<TS_REQ> d2i_TS_REQ_bio(
 /// OpenSSL function `d2i_TS_REQ_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
   ffi.Pointer<TS_REQ> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<TS_REQ>>,
   )
 >()
 external ffi.Pointer<TS_REQ> d2i_TS_REQ_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<TS_REQ>> a,
 );
 
@@ -57505,12 +57518,12 @@ external ffi.Pointer<TS_RESP> d2i_TS_RESP_bio(
 /// OpenSSL function `d2i_TS_RESP_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
   ffi.Pointer<TS_RESP> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<TS_RESP>>,
   )
 >()
 external ffi.Pointer<TS_RESP> d2i_TS_RESP_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<TS_RESP>> a,
 );
 
@@ -57557,12 +57570,12 @@ external ffi.Pointer<TS_TST_INFO> d2i_TS_TST_INFO_bio(
 /// OpenSSL function `d2i_TS_TST_INFO_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
   ffi.Pointer<TS_TST_INFO> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<TS_TST_INFO>>,
   )
 >()
 external ffi.Pointer<TS_TST_INFO> d2i_TS_TST_INFO_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<TS_TST_INFO>> a,
 );
 
@@ -57623,12 +57636,12 @@ external ffi.Pointer<X509_ACERT> d2i_X509_ACERT_bio(
 /// OpenSSL function `d2i_X509_ACERT_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
   ffi.Pointer<X509_ACERT> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<X509_ACERT>>,
   )
 >()
 external ffi.Pointer<X509_ACERT> d2i_X509_ACERT_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<X509_ACERT>> acert,
 );
 
@@ -57759,12 +57772,12 @@ external ffi.Pointer<X509_CRL> d2i_X509_CRL_bio(
 /// OpenSSL function `d2i_X509_CRL_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
   ffi.Pointer<X509_CRL> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<X509_CRL>>,
   )
 >()
 external ffi.Pointer<X509_CRL> d2i_X509_CRL_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<X509_CRL>> crl,
 );
 
@@ -57853,12 +57866,12 @@ external ffi.Pointer<X509_PUBKEY> d2i_X509_PUBKEY_bio(
 /// OpenSSL function `d2i_X509_PUBKEY_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
   ffi.Pointer<X509_PUBKEY> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<X509_PUBKEY>>,
   )
 >()
 external ffi.Pointer<X509_PUBKEY> d2i_X509_PUBKEY_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<X509_PUBKEY>> xpk,
 );
 
@@ -57905,12 +57918,12 @@ external ffi.Pointer<X509_REQ> d2i_X509_REQ_bio(
 /// OpenSSL function `d2i_X509_REQ_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
   ffi.Pointer<X509_REQ> Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<ffi.Pointer<X509_REQ>>,
   )
 >()
 external ffi.Pointer<X509_REQ> d2i_X509_REQ_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<X509_REQ>> req,
 );
 
@@ -57967,10 +57980,13 @@ external ffi.Pointer<X509> d2i_X509_bio(
 
 /// OpenSSL function `d2i_X509_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
-  ffi.Pointer<X509> Function(ffi.Pointer<FILE>, ffi.Pointer<ffi.Pointer<X509>>)
+  ffi.Pointer<X509> Function(
+    ffi.Pointer<openssl3_FILE>,
+    ffi.Pointer<ffi.Pointer<X509>>,
+  )
 >()
 external ffi.Pointer<X509> d2i_X509_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<ffi.Pointer<X509>> x509,
 );
 
@@ -58614,8 +58630,11 @@ external int i2d_DSAPrivateKey_bio(ffi.Pointer<BIO> bp, ffi.Pointer<DSA> dsa);
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<DSA>)>()
-external int i2d_DSAPrivateKey_fp(ffi.Pointer<FILE> fp, ffi.Pointer<DSA> dsa);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<DSA>)>()
+external int i2d_DSAPrivateKey_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<DSA> dsa,
+);
 
 /// OpenSSL function `i2d_DSAPublicKey`. Manual: https://docs.openssl.org/3.5/man3/d2i_RSAPrivateKey/
 @Deprecated(
@@ -58656,8 +58675,11 @@ external int i2d_DSA_PUBKEY_bio(ffi.Pointer<BIO> bp, ffi.Pointer<DSA> dsa);
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<DSA>)>()
-external int i2d_DSA_PUBKEY_fp(ffi.Pointer<FILE> fp, ffi.Pointer<DSA> dsa);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<DSA>)>()
+external int i2d_DSA_PUBKEY_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<DSA> dsa,
+);
 
 /// OpenSSL function `i2d_DSA_SIG`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
@@ -58764,9 +58786,9 @@ external int i2d_ECPrivateKey_bio(
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<EC_KEY>)>()
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<EC_KEY>)>()
 external int i2d_ECPrivateKey_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<EC_KEY> eckey,
 );
 
@@ -58799,8 +58821,11 @@ external int i2d_EC_PUBKEY_bio(ffi.Pointer<BIO> bp, ffi.Pointer<EC_KEY> eckey);
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<EC_KEY>)>()
-external int i2d_EC_PUBKEY_fp(ffi.Pointer<FILE> fp, ffi.Pointer<EC_KEY> eckey);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<EC_KEY>)>()
+external int i2d_EC_PUBKEY_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<EC_KEY> eckey,
+);
 
 /// OpenSSL function `i2d_EDIPARTYNAME`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
@@ -59934,8 +59959,11 @@ external int i2d_PKCS12_SAFEBAG(
 external int i2d_PKCS12_bio(ffi.Pointer<BIO> bp, ffi.Pointer<PKCS12> p12);
 
 /// OpenSSL function `i2d_PKCS12_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<PKCS12>)>()
-external int i2d_PKCS12_fp(ffi.Pointer<FILE> fp, ffi.Pointer<PKCS12> p12);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<PKCS12>)>()
+external int i2d_PKCS12_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<PKCS12> p12,
+);
 
 /// OpenSSL function `i2d_PKCS7`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
@@ -60090,8 +60118,8 @@ external int i2d_PKCS7_bio_stream(
 );
 
 /// OpenSSL function `i2d_PKCS7_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<PKCS7>)>()
-external int i2d_PKCS7_fp(ffi.Pointer<FILE> fp, ffi.Pointer<PKCS7> p7);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<PKCS7>)>()
+external int i2d_PKCS7_fp(ffi.Pointer<openssl3_FILE> fp, ffi.Pointer<PKCS7> p7);
 
 /// OpenSSL function `i2d_PKCS8PrivateKeyInfo_bio`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<ffi.Int Function(ffi.Pointer<BIO>, ffi.Pointer<EVP_PKEY>)>()
@@ -60101,9 +60129,11 @@ external int i2d_PKCS8PrivateKeyInfo_bio(
 );
 
 /// OpenSSL function `i2d_PKCS8PrivateKeyInfo_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<EVP_PKEY>)>()
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<EVP_PKEY>)
+>()
 external int i2d_PKCS8PrivateKeyInfo_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<EVP_PKEY> key,
 );
 
@@ -60132,7 +60162,7 @@ external int i2d_PKCS8PrivateKey_bio(
 /// OpenSSL function `i2d_PKCS8PrivateKey_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_PKCS8PrivateKey_bio/
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<EVP_PKEY>,
     ffi.Pointer<EVP_CIPHER>,
     ffi.Pointer<ffi.Char>,
@@ -60142,7 +60172,7 @@ external int i2d_PKCS8PrivateKey_bio(
   )
 >()
 external int i2d_PKCS8PrivateKey_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<EVP_PKEY> x,
   ffi.Pointer<EVP_CIPHER> enc,
   ffi.Pointer<ffi.Char> kstr,
@@ -60176,7 +60206,7 @@ external int i2d_PKCS8PrivateKey_nid_bio(
 /// OpenSSL function `i2d_PKCS8PrivateKey_nid_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_PKCS8PrivateKey_bio/
 @ffi.Native<
   ffi.Int Function(
-    ffi.Pointer<FILE>,
+    ffi.Pointer<openssl3_FILE>,
     ffi.Pointer<EVP_PKEY>,
     ffi.Int,
     ffi.Pointer<ffi.Char>,
@@ -60186,7 +60216,7 @@ external int i2d_PKCS8PrivateKey_nid_bio(
   )
 >()
 external int i2d_PKCS8PrivateKey_nid_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<EVP_PKEY> x,
   int nid,
   ffi.Pointer<ffi.Char> kstr,
@@ -60218,10 +60248,10 @@ external int i2d_PKCS8_PRIV_KEY_INFO_bio(
 
 /// OpenSSL function `i2d_PKCS8_PRIV_KEY_INFO_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
-  ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<PKCS8_PRIV_KEY_INFO>)
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<PKCS8_PRIV_KEY_INFO>)
 >()
 external int i2d_PKCS8_PRIV_KEY_INFO_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<PKCS8_PRIV_KEY_INFO> p8inf,
 );
 
@@ -60230,8 +60260,13 @@ external int i2d_PKCS8_PRIV_KEY_INFO_fp(
 external int i2d_PKCS8_bio(ffi.Pointer<BIO> bp, ffi.Pointer<X509_SIG> p8);
 
 /// OpenSSL function `i2d_PKCS8_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509_SIG>)>()
-external int i2d_PKCS8_fp(ffi.Pointer<FILE> fp, ffi.Pointer<X509_SIG> p8);
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509_SIG>)
+>()
+external int i2d_PKCS8_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<X509_SIG> p8,
+);
 
 /// OpenSSL function `i2d_PKEY_USAGE_PERIOD`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
@@ -60322,8 +60357,13 @@ external int i2d_PUBKEY(
 external int i2d_PUBKEY_bio(ffi.Pointer<BIO> bp, ffi.Pointer<EVP_PKEY> pkey);
 
 /// OpenSSL function `i2d_PUBKEY_fp`. Manual: https://docs.openssl.org/3.5/man3/X509_PUBKEY_new/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<EVP_PKEY>)>()
-external int i2d_PUBKEY_fp(ffi.Pointer<FILE> fp, ffi.Pointer<EVP_PKEY> pkey);
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<EVP_PKEY>)
+>()
+external int i2d_PUBKEY_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<EVP_PKEY> pkey,
+);
 
 /// OpenSSL function `i2d_PrivateKey`. Manual: https://docs.openssl.org/3.5/man3/d2i_PrivateKey/
 @ffi.Native<
@@ -60345,9 +60385,11 @@ external int i2d_PrivateKey_bio(
 );
 
 /// OpenSSL function `i2d_PrivateKey_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_PrivateKey/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<EVP_PKEY>)>()
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<EVP_PKEY>)
+>()
 external int i2d_PrivateKey_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<EVP_PKEY> pkey,
 );
 
@@ -60389,8 +60431,11 @@ external int i2d_RSAPrivateKey_bio(ffi.Pointer<BIO> bp, ffi.Pointer<RSA> rsa);
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<RSA>)>()
-external int i2d_RSAPrivateKey_fp(ffi.Pointer<FILE> fp, ffi.Pointer<RSA> rsa);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<RSA>)>()
+external int i2d_RSAPrivateKey_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<RSA> rsa,
+);
 
 /// OpenSSL function `i2d_RSAPublicKey`. Manual: https://docs.openssl.org/3.5/man3/d2i_RSAPrivateKey/
 @Deprecated(
@@ -60418,8 +60463,11 @@ external int i2d_RSAPublicKey_bio(ffi.Pointer<BIO> bp, ffi.Pointer<RSA> rsa);
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<RSA>)>()
-external int i2d_RSAPublicKey_fp(ffi.Pointer<FILE> fp, ffi.Pointer<RSA> rsa);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<RSA>)>()
+external int i2d_RSAPublicKey_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<RSA> rsa,
+);
 
 /// OpenSSL function `i2d_RSA_OAEP_PARAMS`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
@@ -60471,8 +60519,11 @@ external int i2d_RSA_PUBKEY_bio(ffi.Pointer<BIO> bp, ffi.Pointer<RSA> rsa);
   'Deprecated since OpenSSL 3.0.0; kept for ABI compatibility. Prefer the EVP/OSSL_* API.',
 )
 @Deprecated('Deprecated')
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<RSA>)>()
-external int i2d_RSA_PUBKEY_fp(ffi.Pointer<FILE> fp, ffi.Pointer<RSA> rsa);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<RSA>)>()
+external int i2d_RSA_PUBKEY_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<RSA> rsa,
+);
 
 /// OpenSSL function `i2d_SCRYPT_PARAMS`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
@@ -60554,9 +60605,11 @@ external int i2d_TS_MSG_IMPRINT_bio(
 );
 
 /// OpenSSL function `i2d_TS_MSG_IMPRINT_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<TS_MSG_IMPRINT>)>()
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<TS_MSG_IMPRINT>)
+>()
 external int i2d_TS_MSG_IMPRINT_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<TS_MSG_IMPRINT> a,
 );
 
@@ -60577,8 +60630,11 @@ external int i2d_TS_REQ(
 external int i2d_TS_REQ_bio(ffi.Pointer<BIO> fp, ffi.Pointer<TS_REQ> a);
 
 /// OpenSSL function `i2d_TS_REQ_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<TS_REQ>)>()
-external int i2d_TS_REQ_fp(ffi.Pointer<FILE> fp, ffi.Pointer<TS_REQ> a);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<TS_REQ>)>()
+external int i2d_TS_REQ_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<TS_REQ> a,
+);
 
 /// OpenSSL function `i2d_TS_RESP`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
@@ -60597,8 +60653,13 @@ external int i2d_TS_RESP(
 external int i2d_TS_RESP_bio(ffi.Pointer<BIO> bio, ffi.Pointer<TS_RESP> a);
 
 /// OpenSSL function `i2d_TS_RESP_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<TS_RESP>)>()
-external int i2d_TS_RESP_fp(ffi.Pointer<FILE> fp, ffi.Pointer<TS_RESP> a);
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<TS_RESP>)
+>()
+external int i2d_TS_RESP_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<TS_RESP> a,
+);
 
 /// OpenSSL function `i2d_TS_STATUS_INFO`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
@@ -60632,9 +60693,11 @@ external int i2d_TS_TST_INFO_bio(
 );
 
 /// OpenSSL function `i2d_TS_TST_INFO_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<TS_TST_INFO>)>()
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<TS_TST_INFO>)
+>()
 external int i2d_TS_TST_INFO_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<TS_TST_INFO> a,
 );
 
@@ -60682,9 +60745,11 @@ external int i2d_X509_ACERT_bio(
 );
 
 /// OpenSSL function `i2d_X509_ACERT_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509_ACERT>)>()
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509_ACERT>)
+>()
 external int i2d_X509_ACERT_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<X509_ACERT> acert,
 );
 
@@ -60789,8 +60854,13 @@ external int i2d_X509_CRL_INFO(
 external int i2d_X509_CRL_bio(ffi.Pointer<BIO> bp, ffi.Pointer<X509_CRL> crl);
 
 /// OpenSSL function `i2d_X509_CRL_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509_CRL>)>()
-external int i2d_X509_CRL_fp(ffi.Pointer<FILE> fp, ffi.Pointer<X509_CRL> crl);
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509_CRL>)
+>()
+external int i2d_X509_CRL_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<X509_CRL> crl,
+);
 
 /// OpenSSL function `i2d_X509_EXTENSION`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
@@ -60860,9 +60930,11 @@ external int i2d_X509_PUBKEY_bio(
 );
 
 /// OpenSSL function `i2d_X509_PUBKEY_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509_PUBKEY>)>()
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509_PUBKEY>)
+>()
 external int i2d_X509_PUBKEY_fp(
-  ffi.Pointer<FILE> fp,
+  ffi.Pointer<openssl3_FILE> fp,
   ffi.Pointer<X509_PUBKEY> xpk,
 );
 
@@ -60895,8 +60967,13 @@ external int i2d_X509_REQ_INFO(
 external int i2d_X509_REQ_bio(ffi.Pointer<BIO> bp, ffi.Pointer<X509_REQ> req);
 
 /// OpenSSL function `i2d_X509_REQ_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509_REQ>)>()
-external int i2d_X509_REQ_fp(ffi.Pointer<FILE> fp, ffi.Pointer<X509_REQ> req);
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509_REQ>)
+>()
+external int i2d_X509_REQ_fp(
+  ffi.Pointer<openssl3_FILE> fp,
+  ffi.Pointer<X509_REQ> req,
+);
 
 /// OpenSSL function `i2d_X509_REVOKED`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
 @ffi.Native<
@@ -60939,8 +61016,8 @@ external int i2d_X509_VAL(
 external int i2d_X509_bio(ffi.Pointer<BIO> bp, ffi.Pointer<X509> x509);
 
 /// OpenSSL function `i2d_X509_fp`. Manual: https://docs.openssl.org/3.5/man3/d2i_X509/
-@ffi.Native<ffi.Int Function(ffi.Pointer<FILE>, ffi.Pointer<X509>)>()
-external int i2d_X509_fp(ffi.Pointer<FILE> fp, ffi.Pointer<X509> x509);
+@ffi.Native<ffi.Int Function(ffi.Pointer<openssl3_FILE>, ffi.Pointer<X509>)>()
+external int i2d_X509_fp(ffi.Pointer<openssl3_FILE> fp, ffi.Pointer<X509> x509);
 
 /// OpenSSL function `i2d_re_X509_CRL_tbs`. Manual: https://docs.openssl.org/3.5/man3/i2d_re_X509_tbs/
 @ffi.Native<
@@ -66271,7 +66348,7 @@ const int CRYPTO_F_SK_RESERVE = 0;
 const int CRYPTO_LOCK = 1;
 
 /// OpenSSL typedef `CRYPTO_ONCE`.
-typedef CRYPTO_ONCE = pthread_once_t;
+typedef CRYPTO_ONCE = openssl3_pthread_once_t;
 
 /// OpenSSL macro `CRYPTO_READ`.
 const int CRYPTO_READ = 4;
@@ -66379,10 +66456,10 @@ const int CRYPTO_R_ZERO_LENGTH_NUMBER = 115;
 typedef CRYPTO_THREADID = crypto_threadid_st;
 
 /// OpenSSL typedef `CRYPTO_THREAD_ID`.
-typedef CRYPTO_THREAD_ID = pthread_t;
+typedef CRYPTO_THREAD_ID = openssl3_pthread_t;
 
 /// OpenSSL typedef `CRYPTO_THREAD_LOCAL`.
-typedef CRYPTO_THREAD_LOCAL = pthread_key_t;
+typedef CRYPTO_THREAD_LOCAL = openssl3_pthread_key_t;
 
 /// OpenSSL macro `CRYPTO_UNLOCK`.
 const int CRYPTO_UNLOCK = 2;
@@ -70199,9 +70276,6 @@ const int EXFLAG_XKUSAGE = 4;
 
 /// OpenSSL typedef `EXTENDED_KEY_USAGE`.
 typedef EXTENDED_KEY_USAGE = stack_st_ASN1_OBJECT;
-
-/// OpenSSL typedef `FILE`.
-typedef FILE = __sFILE;
 
 /// OpenSSL macro `FIPS_KEY_ELEMENTS`.
 const int FIPS_KEY_ELEMENTS = 244;
@@ -82606,7 +82680,7 @@ const int OPENSSL_ENGINES_DIR = 5;
 
 /// OpenSSL macro `OPENSSL_FILE`.
 const String OPENSSL_FILE =
-    '/var/folders/46/s6c41y_j1cx1x2gmmd82b4nr0000gn/T/ffigen temp dir vHjOkL/temp_for_macros.hpp';
+    '/var/folders/46/s6c41y_j1cx1x2gmmd82b4nr0000gn/T/ffigen temp dir LCZrmI/temp_for_macros.hpp';
 
 /// OpenSSL macro `OPENSSL_FULL_VERSION_STR`.
 const String OPENSSL_FULL_VERSION_STR = '3.5.8';
@@ -100879,15 +100953,6 @@ const int XN_FLAG_SPC_EQ = 8388608;
 /// OpenSSL typedef `XTS128_CONTEXT`.
 typedef XTS128_CONTEXT = xts128_context;
 
-/// Opaque OpenSSL type `__sFILE`; only pointers to it are used.
-final class __sFILE extends ffi.Opaque {}
-
-/// Opaque OpenSSL type `_opaque_pthread_once_t`; only pointers to it are used.
-final class _opaque_pthread_once_t extends ffi.Opaque {}
-
-/// Opaque OpenSSL type `_opaque_pthread_t`; only pointers to it are used.
-final class _opaque_pthread_t extends ffi.Opaque {}
-
 /// OpenSSL struct `aes_key_st`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 final class aes_key_st extends ffi.Struct {
   @ffi.Array.multi([60])
@@ -101674,9 +101739,6 @@ final class evp_skey_st extends ffi.Opaque {}
 /// Opaque OpenSSL type `evp_skeymgmt_st`; only pointers to it are used.
 final class evp_skeymgmt_st extends ffi.Opaque {}
 
-/// OpenSSL typedef `fpos_t`.
-typedef fpos_t = ffi.LongLong;
-
 /// Opaque OpenSSL type `gcm128_context`; only pointers to it are used.
 final class gcm128_context extends ffi.Opaque {}
 
@@ -102055,6 +102117,33 @@ final class ocsp_signature_st extends ffi.Opaque {}
 
 /// Opaque OpenSSL type `ocsp_single_response_st`; only pointers to it are used.
 final class ocsp_single_response_st extends ffi.Opaque {}
+
+/// Opaque OpenSSL type `openssl3_FILE`; only pointers to it are used.
+final class openssl3_FILE extends ffi.Opaque {}
+
+/// OpenSSL typedef `openssl3_pthread_key_t`.
+typedef openssl3_pthread_key_t = ffi.UintPtr;
+
+/// OpenSSL typedef `Dartopenssl3_pthread_key_t`.
+typedef Dartopenssl3_pthread_key_t = int;
+
+/// Opaque OpenSSL type `openssl3_pthread_once_t`; only pointers to it are used.
+final class openssl3_pthread_once_t extends ffi.Opaque {}
+
+/// OpenSSL typedef `openssl3_pthread_t`.
+typedef openssl3_pthread_t = ffi.UintPtr;
+
+/// OpenSSL typedef `Dartopenssl3_pthread_t`.
+typedef Dartopenssl3_pthread_t = int;
+
+/// OpenSSL typedef `openssl3_time_t`.
+typedef openssl3_time_t = ffi.IntPtr;
+
+/// OpenSSL typedef `Dartopenssl3_time_t`.
+typedef Dartopenssl3_time_t = int;
+
+/// Opaque OpenSSL type `openssl3_tm`; only pointers to it are used.
+final class openssl3_tm extends ffi.Opaque {}
 
 /// Opaque OpenSSL type `openssl_core_ctx_st`; only pointers to it are used.
 final class openssl_core_ctx_st extends ffi.Opaque {}
@@ -102633,15 +102722,6 @@ final class private_key_st extends ffi.Struct {
 
   external EVP_CIPHER_INFO cipher;
 }
-
-/// OpenSSL typedef `pthread_key_t`.
-typedef pthread_key_t = ffi.UnsignedLong;
-
-/// OpenSSL typedef `pthread_once_t`.
-typedef pthread_once_t = _opaque_pthread_once_t;
-
-/// OpenSSL typedef `pthread_t`.
-typedef pthread_t = ffi.Pointer<_opaque_pthread_t>;
 
 /// Opaque OpenSSL type `rand_drbg_st`; only pointers to it are used.
 final class rand_drbg_st extends ffi.Opaque {}
@@ -106469,70 +106549,6 @@ final class stack_st_X509_VERIFY_PARAM extends ffi.Opaque {}
 
 /// Opaque OpenSSL type `stack_st_void`; only pointers to it are used.
 final class stack_st_void extends ffi.Opaque {}
-
-/// OpenSSL typedef `time_t`.
-typedef time_t = ffi.Long;
-
-/// OpenSSL struct `tm`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
-final class tm extends ffi.Struct {
-  @ffi.Int()
-  external int tm_sec;
-
-  @ffi.Int()
-  external int tm_min;
-
-  @ffi.Int()
-  external int tm_hour;
-
-  @ffi.Int()
-  external int tm_mday;
-
-  @ffi.Int()
-  external int tm_mon;
-
-  @ffi.Int()
-  external int tm_year;
-
-  @ffi.Int()
-  external int tm_wday;
-
-  @ffi.Int()
-  external int tm_yday;
-
-  @ffi.Int()
-  external int tm_isdst;
-
-  @ffi.Long()
-  external int tm_gmtoff;
-
-  external ffi.Pointer<ffi.Char> tm_zone;
-
-  static ffi.Pointer<tm> $allocate(
-    ffi.Allocator $allocator, {
-    required int tm_sec,
-    required int tm_min,
-    required int tm_hour,
-    required int tm_mday,
-    required int tm_mon,
-    required int tm_year,
-    required int tm_wday,
-    required int tm_yday,
-    required int tm_isdst,
-    required int tm_gmtoff,
-    required ffi.Pointer<ffi.Char> tm_zone,
-  }) => $allocator<tm>()
-    ..ref.tm_sec = tm_sec
-    ..ref.tm_min = tm_min
-    ..ref.tm_hour = tm_hour
-    ..ref.tm_mday = tm_mday
-    ..ref.tm_mon = tm_mon
-    ..ref.tm_year = tm_year
-    ..ref.tm_wday = tm_wday
-    ..ref.tm_yday = tm_yday
-    ..ref.tm_isdst = tm_isdst
-    ..ref.tm_gmtoff = tm_gmtoff
-    ..ref.tm_zone = tm_zone;
-}
 
 /// OpenSSL struct `txt_db_st`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 final class txt_db_st extends ffi.Struct {

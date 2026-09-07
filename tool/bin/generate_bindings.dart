@@ -37,6 +37,54 @@ import 'package:path/path.dart' as p;
 const _assetId = 'package:openssl3/src/third_party/openssl.g.dart';
 const _manualBase = 'https://docs.openssl.org/3.5/man3/';
 
+/// Pins libc types whose Dart mapping would otherwise depend on the host that
+/// ran ffigen (bindings must be identical from macOS, Linux and Windows):
+/// - `time_t`  -> `intptr_t`: 64-bit on every 64-bit target incl. Windows x64
+///   (where `long` is 32-bit), 32-bit on 32-bit Android; matches OpenSSL's ABI.
+/// - `FILE`    -> an opaque struct; Dart only ever passes `FILE*` through.
+/// - `pthread_t` (`CRYPTO_THREAD_ID`) -> `uintptr_t`; `pthread_once_t`
+///   (`CRYPTO_ONCE`) and `struct tm` -> opaque; `pthread_key_t`
+///   (`CRYPTO_THREAD_LOCAL`) -> `uintptr_t`.
+/// The functions that still cannot be expressed portably (`struct tm`,
+/// `va_list`, `CRYPTO_ONCE`, `CRYPTO_THREAD_LOCAL`, thread ids) are excluded
+/// by name in [_hostDependentFunctions].
+const _prelude = '''
+#include <stdint.h>
+#include <stdio.h>
+#include <time.h>
+#include <pthread.h>
+typedef intptr_t openssl3_time_t;
+#define time_t openssl3_time_t
+typedef struct openssl3_FILE openssl3_FILE;
+#define FILE openssl3_FILE
+typedef uintptr_t openssl3_pthread_t;
+#define pthread_t openssl3_pthread_t
+typedef struct openssl3_pthread_once_t openssl3_pthread_once_t;
+#define pthread_once_t openssl3_pthread_once_t
+typedef uintptr_t openssl3_pthread_key_t;
+#define pthread_key_t openssl3_pthread_key_t
+typedef struct openssl3_tm openssl3_tm;
+#define tm openssl3_tm
+''';
+
+/// Exported functions whose C signatures involve host-specific libc types that
+/// no portable Dart type can represent. Reachable via `unboundSymbols`.
+const _hostDependentFunctions = {
+  // struct tm (layout differs between libcs)
+  'ASN1_TIME_to_tm',
+  'OPENSSL_gmtime',
+  'OPENSSL_gmtime_adj',
+  'OPENSSL_gmtime_diff',
+  // va_list
+  'BIO_vprintf', 'BIO_vsnprintf', 'ERR_add_error_vdata', 'ERR_vset_error',
+  'OSSL_STORE_vctrl',
+  // CRYPTO_THREAD_ID / CRYPTO_ONCE / CRYPTO_THREAD_LOCAL (pthread vs Win32)
+  'CRYPTO_THREAD_compare_id', 'CRYPTO_THREAD_get_current_id',
+  'CRYPTO_THREAD_run_once', 'CRYPTO_THREAD_init_local',
+  'CRYPTO_THREAD_get_local', 'CRYPTO_THREAD_set_local',
+  'CRYPTO_THREAD_cleanup_local',
+};
+
 /// libssl's headers: not shipped (ADR-0009). `asn1_mac.h` is an `#error` stub.
 const _excludedHeaders = {
   'ssl.h',
@@ -251,7 +299,7 @@ void _runFfigen(Directory include, File output) {
   // trips "#pragma once in main file" warnings, which ffigen treats as fatal.
   final umbrella = File(p.join(include.path, 'openssl3_all.h'))
     ..writeAsStringSync(
-      '${headers.map((h) => '#include <openssl/$h>').join('\n')}\n',
+      '$_prelude${headers.map((h) => '#include <openssl/$h>').join('\n')}\n',
     );
 
   final exported = {
@@ -299,7 +347,9 @@ void _runFfigen(Directory include, File output) {
       ],
     ),
     functions: Functions(
-      include: (d) => exported.contains(d.originalName),
+      include: (d) =>
+          exported.contains(d.originalName) &&
+          !_hostDependentFunctions.contains(d.originalName),
       // No leaf calls: several functions take callbacks and none is on a
       // path hot enough to justify the GC-safety trade-off.
     ),
@@ -307,7 +357,7 @@ void _runFfigen(Directory include, File output) {
     unions: Unions(include: public),
     enums: Enums(include: public, silenceWarning: true),
     unnamedEnums: UnnamedEnums(include: public),
-    typedefs: Typedefs(include: public, includeUnused: true),
+    typedefs: Typedefs(include: public, includeUnused: false),
     macros: Macros(include: public),
     globals: Globals(include: public),
   ).generate(logger: logger);
@@ -422,8 +472,8 @@ String _decorate(String generated, Map<String, String> manual) {
 /// assert nothing required is missing and the README can list them.
 ///
 /// Typical causes: functions returning raw function pointers
-/// (`*_meth_get_*`), and symbols in `libcrypto.num` that no public header
-/// declares (`DSO_*`, `OPENSSL_DIR_*`).
+/// (`*_meth_get_*`), symbols in `libcrypto.num` that no public header declares
+/// (`DSO_*`, `OPENSSL_DIR_*`), and [_hostDependentFunctions].
 String _unboundReport(String generated) {
   final exported = {
     ...abi.commonSymbols,
