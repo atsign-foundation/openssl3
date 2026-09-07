@@ -641,7 +641,7 @@ Dependabot cannot do this: its `gitsubmodule` ecosystem tracks branch heads, not
 - Pipeline builds all five Apple targets (macos-arm64/x64, ios-arm64, ios_sim-arm64/x64): 4.8–5.4 MB
   thin dylibs, 5 729 exports each, install name `@rpath/libopenssl3_crypto.dylib`, ad-hoc signed.
 - Bundled 3.5.8 loads beside Homebrew OpenSSL 3.6.3 in one process without interference.
-- 73 package tests pass, including FFI tests through the hook-supplied asset: GCM spec vector,
+- 81 package tests pass (Digest/Hmac/Hkdf added 2026-09-07), including FFI tests through the hook-supplied asset: GCM spec vector,
   RFC 8439, NIST CTR (128/192/256), RFC 7748, and ML-KEM-768 / ML-DSA-65 fixtures produced by
   python-cryptography (same seed → same public key; OpenSSL decapsulates/verifies python output).
 - `dart build cli` bundles `bin/` + `lib/libopenssl3_crypto.dylib`; the example reports 0 failures.
@@ -669,6 +669,13 @@ Dependabot cannot do this: its `gitsubmodule` ecosystem tracks branch heads, not
   `manifest_override`, warm-cache rebuild with the mirror down, tampered mirror fails closed
   with the digest message, `local_path` verified against the manifest.
 - Bindings regenerate byte-identically on Linux (Docker, Dart 3.13) and macOS.
+- End-to-end (`example/e2e`, added 2026-09-07): an iperf3-style client/server that runs a
+  hybrid X25519 + ML-KEM-768 handshake signed by an ML-DSA-65 identity, derives keys with
+  HKDF-SHA256 and streams AES-256-GCM or AES-256-CTR + HMAC-SHA256 records over TCP.
+  `ci.yml` runs its unit tests, the in-process `selftest` (both ciphers, tampered frame and
+  wrong server key rejected) and a two-process run from a `dart build cli` bundle on Linux,
+  macOS and Windows; `verify.yml` runs `selftest` from a bundle on every consumer OS.
+  Loopback throughput in CI: 1.2–3.7 Gbit/s (GCM faster than CTR+HMAC), single-threaded Dart.
 
 **Lessons that changed the design during CI bring-up**
 - The Ubuntu 24.04-built library needed `GLIBC_2.38` and did not load on Debian 12; glibc
