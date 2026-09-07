@@ -109,7 +109,8 @@ jobs:
           FILE: libopenssl3_crypto.${{ matrix.target == 'macos-arm64' && 'arm64.macos.dylib' || 'x64.linux.so' }}
         run: |
           # An untampered copy (out/) for this runner's target via local_path.
-          lib=../../out/$FILE
+          # Paths in user defines resolve relative to the ROOT pubspec.yaml.
+          lib=out/$FILE
           cp ../../out/manifest.json /tmp/manifest.json
           sed -i.bak '/url_pattern:/d; /manifest_override:/d' ../../pubspec.yaml
           printf '      local_path: %s\n      manifest_override: /tmp/manifest.json\n' "$lib" >> ../../pubspec.yaml
