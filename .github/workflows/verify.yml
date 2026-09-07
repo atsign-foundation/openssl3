@@ -144,6 +144,16 @@ jobs:
       - uses: docker/setup-qemu-action@v3
         with:
           platforms: arm
+      # Resolve on the host into a pub cache inside the workspace; the container
+      # then runs `pub get --offline` (the slim image has no CA certificates and
+      # network under qemu is slow anyway). Same paths on both sides.
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - name: Populate the pub cache on the host
+        env:
+          PUB_CACHE: ${{ github.workspace }}/.pub-cache
+        run: dart pub get
       - name: Dart SDK version to mirror (stable)
         id: dart
         run: |
@@ -159,7 +169,7 @@ jobs:
             for t in cc gcc clang; do command -v $t && { echo "$t present in the clean image"; exit 1; }; done
             export PATH="$PWD/dart-sdk/bin:$PATH"
             dart --version
-            dart pub get
+            dart pub get --offline
             cd example/cli
             dart build cli
             bin=$(find build -type f -path "*/bundle/bin/*" -name "openssl3_example_cli*" | head -1)
