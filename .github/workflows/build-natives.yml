@@ -58,23 +58,24 @@ jobs:
         with:
           sdk: ${{ env.DART_SDK }}
       - run: dart pub get
-      # Build inside Debian 11 so the library needs glibc >= 2.31 (Debian 11,
-      # Ubuntu 20.04, RHEL 9) instead of the runner image's 2.39. The Dart
-      # tooling stays on the host and drives gcc/binutils in the container
-      # (same mechanism as the musl builds, ADR-0004).
-      - name: Start debian:bullseye build container
+      # Build inside a manylinux_2_28 image (glibc 2.28: RHEL 8, Debian 10,
+      # Ubuntu 20.04 and newer) instead of the runner image's glibc 2.39. These
+      # images are what the Python ecosystem uses for portable Linux binaries;
+      # they ship gcc, perl and binutils. The Dart tooling stays on the host and
+      # drives the container (same mechanism as the musl builds, ADR-0004).
+      - name: Start manylinux_2_28 build container
         run: |
-          docker run -d --name buildbox -v "$PWD:$PWD" -w "$PWD" debian:bullseye sleep infinity
-          docker exec buildbox sh -c 'apt-get update -qq && apt-get install -y -qq build-essential perl binutils >/dev/null'
-          docker exec buildbox sh -c 'gcc --version | head -1; ldd --version | head -1'
+          arch=$(uname -m)   # x86_64 or aarch64
+          docker run -d --name buildbox -v "$PWD:$PWD" -w "$PWD" "quay.io/pypa/manylinux_2_28_${arch}" sleep infinity
+          docker exec buildbox sh -c 'gcc --version | head -1; ldd --version | head -1; perl --version | grep -o "v5[0-9.]*"'
       - name: Build
         run: dart run tool/bin/build_openssl.dart ${{ matrix.target }} --out out --docker buildbox
-      - name: glibc floor is 2.31 or lower
+      - name: glibc floor is 2.28 or lower
         run: |
           docker exec -w "$PWD" buildbox sh -c 'objdump -T out/libopenssl3_crypto.*.linux.so | grep -oE "GLIBC_[0-9.]+" | sort -uV | tail -3'
           max=$(docker exec -w "$PWD" buildbox sh -c 'objdump -T out/libopenssl3_crypto.*.linux.so | grep -oE "GLIBC_[0-9]+\.[0-9]+" | sort -uV | tail -1')
           echo "highest glibc symbol version: $max"
-          test "$(printf '%s\n' "$max" GLIBC_2.31 | sort -V | tail -1)" = GLIBC_2.31
+          test "$(printf '%s\n' "$max" GLIBC_2.28 | sort -V | tail -1)" = GLIBC_2.28
       - name: Smoke test (inside the build container)
         run: |
           docker exec -w "$PWD" buildbox sh -c 'gcc -O2 -o /tmp/smoke tool/native/smoke_dlopen.c -ldl && /tmp/smoke out/libopenssl3_crypto.*.linux.so'

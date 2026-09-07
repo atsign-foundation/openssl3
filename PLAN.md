@@ -339,8 +339,9 @@ most-travelled path for both the library and the hooks ecosystem. GitHub's free 
 us build Linux arm64 (glibc and musl) natively instead of cross-compiling.
 
 glibc floor: first CI runs showed the Ubuntu 24.04-built library needs `GLIBC_2.38` and fails to
-load on Debian 12 (2.36), so the x64/arm64 glibc builds run inside `debian:bullseye` containers
-(the same host-driven container mechanism as musl), giving a floor of **glibc 2.31**; riscv64 is
+load on Debian 12 (2.36), so the x64/arm64 glibc builds run inside `quay.io/pypa/manylinux_2_28` containers
+(the same host-driven container mechanism as musl; Debian 11 was tried first but its apt
+repositories moved after its August 2026 EOL), giving a floor of **glibc 2.28**; riscv64 is
 cross-built on the runner image (2.39). Per the maintainer, only current distributions need to be supported; the
 README states the floor and the release manifest records it (`glibc_min`), and `local_build` /
 `url_pattern` remain for anyone who needs older. Zig stays documented here as the fallback if a
