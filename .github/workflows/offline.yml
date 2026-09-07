@@ -66,6 +66,10 @@ jobs:
           sed -i.bak '/test_directory: out/d' ../../pubspec.yaml
           printf '      url_pattern: "http://127.0.0.1:8765/$RELEASE_TAG/$FILENAME"\n      manifest_override: out/manifest.json\n' >> ../../pubspec.yaml
           tail -5 ../../pubspec.yaml
+          # The manifest-writing step already ran the hook (test_directory mode)
+          # and cached the very same bytes by digest; clear it so this build
+          # must go to the mirror.
+          rm -rf ../../.dart_tool/hooks_runner
           dart build cli
           # The hooks runner hides hook stdout on success; the mirror's request
           # log is the evidence that the library came from the mirror.

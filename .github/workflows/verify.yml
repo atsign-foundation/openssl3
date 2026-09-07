@@ -70,7 +70,7 @@ jobs:
           # ca-certificates depends on the openssl *binary*, so only compilers
           # can be asserted absent here; the bundle's dependencies are checked
           # with ldd after the build instead.
-          for t in cc gcc clang perl; do command -v $t && { echo "$t present in the 'clean' image"; exit 1; }; done
+          for t in cc gcc clang; do command -v $t && { echo "$t present in the 'clean' image"; exit 1; }; done
           echo "no C compiler present: good"
       - uses: actions/checkout@v4
         with:
@@ -97,7 +97,7 @@ jobs:
           dart build cli
           bin=$(find build -type f -path '*/bundle/bin/*' -name 'openssl3_example_cli*' | head -1)
           ls -la "$(dirname "$bin")/../lib"
-          if command -v ldd >/dev/null; then
+          if [ "$RUNNER_OS" = Linux ]; then
             ldd "$(dirname "$bin")"/../lib/libopenssl3_crypto.so | tee ldd.txt
             ! grep -qE 'libcrypto|libssl' ldd.txt || { echo "bundle depends on a system OpenSSL"; exit 1; }
           fi
