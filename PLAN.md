@@ -652,10 +652,37 @@ Dependabot cannot do this: its `gitsubmodule` ecosystem tracks branch heads, not
 - pana: 150/160 locally; the last 10 points are the repository-URL check, which needs the
   commits pushed so the remote contains `packages/openssl3/pubspec.yaml`.
 
-**Written but not yet exercised (needs CI or other hosts)**
-- Linux glibc/musl, Android, Windows builds (`build-natives.yml`), riscv64 under qemu, the Alpine
-  docker-exec path (being exercised locally via Docker at the time of writing), Windows arm64.
-- `release.yml` two-step flow, `verify.yml`, `offline.yml`, `openssl-update.yml`.
+**Proven on GitHub Actions (2026-09-07, after the first push)**
+- `build-natives.yml`: all 15 targets build and pass `verify.dart` (exports == ABI, SONAME,
+  no system libcrypto, Android 16 KB alignment); Linux glibc x64/arm64 built in
+  `manylinux_2_28` containers with a CI assertion that no symbol version exceeds `GLIBC_2.28`;
+  riscv64 smoke-tested under qemu-user; musl in Alpine; `manifest.json` with all 15 assets and
+  the upstream tarball sha256.
+- `ci.yml`: format/analyze/generated-file freshness, hook tests, pana (repository check passes
+  now that the package is on the remote), and build + full test suite + `dart build cli` on
+  Linux x64, Linux arm64, macOS arm64 and Windows x64.
+- `verify.yml` (14 jobs): `dart build cli` on debian-slim (no compiler; bundle checked with
+  `ldd`), Alpine (musl), Linux arm64, macOS, Windows x64 and Windows arm64; `flutter build` plus
+  the integration test on macOS, Linux (xvfb), Windows, iOS simulator and an Android x86_64
+  emulator (APK checked for 16 KB alignment); `local_build` from source on Linux and macOS.
+- `offline.yml`: with github.com blackholed, mirror download via `url_pattern` +
+  `manifest_override`, warm-cache rebuild with the mirror down, tampered mirror fails closed
+  with the digest message, `local_path` verified against the manifest.
+- Bindings regenerate byte-identically on Linux (Docker, Dart 3.13) and macOS.
+
+**Lessons that changed the design during CI bring-up**
+- The Ubuntu 24.04-built library needed `GLIBC_2.38` and did not load on Debian 12; glibc
+  builds moved into `manylinux_2_28` containers (Debian 11 was tried first; its apt repos moved
+  after its EOL).
+- The hooks runner hides hook stdout on success; tests must assert on side effects.
+- Formatting must use the latest stable Dart (pana and CI do); the bindings generator formats
+  its output in place so `--check` is byte-exact.
+- `dart run tool/...` runs this package's own hook; `test_directory` mode tolerates a missing
+  build so the tool can bootstrap.
+
+**Not yet exercised**
+- `release.yml` end to end (no tag pushed yet; every building block has run), `openssl-update.yml`
+  against a real newer tag.
 
 **Not started**
 - Web/WASM (§6 web.yml, `wasm.dart`): stretch goal, design unchanged.
