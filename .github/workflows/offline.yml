@@ -66,16 +66,20 @@ jobs:
           sed -i.bak '/test_directory: out/d' ../../pubspec.yaml
           printf '      url_pattern: "http://127.0.0.1:8765/$RELEASE_TAG/$FILENAME"\n      manifest_override: out/manifest.json\n' >> ../../pubspec.yaml
           tail -5 ../../pubspec.yaml
-          dart build cli 2>&1 | tee build.log
-          grep -q 'fetching' build.log
+          dart build cli
+          # The hooks runner hides hook stdout on success; the mirror's request
+          # log is the evidence that the library came from the mirror.
+          grep -q "GET /vtest/libopenssl3_crypto" /tmp/mirror.log
+          cp /tmp/mirror.log /tmp/mirror.after-first-build.log
           bin=$(find build -type f -path '*/bundle/bin/*' -name 'openssl3_example_cli*' | head -1); "$bin"
       - name: Warm cache needs no network at all
         working-directory: example/cli
         run: |
+          # Mirror down: the build must still succeed from the warm cache.
           pkill -f "http.server 8765" || true
-          rm -rf build
-          dart build cli 2>&1 | tee build2.log
-          grep -q 'using cached' build2.log
+          rm -rf build ../../.dart_tool/hooks_runner
+          dart build cli
+          bin=$(find build -type f -path '*/bundle/bin/*' -name 'openssl3_example_cli*' | head -1); "$bin"
       - name: A tampered mirror fails closed
         working-directory: example/cli
         env:

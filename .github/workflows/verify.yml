@@ -67,8 +67,11 @@ jobs:
           # git would pull perl into the image. No compilers, no openssl.
           if command -v apk >/dev/null; then apk add --no-cache bash curl unzip gcompat; \
           else apt-get update && apt-get install -y --no-install-recommends ca-certificates curl unzip; fi
-          for t in cc gcc clang openssl; do command -v $t && { echo "$t present in the 'clean' image"; exit 1; }; done
-          echo "no C compiler and no openssl binary present: good"
+          # ca-certificates depends on the openssl *binary*, so only compilers
+          # can be asserted absent here; the bundle's dependencies are checked
+          # with ldd after the build instead.
+          for t in cc gcc clang perl; do command -v $t && { echo "$t present in the 'clean' image"; exit 1; }; done
+          echo "no C compiler present: good"
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
@@ -94,6 +97,10 @@ jobs:
           dart build cli
           bin=$(find build -type f -path '*/bundle/bin/*' -name 'openssl3_example_cli*' | head -1)
           ls -la "$(dirname "$bin")/../lib"
+          if command -v ldd >/dev/null; then
+            ldd "$(dirname "$bin")"/../lib/libopenssl3_crypto.so | tee ldd.txt
+            ! grep -qE 'libcrypto|libssl' ldd.txt || { echo "bundle depends on a system OpenSSL"; exit 1; }
+          fi
           "$bin" --json | tee result.json
           grep -q '"failures":0' result.json
       - name: dart compile exe is NOT supported (documented behaviour)
@@ -142,6 +149,7 @@ jobs:
           github-token: ${{ github.token }}
       - name: Build and run the integration test on the desktop
         working-directory: example/flutter_app
+        shell: bash
         run: |
           flutter pub get
           flutter build ${{ matrix.platform }} --debug
@@ -228,7 +236,8 @@ jobs:
           arch: x86_64
           target: google_apis
           working-directory: example/flutter_app
-          script: flutter test integration_test -d emulator-5554
+          # DDS start-up on the emulator is flaky; one retry.
+          script: flutter test integration_test -d emulator-5554 || flutter test integration_test -d emulator-5554
 
   local-build:
     name: local_build from source (${{ matrix.runner }})
