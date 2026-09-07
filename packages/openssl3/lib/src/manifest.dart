@@ -9,7 +9,7 @@
 
 import 'hook/manifest_model.dart';
 
-const String? releaseTag = 'v3.5.8-1';
+const String releaseTag = 'v3.5.8-1';
 
 const Manifest compiledInManifest = Manifest(
   releaseTag: releaseTag,
