@@ -15,6 +15,7 @@ Prebuilt OpenSSL 3.5 LTS `libcrypto` for Dart and Flutter, delivered as a
 | [`packages/openssl3/`](packages/openssl3/) | the published package: `hook/build.dart`, generated bindings, `evp.dart`, the native build pipeline |
 | [`tool/`](tool/) | CLIs used by CI and maintainers: build a target, generate symbols/bindings/manifest, watch upstream |
 | [`example/cli/`](example/cli/) | Dart CLI smoke test (`dart build cli`) |
+| [`example/e2e/`](example/e2e/) | iperf3-style end-to-end test: hybrid X25519 + ML-KEM-768 handshake, ML-DSA-65 identity, AES-GCM or AES-CTR + HMAC over TCP |
 | [`example/flutter_app/`](example/flutter_app/) | Flutter smoke app with an integration test |
 | [`third_party/openssl`](third_party/openssl) | git submodule pinned to the bundled OpenSSL tag |
 | [`docs/adr/`](docs/adr/) | architecture decision records |

@@ -30,8 +30,8 @@ jobs:
           sudo apt-get install -y libclang-dev
       - run: dart pub get
       # Dart-only packages; example/flutter_app is analysed by flutter in verify.yml.
-      - run: dart format --output=none --set-exit-if-changed packages tool example/cli
-      - run: dart analyze --fatal-infos packages tool example/cli
+      - run: dart format --output=none --set-exit-if-changed packages tool example/cli example/e2e
+      - run: dart analyze --fatal-infos packages tool example/cli example/e2e
       - name: symbols.dart and bindings are up to date
         run: |
           dart run tool/bin/generate_bindings.dart --check
@@ -99,3 +99,30 @@ jobs:
           bin=$(find build -type f -path '*/bundle/bin/*' -name 'openssl3_example_cli*' | head -1)
           ls -la "$(dirname "$bin")/../lib"
           "$bin"
+      - name: End-to-end tests (encrypted TCP transfer, iperf3 style)
+        working-directory: example/e2e
+        shell: bash
+        run: |
+          dart test
+          dart run bin/openssl3_e2e.dart selftest --bytes 128M
+      - name: End-to-end as two processes from a dart build cli bundle
+        working-directory: example/e2e
+        shell: bash
+        run: |
+          dart build cli
+          bin=$(find build -type f -path '*/bundle/bin/*' -name 'openssl3_e2e*' | head -1)
+          "$bin" server --port 15201 --once > server.log 2>&1 &
+          srv=$!
+          for i in $(seq 1 100); do grep -q "public key" server.log && break; sleep 0.2; done
+          key=$(grep "public key" server.log | awk '{print $NF}')
+          "$bin" client --port 15201 --server-key "$key" --bytes 256M --cipher gcm
+          wait "$srv"
+          cat server.log
+          "$bin" server --port 15201 --once > server2.log 2>&1 &
+          srv=$!
+          for i in $(seq 1 100); do grep -q "public key" server2.log && break; sleep 0.2; done
+          key=$(grep "public key" server2.log | awk '{print $NF}')
+          "$bin" client --port 15201 --server-key "$key" --bytes 8M --cipher ctr --tamper 5
+          if wait "$srv"; then echo "server accepted a tampered transfer"; exit 1; fi
+          grep -q "AuthenticationException" server2.log
+          echo "server rejected the tampered transfer (expected)"

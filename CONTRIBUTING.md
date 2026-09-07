@@ -32,8 +32,8 @@ first or the hook fails closed, on purpose.
 ## Before every commit
 
 ```sh
-dart format packages tool example/cli
-dart analyze --fatal-infos packages tool example/cli
+dart format packages tool example/cli example/e2e
+dart analyze --fatal-infos packages tool example/cli example/e2e
 cd packages/openssl3 && dart test
 ```
 
@@ -136,5 +136,6 @@ generator fails loudly rather than emitting wrong widths.
   known-answer vectors (GCM, ChaCha20-Poly1305, NIST CTR, RFC 7748) and
   ML-KEM-768 / ML-DSA-65 fixtures generated with python-cryptography
   (`test/evp/vectors/`).
+- `example/e2e` is the end-to-end test (`dart test`, then `dart run bin/openssl3_e2e.dart selftest`); CI also runs it as two processes from a `dart build cli` bundle
 - `example/cli` and `example/flutter_app` are the consumer-side smoke tests
   used by `verify.yml`.

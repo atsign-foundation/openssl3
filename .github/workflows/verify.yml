@@ -105,6 +105,13 @@ jobs:
           fi
           "$bin" --json | tee result.json
           grep -q '"failures":0' result.json
+      - name: End-to-end selftest from a dart build cli bundle
+        working-directory: example/e2e
+        shell: bash
+        run: |
+          dart build cli
+          bin=$(find build -type f -path '*/bundle/bin/*' -name 'openssl3_e2e*' | head -1)
+          "$bin" selftest --bytes 64M
       - name: dart compile exe is NOT supported (documented behaviour)
         working-directory: example/cli
         shell: bash
