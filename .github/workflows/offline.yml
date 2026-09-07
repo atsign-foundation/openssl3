@@ -54,7 +54,8 @@ jobs:
           dart run tool/bin/write_manifest.dart --out out --tag vtest --dart-output /tmp/m.dart
           mkdir -p mirror/vtest && cp out/* mirror/vtest/
           (cd mirror && python3 -m http.server 8765 >/tmp/mirror.log 2>&1 &)
-          sleep 1
+          for i in $(seq 1 20); do curl -sf -o /dev/null http://127.0.0.1:8765/ && break; sleep 0.5; done
+          curl -sf -o /dev/null http://127.0.0.1:8765/vtest/manifest.json && echo "mirror up"
       - name: Blackhole github.com (simulated air gap)
         run: |
           echo '127.0.0.1 github.com objects.githubusercontent.com release-assets.githubusercontent.com' | sudo tee -a /etc/hosts
@@ -91,7 +92,7 @@ jobs:
           FILE: libopenssl3_crypto.${{ matrix.target == 'macos-arm64' && 'arm64.macos.dylib' || 'x64.linux.so' }}
         run: |
           (cd ../../mirror && python3 -m http.server 8765 >/tmp/mirror.log 2>&1 &)
-          sleep 1
+          for i in $(seq 1 20); do curl -sf -o /dev/null http://127.0.0.1:8765/ && break; sleep 0.5; done
           f=../../mirror/vtest/$FILE
           # Flip a byte deep in the file (offset 100 is already zero in an ELF header).
           python3 -c 'import sys; p=sys.argv[1]; b=bytearray(open(p,"rb").read()); b[65536]^=0xff; open(p,"wb").write(b)' "$f"
@@ -100,9 +101,9 @@ jobs:
           find ../.. -type d -name 'download-*' -path '*shared*' -prune -exec rm -rf {} + 2>/dev/null || true
           rm -rf build ../../.dart_tool/hooks_runner
           set +e; dart build cli > build3.log 2>&1; code=$?; set -e
-          tail -5 build3.log
+          cat build3.log
           test $code -ne 0
-          grep -q 'sha256' build3.log
+          grep -qE 'sha256 of .* is .*, expected' build3.log
       - name: local_path (verified against the manifest)
         working-directory: example/cli
         env:
