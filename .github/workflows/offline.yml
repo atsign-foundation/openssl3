@@ -62,45 +62,47 @@ jobs:
       - name: url_pattern mirror + manifest_override downloads and verifies
         working-directory: example/cli
         run: |
-          cat >> ../../pubspec.yaml <<EOF
-                url_pattern: "http://127.0.0.1:8765/\$RELEASE_TAG/\$FILENAME"
-                manifest_override: out/manifest.json
-          EOF
+          # Replace the workspace's test_directory with a mirror + manifest.
           sed -i.bak '/test_directory: out/d' ../../pubspec.yaml
+          printf '      url_pattern: "http://127.0.0.1:8765/$RELEASE_TAG/$FILENAME"\n      manifest_override: out/manifest.json\n' >> ../../pubspec.yaml
+          tail -5 ../../pubspec.yaml
           dart build cli 2>&1 | tee build.log
           grep -q 'fetching' build.log
           bin=$(find build -type f -path '*/bundle/bin/*' -name 'openssl3_example_cli*' | head -1); "$bin"
       - name: Warm cache needs no network at all
         working-directory: example/cli
         run: |
-          kill %1 2>/dev/null || pkill -f "http.server 8765" || true
+          pkill -f "http.server 8765" || true
           rm -rf build
           dart build cli 2>&1 | tee build2.log
           grep -q 'using cached' build2.log
       - name: A tampered mirror fails closed
         working-directory: example/cli
+        env:
+          EXT: ${{ matrix.target == 'macos-arm64' && 'macos.dylib' || 'linux.so' }}
         run: |
           (cd ../../mirror && python3 -m http.server 8765 >/tmp/mirror.log 2>&1 &)
           sleep 1
-          f=$(ls ../../mirror/vtest/libopenssl3_crypto.*.${{ matrix.target == 'macos-arm64' && 'macos.dylib' || 'linux.so' }} | head -1)
+          f=$(ls ../../mirror/vtest/libopenssl3_crypto.*.$EXT | head -1)
           printf '\x00' | dd of="$f" bs=1 seek=100 count=1 conv=notrunc
-          rm -rf build "$HOME/.dart_tool" 2>/dev/null || true
-          find .. -path '*shared*' -name 'download-*' -prune -exec rm -rf {} + 2>/dev/null || true
+          # Drop the warm cache so the hook must fetch again.
+          find ../.. -type d -name 'download-*' -path '*shared*' -prune -exec rm -rf {} + 2>/dev/null || true
+          rm -rf build ../../.dart_tool/hooks_runner
           set +e; dart build cli > build3.log 2>&1; code=$?; set -e
-          cat build3.log | tail -5
-          test $code -ne 0 && grep -q 'sha256' build3.log
+          tail -5 build3.log
+          test $code -ne 0
+          grep -q 'sha256' build3.log
       - name: local_path (verified against the manifest)
         working-directory: example/cli
+        env:
+          EXT: ${{ matrix.target == 'macos-arm64' && 'macos.dylib' || 'linux.so' }}
         run: |
+          # Restore an untampered copy and point local_path at it.
+          lib=$(ls ../../out/libopenssl3_crypto.*.$EXT | head -1)
           cp ../../out/manifest.json /tmp/manifest.json
-          lib=$(ls ../../out/libopenssl3_crypto.*.${{ matrix.target == 'macos-arm64' && 'macos.dylib' || 'linux.so' }} | head -1)
-          python3 - <<EOF
-          import re
-          p='../../pubspec.yaml'; s=open(p).read()
-          s=re.sub(r'\n\s+url_pattern:.*', '', s); s=re.sub(r'\n\s+manifest_override:.*', '', s)
-          s+='\n      local_path: $lib\n      manifest_override: /tmp/manifest.json\n'
-          open(p,'w').write(s)
-          EOF
-          rm -rf build
+          sed -i.bak '/url_pattern:/d; /manifest_override:/d' ../../pubspec.yaml
+          printf '      local_path: %s\n      manifest_override: /tmp/manifest.json\n' "$lib" >> ../../pubspec.yaml
+          tail -4 ../../pubspec.yaml
+          rm -rf build ../../.dart_tool/hooks_runner
           dart build cli
           bin=$(find build -type f -path '*/bundle/bin/*' -name 'openssl3_example_cli*' | head -1); "$bin"
