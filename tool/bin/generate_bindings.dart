@@ -85,6 +85,8 @@ const _hostDependentFunctions = {
   'CRYPTO_THREAD_cleanup_local',
 };
 
+const _locationMacros = {'OPENSSL_FILE', 'OPENSSL_LINE', 'OPENSSL_FUNC'};
+
 /// libssl's headers: not shipped (ADR-0009). `asn1_mac.h` is an `#error` stub.
 const _excludedHeaders = {
   'ssl.h',
@@ -361,7 +363,11 @@ void _runFfigen(Directory include, File output) {
     enums: Enums(include: public, silenceWarning: true),
     unnamedEnums: UnnamedEnums(include: public),
     typedefs: Typedefs(include: public, includeUnused: false),
-    macros: Macros(include: public),
+    // OPENSSL_FILE/LINE/FUNC expand to __FILE__ etc. of ffigen's own scratch
+    // file: meaningless and different on every run.
+    macros: Macros(
+      include: (d) => public(d) && !_locationMacros.contains(d.originalName),
+    ),
     globals: Globals(include: public),
   ).generate(logger: logger);
 }
@@ -400,6 +406,13 @@ Map<String, String> _manualIndex(Directory man3) {
 
 /// Adds doc comments and deprecation annotations to ffigen's output.
 String _decorate(String generated, Map<String, String> manual) {
+  generated = generated.replaceAll(
+    RegExp(
+      r"^const String \w+ =\s*'[^']*temp_for_macros\.hpp';\n",
+      multiLine: true,
+    ),
+    '',
+  );
   final lines = generated.split('\n');
   final out = <String>[];
   var lastBlank = -1; // index in `out` of the last blank line

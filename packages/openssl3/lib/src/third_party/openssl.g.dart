@@ -82678,18 +82678,11 @@ const int OPENSSL_EC_NAMED_CURVE = 1;
 /// OpenSSL macro `OPENSSL_ENGINES_DIR`.
 const int OPENSSL_ENGINES_DIR = 5;
 
-/// OpenSSL macro `OPENSSL_FILE`.
-const String OPENSSL_FILE =
-    '/var/folders/46/s6c41y_j1cx1x2gmmd82b4nr0000gn/T/ffigen temp dir iLY53P/temp_for_macros.hpp';
-
 /// OpenSSL macro `OPENSSL_FULL_VERSION_STR`.
 const String OPENSSL_FULL_VERSION_STR = '3.5.8';
 
 /// OpenSSL macro `OPENSSL_FULL_VERSION_STRING`.
 const int OPENSSL_FULL_VERSION_STRING = 7;
-
-/// OpenSSL macro `OPENSSL_FUNC`.
-const String OPENSSL_FUNC = '(unknown function)';
 
 /// OpenSSL macro `OPENSSL_HTTPS_PROXY`.
 const String OPENSSL_HTTPS_PROXY = 'HTTPS_PROXY';
@@ -82900,9 +82893,6 @@ typedef DartOPENSSL_LH_HASHFUNCTHUNKFunction =
 
 /// OpenSSL typedef `OPENSSL_LH_NODE`.
 typedef OPENSSL_LH_NODE = lhash_node_st;
-
-/// OpenSSL macro `OPENSSL_LINE`.
-const int OPENSSL_LINE = 89;
 
 /// OpenSSL macro `OPENSSL_MODULES_DIR`.
 const int OPENSSL_MODULES_DIR = 8;
