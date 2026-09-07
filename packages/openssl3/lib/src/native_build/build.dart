@@ -413,8 +413,17 @@ final class _Makefile {
     );
   }
 
-  List<String> words(String name) =>
-      expand(name).split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
+  /// Whitespace-separated words of [name], with surrounding double quotes
+  /// removed: OpenSSL's Windows makefile writes `CC="cl"`, `PERL="..."`.
+  List<String> words(String name) => expand(name)
+      .split(RegExp(r'\s+'))
+      .where((w) => w.isNotEmpty)
+      .map(
+        (w) => w.length >= 2 && w.startsWith('"') && w.endsWith('"')
+            ? w.substring(1, w.length - 1)
+            : w,
+      )
+      .toList();
 
   /// Flags that must also be passed when *linking* with the same compiler:
   /// architecture, sysroot, minimum OS version, target triple.
