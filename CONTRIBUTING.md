@@ -24,10 +24,19 @@ dart run tool/bin/build_openssl.dart macos-arm64     # ~30 s; writes out/
 cd packages/openssl3 && dart test                     # hook + FFI tests
 ```
 
-Inside this repository there is no GitHub release to download from, so the
-workspace root `pubspec.yaml` points the hook at `out/`
-(`hooks: user_defines: openssl3: test_directory: out`). Build your host target
-first or the hook fails closed, on purpose.
+Inside this repository the workspace root `pubspec.yaml` points the hook at
+`out/` (`hooks: user_defines: openssl3: test_directory: out`) so that tests and
+examples exercise freshly built binaries. On a fresh clone `out/` is empty and
+the hook warns and emits **no** library (any native call would then fail).
+Either build your host target as above, or fetch the released build instead of
+compiling (no toolchain needed):
+
+```sh
+gh release download v3.5.8-1 --pattern 'libopenssl3_crypto.x64.linux.so*' --dir out
+```
+
+The pattern must match both the library and its `.json` sidecar; the hook
+verifies the file against the sidecar's sha256.
 
 ## Before every commit
 

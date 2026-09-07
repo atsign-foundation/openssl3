@@ -17,6 +17,7 @@ import 'package:crypto/crypto.dart';
 import 'package:hooks/hooks.dart';
 import 'package:path/path.dart' as p;
 
+import '../manifest.dart' as compiled;
 import 'binary_source.dart';
 import 'supported_targets.dart';
 
@@ -122,11 +123,18 @@ Future<File?> obtainBundledLibrary(
       output.dependencies.add(file.uri);
       output.dependencies.add(sidecar.uri);
       if (!file.existsSync() || !sidecar.existsSync()) {
+        final tag = compiled.compiledInManifest.releaseTag;
+        final fetch = tag == null
+            ? ''
+            : ', or fetch the released build: `gh release download $tag '
+                  "--pattern '${target.releaseFileName}*' "
+                  '--dir ${source.directory.path}`';
         stderr.writeln(
           'openssl3: WARNING: test_directory ${source.directory.path} has no '
           '${target.releaseFileName} (+ .json sidecar) yet; emitting no code '
           'asset. Build it with `dart run tool/bin/build_openssl.dart '
-          '${target.id}`. Any @Native call will fail until then.',
+          '${target.id} --out ${source.directory.path}`$fetch. '
+          'Any @Native call will fail until then.',
         );
         return null;
       }
