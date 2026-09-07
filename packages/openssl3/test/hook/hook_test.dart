@@ -383,7 +383,7 @@ void main() {
           ok,
           target,
         );
-        expect(file.readAsBytesSync(), payload);
+        expect(file!.readAsBytesSync(), payload);
         expect(hits, 1);
 
         await obtainBundledLibrary(input, BuildOutputBuilder(), ok, target);
