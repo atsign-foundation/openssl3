@@ -119,24 +119,16 @@ EXPORTS
   group('real libcrypto.num', () {
     final numFile = File('../../third_party/openssl/util/libcrypto.num');
 
-    test(
-      'parses every line',
-      () {
-        final entries = AbiEntry.parseFile(numFile);
-        expect(entries.length, greaterThan(5000));
-        expect(entries.where((e) => e.exists).length, greaterThan(5000));
-      },
-      skip: numFile.existsSync() ? false : 'submodule not checked out',
-    );
+    test('parses every line', () {
+      final entries = AbiEntry.parseFile(numFile);
+      expect(entries.length, greaterThan(5000));
+      expect(entries.where((e) => e.exists).length, greaterThan(5000));
+    }, skip: numFile.existsSync() ? false : 'submodule not checked out');
 
-    test(
-      'required symbols are all in the ABI list',
-      () {
-        final names = AbiEntry.parseFile(numFile).map((e) => e.name).toSet();
-        expect(requiredSymbols.where((s) => !names.contains(s)), isEmpty);
-      },
-      skip: numFile.existsSync() ? false : 'submodule not checked out',
-    );
+    test('required symbols are all in the ABI list', () {
+      final names = AbiEntry.parseFile(numFile).map((e) => e.name).toSet();
+      expect(requiredSymbols.where((s) => !names.contains(s)), isEmpty);
+    }, skip: numFile.existsSync() ? false : 'submodule not checked out');
   });
 
   group('targets', () {

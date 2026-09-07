@@ -26,7 +26,10 @@ void main() {
     final info = caps.buildInfo;
     expect(info, isNotNull);
     expect(info!['openssl_version'], startsWith('3.5.'));
-    expect(info['library_name'], startsWith('libopenssl3_crypto'));
+    expect(
+      info['library_name'],
+      contains('openssl3_crypto'),
+    ); // lib prefix except on Windows
     expect(info['configure_args'], contains('no-module'));
     expect(info['configure_args'], contains('no-legacy'));
   });

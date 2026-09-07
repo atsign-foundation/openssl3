@@ -32,10 +32,14 @@ first or the hook fails closed, on purpose.
 ## Before every commit
 
 ```sh
-dart format .
-dart analyze --fatal-infos
+dart format packages tool example/cli
+dart analyze --fatal-infos packages tool example/cli
 cd packages/openssl3 && dart test
 ```
+
+Format with the **latest stable Dart SDK**: CI and pub.dev's pana use it, and
+the formatter's output changes between SDK releases. `tool/bin/generate_bindings.dart`
+formats its output the same way, so regenerate bindings with that SDK too.
 
 Commits follow [Conventional Commits](https://www.conventionalcommits.org/)
 (`feat:`, `fix:`, `ci:`, `docs:`, `chore(openssl):` …). Keep them small and

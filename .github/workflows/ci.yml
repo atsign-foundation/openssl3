@@ -29,8 +29,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libclang-dev
       - run: dart pub get
-      - run: dart format --output=none --set-exit-if-changed .
-      - run: dart analyze --fatal-infos
+      # Dart-only packages; example/flutter_app is analysed by flutter in verify.yml.
+      - run: dart format --output=none --set-exit-if-changed packages tool example/cli
+      - run: dart analyze --fatal-infos packages tool example/cli
       - name: symbols.dart and bindings are up to date
         run: |
           dart run tool/bin/generate_bindings.dart --check
