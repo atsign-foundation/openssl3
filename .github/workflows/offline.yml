@@ -87,11 +87,12 @@ jobs:
       - name: A tampered mirror fails closed
         working-directory: example/cli
         env:
-          EXT: ${{ matrix.target == 'macos-arm64' && 'macos.dylib' || 'linux.so' }}
+          # The file the hook fetches for THIS runner's target.
+          FILE: libopenssl3_crypto.${{ matrix.target == 'macos-arm64' && 'arm64.macos.dylib' || 'x64.linux.so' }}
         run: |
           (cd ../../mirror && python3 -m http.server 8765 >/tmp/mirror.log 2>&1 &)
           sleep 1
-          f=$(ls ../../mirror/vtest/libopenssl3_crypto.*.$EXT | head -1)
+          f=../../mirror/vtest/$FILE
           # Flip a byte deep in the file (offset 100 is already zero in an ELF header).
           python3 -c 'import sys; p=sys.argv[1]; b=bytearray(open(p,"rb").read()); b[65536]^=0xff; open(p,"wb").write(b)' "$f"
           shasum -a 256 "$f" ../../out/$(basename "$f")
@@ -105,10 +106,10 @@ jobs:
       - name: local_path (verified against the manifest)
         working-directory: example/cli
         env:
-          EXT: ${{ matrix.target == 'macos-arm64' && 'macos.dylib' || 'linux.so' }}
+          FILE: libopenssl3_crypto.${{ matrix.target == 'macos-arm64' && 'arm64.macos.dylib' || 'x64.linux.so' }}
         run: |
-          # Restore an untampered copy and point local_path at it.
-          lib=$(ls ../../out/libopenssl3_crypto.*.$EXT | head -1)
+          # An untampered copy (out/) for this runner's target via local_path.
+          lib=../../out/$FILE
           cp ../../out/manifest.json /tmp/manifest.json
           sed -i.bak '/url_pattern:/d; /manifest_override:/d' ../../pubspec.yaml
           printf '      local_path: %s\n      manifest_override: /tmp/manifest.json\n' "$lib" >> ../../pubspec.yaml
