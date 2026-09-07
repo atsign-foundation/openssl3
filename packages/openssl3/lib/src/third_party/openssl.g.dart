@@ -82936,9 +82936,6 @@ typedef OPENSSL_STACK = stack_st;
 /// OpenSSL typedef `OPENSSL_STRING`.
 typedef OPENSSL_STRING = ffi.Pointer<ffi.Char>;
 
-/// OpenSSL macro `OPENSSL_SYS_MACOSX`.
-const int OPENSSL_SYS_MACOSX = 1;
-
 /// OpenSSL macro `OPENSSL_VERSION`.
 const int OPENSSL_VERSION = 0;
 
@@ -84597,7 +84594,7 @@ typedef OSSL_FUNC_BIO_vprintf_fn =
       ffi.Int Function(
         ffi.Pointer<OSSL_CORE_BIO> bio,
         ffi.Pointer<ffi.Char> format,
-        va_list args,
+        openssl3_va_list args,
       )
     >;
 
@@ -84608,7 +84605,7 @@ typedef OSSL_FUNC_BIO_vsnprintf_fn =
         ffi.Pointer<ffi.Char> buf,
         ffi.Size n,
         ffi.Pointer<ffi.Char> fmt,
-        va_list args,
+        openssl3_va_list args,
       )
     >;
 
@@ -85993,7 +85990,7 @@ typedef OSSL_FUNC_core_vset_error_fn =
         ffi.Pointer<OSSL_CORE_HANDLE> prov,
         ffi.Uint32 reason,
         ffi.Pointer<ffi.Char> fmt,
-        va_list args,
+        openssl3_va_list args,
       )
     >;
 
@@ -89841,14 +89838,14 @@ typedef OSSL_STORE_ctrl_fn =
 typedef OSSL_STORE_ctrl_fnFunction = ffi.Int Function(
   ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
   ffi.Int cmd,
-  va_list args,
+  openssl3_va_list args,
 );
 
 /// OpenSSL typedef `DartOSSL_STORE_ctrl_fnFunction`.
 typedef DartOSSL_STORE_ctrl_fnFunction = int Function(
   ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
   int cmd,
-  va_list args,
+  openssl3_va_list args,
 );
 
 /// OpenSSL typedef `OSSL_STORE_eof_fn`.
@@ -101718,12 +101715,6 @@ final class idea_key_st extends ffi.Struct {
   external ffi.Array<ffi.Array<IDEA_INT>> data;
 }
 
-/// OpenSSL typedef `intmax_t`.
-typedef intmax_t = ffi.Long;
-
-/// OpenSSL typedef `Dartintmax_t`.
-typedef Dartintmax_t = int;
-
 /// OpenSSL typedef `lh_CONF_VALUE_compfunc`.
 typedef lh_CONF_VALUE_compfunc =
     ffi.Pointer<ffi.NativeFunction<lh_CONF_VALUE_compfuncFunction>>;
@@ -102091,6 +102082,12 @@ final class ocsp_single_response_st extends ffi.Opaque {}
 /// Opaque OpenSSL type `openssl3_FILE`; only pointers to it are used.
 final class openssl3_FILE extends ffi.Opaque {}
 
+/// OpenSSL typedef `openssl3_intmax_t`.
+typedef openssl3_intmax_t = ffi.Int64;
+
+/// OpenSSL typedef `Dartopenssl3_intmax_t`.
+typedef Dartopenssl3_intmax_t = int;
+
 /// OpenSSL typedef `openssl3_pthread_key_t`.
 typedef openssl3_pthread_key_t = ffi.UintPtr;
 
@@ -102114,6 +102111,15 @@ typedef Dartopenssl3_time_t = int;
 
 /// Opaque OpenSSL type `openssl3_tm`; only pointers to it are used.
 final class openssl3_tm extends ffi.Opaque {}
+
+/// OpenSSL typedef `openssl3_uintmax_t`.
+typedef openssl3_uintmax_t = ffi.Uint64;
+
+/// OpenSSL typedef `Dartopenssl3_uintmax_t`.
+typedef Dartopenssl3_uintmax_t = int;
+
+/// OpenSSL typedef `openssl3_va_list`.
+typedef openssl3_va_list = ffi.Pointer<ffi.Void>;
 
 /// Opaque OpenSSL type `openssl_core_ctx_st`; only pointers to it are used.
 final class openssl_core_ctx_st extends ffi.Opaque {}
@@ -102263,7 +102269,7 @@ final class ossl_http_req_ctx_st extends ffi.Opaque {}
 final class ossl_init_settings_st extends ffi.Opaque {}
 
 /// OpenSSL typedef `ossl_intmax_t`.
-typedef ossl_intmax_t = intmax_t;
+typedef ossl_intmax_t = openssl3_intmax_t;
 
 /// Opaque OpenSSL type `ossl_issuer_serial_st`; only pointers to it are used.
 final class ossl_issuer_serial_st extends ffi.Opaque {}
@@ -102351,7 +102357,7 @@ final class ossl_store_loader_st extends ffi.Opaque {}
 final class ossl_store_search_st extends ffi.Opaque {}
 
 /// OpenSSL typedef `ossl_uintmax_t`.
-typedef ossl_uintmax_t = uintmax_t;
+typedef ossl_uintmax_t = openssl3_uintmax_t;
 
 /// OpenSSL struct `otherName_st`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 final class otherName_st extends ffi.Struct {
@@ -106633,12 +106639,6 @@ final class ui_st extends ffi.Opaque {}
 /// Opaque OpenSSL type `ui_string_st`; only pointers to it are used.
 final class ui_string_st extends ffi.Opaque {}
 
-/// OpenSSL typedef `uintmax_t`.
-typedef uintmax_t = ffi.UnsignedLong;
-
-/// OpenSSL typedef `Dartuintmax_t`.
-typedef Dartuintmax_t = int;
-
 /// OpenSSL struct `v3_ext_ctx`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 final class v3_ext_ctx extends ffi.Struct {
   @ffi.Int()
@@ -106743,9 +106743,6 @@ final class v3_ext_method extends ffi.Struct {
     ..ref.r2i = r2i
     ..ref.usr_data = usr_data;
 }
-
-/// OpenSSL typedef `va_list`.
-typedef va_list = ffi.Pointer<ffi.Char>;
 
 /// Opaque OpenSSL type `x509_attributes_st`; only pointers to it are used.
 final class x509_attributes_st extends ffi.Opaque {}

@@ -51,8 +51,24 @@ const _manualBase = 'https://docs.openssl.org/3.5/man3/';
 const _prelude = '''
 #include <stdint.h>
 #include <stdio.h>
+#include <stdarg.h>
 #include <time.h>
 #include <pthread.h>
+#include <openssl/configuration.h>
+/* RC4_INT is chosen per platform by Configure (unsigned char on aarch64
+   Linux, unsigned int elsewhere); pin it so RC4_KEY has one layout. RC4 is
+   a deprecated low-level API and the legacy provider is not compiled in. */
+#undef RC4_INT
+#define RC4_INT unsigned int
+/* va_list is a pointer on x64/arm64-macOS and a struct on aarch64 Linux; every
+   function taking one is excluded below, this only keeps callback typedefs
+   deterministic. */
+typedef void *openssl3_va_list;
+#define va_list openssl3_va_list
+typedef int64_t openssl3_intmax_t;
+#define intmax_t openssl3_intmax_t
+typedef uint64_t openssl3_uintmax_t;
+#define uintmax_t openssl3_uintmax_t
 typedef intptr_t openssl3_time_t;
 #define time_t openssl3_time_t
 typedef struct openssl3_FILE openssl3_FILE;
@@ -86,6 +102,12 @@ const _hostDependentFunctions = {
 };
 
 const _locationMacros = {'OPENSSL_FILE', 'OPENSSL_LINE', 'OPENSSL_FUNC'};
+
+/// Macros whose value or existence depends on the generating host.
+bool _hostDependentMacro(String name) =>
+    _locationMacros.contains(name) ||
+    name.startsWith('OPENSSL_SYS_') || // platform markers (MACOSX, LINUX, ...)
+    name == 'CRYPTO_ONCE_STATIC_INIT'; // PTHREAD_ONCE_INIT, struct on macOS
 
 /// libssl's headers: not shipped (ADR-0009). `asn1_mac.h` is an `#error` stub.
 const _excludedHeaders = {
@@ -366,7 +388,7 @@ void _runFfigen(Directory include, File output) {
     // OPENSSL_FILE/LINE/FUNC expand to __FILE__ etc. of ffigen's own scratch
     // file: meaningless and different on every run.
     macros: Macros(
-      include: (d) => public(d) && !_locationMacros.contains(d.originalName),
+      include: (d) => public(d) && !_hostDependentMacro(d.originalName),
     ),
     globals: Globals(include: public),
   ).generate(logger: logger);
