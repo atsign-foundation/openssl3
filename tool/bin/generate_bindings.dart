@@ -151,13 +151,15 @@ Future<void> main(List<String> args) async {
     final rawOutput = File(p.join(scratch.path, 'openssl.raw.g.dart'));
     _runFfigen(include, rawOutput);
     final manual = _manualIndex(Directory(p.join(source.path, 'doc', 'man3')));
+    final output = File(opts.option('output')!);
+    // Format *inside* the package: dart format picks the package's language
+    // version there, and CI/pana format in that same context.
     final decorated = await _formatted(
       _decorate(rawOutput.readAsStringSync(), manual),
-      scratch,
+      File('${output.path}.formatting.tmp.dart'),
     );
 
     final unbound = _unboundReport(decorated);
-    final output = File(opts.option('output')!);
     final unboundFile = File(
       p.join(p.dirname(output.path), 'unbound_symbols.g.dart'),
     );
@@ -555,12 +557,16 @@ String _unboundReport(String generated) {
 
 /// Runs `dart format` on [source] so the committed file is byte-identical to
 /// what `--check` regenerates, regardless of who formats what afterwards.
-Future<String> _formatted(String source, Directory scratch) async {
-  final f = File(p.join(scratch.path, 'formatted.dart'))
-    ..writeAsStringSync(source);
-  final r = await Process.run('dart', ['format', f.path]);
-  if (r.exitCode != 0) {
-    throw ProcessException('dart', ['format'], '${r.stderr}', r.exitCode);
+Future<String> _formatted(String source, File tmp) async {
+  tmp.parent.createSync(recursive: true);
+  tmp.writeAsStringSync(source);
+  try {
+    final r = await Process.run('dart', ['format', tmp.path]);
+    if (r.exitCode != 0) {
+      throw ProcessException('dart', ['format'], '${r.stderr}', r.exitCode);
+    }
+    return tmp.readAsStringSync();
+  } finally {
+    if (tmp.existsSync()) tmp.deleteSync();
   }
-  return f.readAsStringSync();
 }

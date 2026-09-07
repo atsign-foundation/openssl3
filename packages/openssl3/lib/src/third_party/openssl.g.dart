@@ -63204,23 +63204,20 @@ typedef ASYNC_stack_alloc_fn =
     ffi.Pointer<ffi.NativeFunction<ASYNC_stack_alloc_fnFunction>>;
 
 /// OpenSSL typedef `ASYNC_stack_alloc_fnFunction`.
-typedef ASYNC_stack_alloc_fnFunction = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<ffi.Size> num,
-);
+typedef ASYNC_stack_alloc_fnFunction =
+    ffi.Pointer<ffi.Void> Function(ffi.Pointer<ffi.Size> num);
 
 /// OpenSSL typedef `ASYNC_stack_free_fn`.
 typedef ASYNC_stack_free_fn =
     ffi.Pointer<ffi.NativeFunction<ASYNC_stack_free_fnFunction>>;
 
 /// OpenSSL typedef `ASYNC_stack_free_fnFunction`.
-typedef ASYNC_stack_free_fnFunction = ffi.Void Function(
-  ffi.Pointer<ffi.Void> addr,
-);
+typedef ASYNC_stack_free_fnFunction =
+    ffi.Void Function(ffi.Pointer<ffi.Void> addr);
 
 /// OpenSSL typedef `DartASYNC_stack_free_fnFunction`.
-typedef DartASYNC_stack_free_fnFunction = void Function(
-  ffi.Pointer<ffi.Void> addr,
-);
+typedef DartASYNC_stack_free_fnFunction =
+    void Function(ffi.Pointer<ffi.Void> addr);
 
 /// OpenSSL struct `ATTRIBUTE_MAPPING_st`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 final class ATTRIBUTE_MAPPING_st extends ffi.Struct {
@@ -64239,52 +64236,56 @@ typedef BIO_callback_fn =
     ffi.Pointer<ffi.NativeFunction<BIO_callback_fnFunction>>;
 
 /// OpenSSL typedef `BIO_callback_fnFunction`.
-typedef BIO_callback_fnFunction = ffi.Long Function(
-  ffi.Pointer<BIO> b,
-  ffi.Int oper,
-  ffi.Pointer<ffi.Char> argp,
-  ffi.Int argi,
-  ffi.Long argl,
-  ffi.Long ret,
-);
+typedef BIO_callback_fnFunction =
+    ffi.Long Function(
+      ffi.Pointer<BIO> b,
+      ffi.Int oper,
+      ffi.Pointer<ffi.Char> argp,
+      ffi.Int argi,
+      ffi.Long argl,
+      ffi.Long ret,
+    );
 
 /// OpenSSL typedef `DartBIO_callback_fnFunction`.
-typedef DartBIO_callback_fnFunction = int Function(
-  ffi.Pointer<BIO> b,
-  int oper,
-  ffi.Pointer<ffi.Char> argp,
-  int argi,
-  int argl,
-  int ret,
-);
+typedef DartBIO_callback_fnFunction =
+    int Function(
+      ffi.Pointer<BIO> b,
+      int oper,
+      ffi.Pointer<ffi.Char> argp,
+      int argi,
+      int argl,
+      int ret,
+    );
 
 /// OpenSSL typedef `BIO_callback_fn_ex`.
 typedef BIO_callback_fn_ex =
     ffi.Pointer<ffi.NativeFunction<BIO_callback_fn_exFunction>>;
 
 /// OpenSSL typedef `BIO_callback_fn_exFunction`.
-typedef BIO_callback_fn_exFunction = ffi.Long Function(
-  ffi.Pointer<BIO> b,
-  ffi.Int oper,
-  ffi.Pointer<ffi.Char> argp,
-  ffi.Size len,
-  ffi.Int argi,
-  ffi.Long argl,
-  ffi.Int ret,
-  ffi.Pointer<ffi.Size> processed,
-);
+typedef BIO_callback_fn_exFunction =
+    ffi.Long Function(
+      ffi.Pointer<BIO> b,
+      ffi.Int oper,
+      ffi.Pointer<ffi.Char> argp,
+      ffi.Size len,
+      ffi.Int argi,
+      ffi.Long argl,
+      ffi.Int ret,
+      ffi.Pointer<ffi.Size> processed,
+    );
 
 /// OpenSSL typedef `DartBIO_callback_fn_exFunction`.
-typedef DartBIO_callback_fn_exFunction = int Function(
-  ffi.Pointer<BIO> b,
-  int oper,
-  ffi.Pointer<ffi.Char> argp,
-  int len,
-  int argi,
-  int argl,
-  int ret,
-  ffi.Pointer<ffi.Size> processed,
-);
+typedef DartBIO_callback_fn_exFunction =
+    int Function(
+      ffi.Pointer<BIO> b,
+      int oper,
+      ffi.Pointer<ffi.Char> argp,
+      int len,
+      int argi,
+      int argl,
+      int ret,
+      ffi.Pointer<ffi.Size> processed,
+    );
 
 /// OpenSSL typedef `BIO_dgram_sctp_notification_handler_fn`.
 typedef BIO_dgram_sctp_notification_handler_fn =
@@ -64293,18 +64294,20 @@ typedef BIO_dgram_sctp_notification_handler_fn =
     >;
 
 /// OpenSSL typedef `BIO_dgram_sctp_notification_handler_fnFunction`.
-typedef BIO_dgram_sctp_notification_handler_fnFunction = ffi.Void Function(
-  ffi.Pointer<BIO> b,
-  ffi.Pointer<ffi.Void> context,
-  ffi.Pointer<ffi.Void> buf,
-);
+typedef BIO_dgram_sctp_notification_handler_fnFunction =
+    ffi.Void Function(
+      ffi.Pointer<BIO> b,
+      ffi.Pointer<ffi.Void> context,
+      ffi.Pointer<ffi.Void> buf,
+    );
 
 /// OpenSSL typedef `DartBIO_dgram_sctp_notification_handler_fnFunction`.
-typedef DartBIO_dgram_sctp_notification_handler_fnFunction = void Function(
-  ffi.Pointer<BIO> b,
-  ffi.Pointer<ffi.Void> context,
-  ffi.Pointer<ffi.Void> buf,
-);
+typedef DartBIO_dgram_sctp_notification_handler_fnFunction =
+    void Function(
+      ffi.Pointer<BIO> b,
+      ffi.Pointer<ffi.Void> context,
+      ffi.Pointer<ffi.Void> buf,
+    );
 
 /// OpenSSL enum `BIO_hostserv_priorities`. Manual: https://docs.openssl.org/3.5/man3/BIO_parse_hostserv/
 enum BIO_hostserv_priorities {
@@ -66480,56 +66483,62 @@ typedef CRYPTO_free_fn =
     ffi.Pointer<ffi.NativeFunction<CRYPTO_free_fnFunction>>;
 
 /// OpenSSL typedef `CRYPTO_free_fnFunction`.
-typedef CRYPTO_free_fnFunction = ffi.Void Function(
-  ffi.Pointer<ffi.Void> addr,
-  ffi.Pointer<ffi.Char> file,
-  ffi.Int line,
-);
+typedef CRYPTO_free_fnFunction =
+    ffi.Void Function(
+      ffi.Pointer<ffi.Void> addr,
+      ffi.Pointer<ffi.Char> file,
+      ffi.Int line,
+    );
 
 /// OpenSSL typedef `DartCRYPTO_free_fnFunction`.
-typedef DartCRYPTO_free_fnFunction = void Function(
-  ffi.Pointer<ffi.Void> addr,
-  ffi.Pointer<ffi.Char> file,
-  int line,
-);
+typedef DartCRYPTO_free_fnFunction =
+    void Function(
+      ffi.Pointer<ffi.Void> addr,
+      ffi.Pointer<ffi.Char> file,
+      int line,
+    );
 
 /// OpenSSL typedef `CRYPTO_malloc_fn`.
 typedef CRYPTO_malloc_fn =
     ffi.Pointer<ffi.NativeFunction<CRYPTO_malloc_fnFunction>>;
 
 /// OpenSSL typedef `CRYPTO_malloc_fnFunction`.
-typedef CRYPTO_malloc_fnFunction = ffi.Pointer<ffi.Void> Function(
-  ffi.Size num,
-  ffi.Pointer<ffi.Char> file,
-  ffi.Int line,
-);
+typedef CRYPTO_malloc_fnFunction =
+    ffi.Pointer<ffi.Void> Function(
+      ffi.Size num,
+      ffi.Pointer<ffi.Char> file,
+      ffi.Int line,
+    );
 
 /// OpenSSL typedef `DartCRYPTO_malloc_fnFunction`.
-typedef DartCRYPTO_malloc_fnFunction = ffi.Pointer<ffi.Void> Function(
-  int num,
-  ffi.Pointer<ffi.Char> file,
-  int line,
-);
+typedef DartCRYPTO_malloc_fnFunction =
+    ffi.Pointer<ffi.Void> Function(
+      int num,
+      ffi.Pointer<ffi.Char> file,
+      int line,
+    );
 
 /// OpenSSL typedef `CRYPTO_realloc_fn`.
 typedef CRYPTO_realloc_fn =
     ffi.Pointer<ffi.NativeFunction<CRYPTO_realloc_fnFunction>>;
 
 /// OpenSSL typedef `CRYPTO_realloc_fnFunction`.
-typedef CRYPTO_realloc_fnFunction = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<ffi.Void> addr,
-  ffi.Size num,
-  ffi.Pointer<ffi.Char> file,
-  ffi.Int line,
-);
+typedef CRYPTO_realloc_fnFunction =
+    ffi.Pointer<ffi.Void> Function(
+      ffi.Pointer<ffi.Void> addr,
+      ffi.Size num,
+      ffi.Pointer<ffi.Char> file,
+      ffi.Int line,
+    );
 
 /// OpenSSL typedef `DartCRYPTO_realloc_fnFunction`.
-typedef DartCRYPTO_realloc_fnFunction = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<ffi.Void> addr,
-  int num,
-  ffi.Pointer<ffi.Char> file,
-  int line,
-);
+typedef DartCRYPTO_realloc_fnFunction =
+    ffi.Pointer<ffi.Void> Function(
+      ffi.Pointer<ffi.Void> addr,
+      int num,
+      ffi.Pointer<ffi.Char> file,
+      int line,
+    );
 
 /// OpenSSL typedef `CTLOG`.
 typedef CTLOG = ctlog_st;
@@ -82776,34 +82785,32 @@ typedef OPENSSL_LH_COMPFUNC =
     ffi.Pointer<ffi.NativeFunction<OPENSSL_LH_COMPFUNCFunction>>;
 
 /// OpenSSL typedef `OPENSSL_LH_COMPFUNCFunction`.
-typedef OPENSSL_LH_COMPFUNCFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Void>,
-);
+typedef OPENSSL_LH_COMPFUNCFunction =
+    ffi.Int Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
 
 /// OpenSSL typedef `DartOPENSSL_LH_COMPFUNCFunction`.
-typedef DartOPENSSL_LH_COMPFUNCFunction = int Function(
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Void>,
-);
+typedef DartOPENSSL_LH_COMPFUNCFunction =
+    int Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
 
 /// OpenSSL typedef `OPENSSL_LH_COMPFUNCTHUNK`.
 typedef OPENSSL_LH_COMPFUNCTHUNK =
     ffi.Pointer<ffi.NativeFunction<OPENSSL_LH_COMPFUNCTHUNKFunction>>;
 
 /// OpenSSL typedef `OPENSSL_LH_COMPFUNCTHUNKFunction`.
-typedef OPENSSL_LH_COMPFUNCTHUNKFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Void>,
-  OPENSSL_LH_COMPFUNC,
-);
+typedef OPENSSL_LH_COMPFUNCTHUNKFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Void>,
+      ffi.Pointer<ffi.Void>,
+      OPENSSL_LH_COMPFUNC,
+    );
 
 /// OpenSSL typedef `DartOPENSSL_LH_COMPFUNCTHUNKFunction`.
-typedef DartOPENSSL_LH_COMPFUNCTHUNKFunction = int Function(
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Void>,
-  OPENSSL_LH_COMPFUNC,
-);
+typedef DartOPENSSL_LH_COMPFUNCTHUNKFunction =
+    int Function(
+      ffi.Pointer<ffi.Void>,
+      ffi.Pointer<ffi.Void>,
+      OPENSSL_LH_COMPFUNC,
+    );
 
 /// OpenSSL typedef `OPENSSL_LH_DOALL_FUNC`.
 typedef OPENSSL_LH_DOALL_FUNC =
@@ -82814,69 +82821,60 @@ typedef OPENSSL_LH_DOALL_FUNCARG =
     ffi.Pointer<ffi.NativeFunction<OPENSSL_LH_DOALL_FUNCARGFunction>>;
 
 /// OpenSSL typedef `OPENSSL_LH_DOALL_FUNCARGFunction`.
-typedef OPENSSL_LH_DOALL_FUNCARGFunction = ffi.Void Function(
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Void>,
-);
+typedef OPENSSL_LH_DOALL_FUNCARGFunction =
+    ffi.Void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
 
 /// OpenSSL typedef `DartOPENSSL_LH_DOALL_FUNCARGFunction`.
-typedef DartOPENSSL_LH_DOALL_FUNCARGFunction = void Function(
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Void>,
-);
+typedef DartOPENSSL_LH_DOALL_FUNCARGFunction =
+    void Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
 
 /// OpenSSL typedef `OPENSSL_LH_DOALL_FUNCARG_THUNK`.
 typedef OPENSSL_LH_DOALL_FUNCARG_THUNK =
     ffi.Pointer<ffi.NativeFunction<OPENSSL_LH_DOALL_FUNCARG_THUNKFunction>>;
 
 /// OpenSSL typedef `OPENSSL_LH_DOALL_FUNCARG_THUNKFunction`.
-typedef OPENSSL_LH_DOALL_FUNCARG_THUNKFunction = ffi.Void Function(
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Void>,
-  OPENSSL_LH_DOALL_FUNCARG,
-);
+typedef OPENSSL_LH_DOALL_FUNCARG_THUNKFunction =
+    ffi.Void Function(
+      ffi.Pointer<ffi.Void>,
+      ffi.Pointer<ffi.Void>,
+      OPENSSL_LH_DOALL_FUNCARG,
+    );
 
 /// OpenSSL typedef `DartOPENSSL_LH_DOALL_FUNCARG_THUNKFunction`.
-typedef DartOPENSSL_LH_DOALL_FUNCARG_THUNKFunction = void Function(
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Void>,
-  OPENSSL_LH_DOALL_FUNCARG,
-);
+typedef DartOPENSSL_LH_DOALL_FUNCARG_THUNKFunction =
+    void Function(
+      ffi.Pointer<ffi.Void>,
+      ffi.Pointer<ffi.Void>,
+      OPENSSL_LH_DOALL_FUNCARG,
+    );
 
 /// OpenSSL typedef `OPENSSL_LH_DOALL_FUNCFunction`.
-typedef OPENSSL_LH_DOALL_FUNCFunction = ffi.Void Function(
-  ffi.Pointer<ffi.Void>,
-);
+typedef OPENSSL_LH_DOALL_FUNCFunction =
+    ffi.Void Function(ffi.Pointer<ffi.Void>);
 
 /// OpenSSL typedef `DartOPENSSL_LH_DOALL_FUNCFunction`.
-typedef DartOPENSSL_LH_DOALL_FUNCFunction = void Function(
-  ffi.Pointer<ffi.Void>,
-);
+typedef DartOPENSSL_LH_DOALL_FUNCFunction =
+    void Function(ffi.Pointer<ffi.Void>);
 
 /// OpenSSL typedef `OPENSSL_LH_DOALL_FUNC_THUNK`.
 typedef OPENSSL_LH_DOALL_FUNC_THUNK =
     ffi.Pointer<ffi.NativeFunction<OPENSSL_LH_DOALL_FUNC_THUNKFunction>>;
 
 /// OpenSSL typedef `OPENSSL_LH_DOALL_FUNC_THUNKFunction`.
-typedef OPENSSL_LH_DOALL_FUNC_THUNKFunction = ffi.Void Function(
-  ffi.Pointer<ffi.Void>,
-  OPENSSL_LH_DOALL_FUNC,
-);
+typedef OPENSSL_LH_DOALL_FUNC_THUNKFunction =
+    ffi.Void Function(ffi.Pointer<ffi.Void>, OPENSSL_LH_DOALL_FUNC);
 
 /// OpenSSL typedef `DartOPENSSL_LH_DOALL_FUNC_THUNKFunction`.
-typedef DartOPENSSL_LH_DOALL_FUNC_THUNKFunction = void Function(
-  ffi.Pointer<ffi.Void>,
-  OPENSSL_LH_DOALL_FUNC,
-);
+typedef DartOPENSSL_LH_DOALL_FUNC_THUNKFunction =
+    void Function(ffi.Pointer<ffi.Void>, OPENSSL_LH_DOALL_FUNC);
 
 /// OpenSSL typedef `OPENSSL_LH_HASHFUNC`.
 typedef OPENSSL_LH_HASHFUNC =
     ffi.Pointer<ffi.NativeFunction<OPENSSL_LH_HASHFUNCFunction>>;
 
 /// OpenSSL typedef `OPENSSL_LH_HASHFUNCFunction`.
-typedef OPENSSL_LH_HASHFUNCFunction = ffi.UnsignedLong Function(
-  ffi.Pointer<ffi.Void>,
-);
+typedef OPENSSL_LH_HASHFUNCFunction =
+    ffi.UnsignedLong Function(ffi.Pointer<ffi.Void>);
 
 /// OpenSSL typedef `DartOPENSSL_LH_HASHFUNCFunction`.
 typedef DartOPENSSL_LH_HASHFUNCFunction = int Function(ffi.Pointer<ffi.Void>);
@@ -82886,16 +82884,12 @@ typedef OPENSSL_LH_HASHFUNCTHUNK =
     ffi.Pointer<ffi.NativeFunction<OPENSSL_LH_HASHFUNCTHUNKFunction>>;
 
 /// OpenSSL typedef `OPENSSL_LH_HASHFUNCTHUNKFunction`.
-typedef OPENSSL_LH_HASHFUNCTHUNKFunction = ffi.UnsignedLong Function(
-  ffi.Pointer<ffi.Void>,
-  OPENSSL_LH_HASHFUNC,
-);
+typedef OPENSSL_LH_HASHFUNCTHUNKFunction =
+    ffi.UnsignedLong Function(ffi.Pointer<ffi.Void>, OPENSSL_LH_HASHFUNC);
 
 /// OpenSSL typedef `DartOPENSSL_LH_HASHFUNCTHUNKFunction`.
-typedef DartOPENSSL_LH_HASHFUNCTHUNKFunction = int Function(
-  ffi.Pointer<ffi.Void>,
-  OPENSSL_LH_HASHFUNC,
-);
+typedef DartOPENSSL_LH_HASHFUNCTHUNKFunction =
+    int Function(ffi.Pointer<ffi.Void>, OPENSSL_LH_HASHFUNC);
 
 /// OpenSSL typedef `OPENSSL_LH_NODE`.
 typedef OPENSSL_LH_NODE = lhash_node_st;
@@ -82974,25 +82968,20 @@ typedef OPENSSL_sk_compfunc =
     ffi.Pointer<ffi.NativeFunction<OPENSSL_sk_compfuncFunction>>;
 
 /// OpenSSL typedef `OPENSSL_sk_compfuncFunction`.
-typedef OPENSSL_sk_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Void>,
-);
+typedef OPENSSL_sk_compfuncFunction =
+    ffi.Int Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
 
 /// OpenSSL typedef `DartOPENSSL_sk_compfuncFunction`.
-typedef DartOPENSSL_sk_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Void>,
-);
+typedef DartOPENSSL_sk_compfuncFunction =
+    int Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>);
 
 /// OpenSSL typedef `OPENSSL_sk_copyfunc`.
 typedef OPENSSL_sk_copyfunc =
     ffi.Pointer<ffi.NativeFunction<OPENSSL_sk_copyfuncFunction>>;
 
 /// OpenSSL typedef `OPENSSL_sk_copyfuncFunction`.
-typedef OPENSSL_sk_copyfuncFunction = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<ffi.Void>,
-);
+typedef OPENSSL_sk_copyfuncFunction =
+    ffi.Pointer<ffi.Void> Function(ffi.Pointer<ffi.Void>);
 
 /// OpenSSL typedef `OPENSSL_sk_freefunc`.
 typedef OPENSSL_sk_freefunc =
@@ -83821,22 +83810,24 @@ typedef OSSL_CMP_SRV_certConf_cb_t =
     ffi.Pointer<ffi.NativeFunction<OSSL_CMP_SRV_certConf_cb_tFunction>>;
 
 /// OpenSSL typedef `OSSL_CMP_SRV_certConf_cb_tFunction`.
-typedef OSSL_CMP_SRV_certConf_cb_tFunction = ffi.Int Function(
-  ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
-  ffi.Pointer<OSSL_CMP_MSG> req,
-  ffi.Int certReqId,
-  ffi.Pointer<ASN1_OCTET_STRING> certHash,
-  ffi.Pointer<OSSL_CMP_PKISI> si,
-);
+typedef OSSL_CMP_SRV_certConf_cb_tFunction =
+    ffi.Int Function(
+      ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
+      ffi.Pointer<OSSL_CMP_MSG> req,
+      ffi.Int certReqId,
+      ffi.Pointer<ASN1_OCTET_STRING> certHash,
+      ffi.Pointer<OSSL_CMP_PKISI> si,
+    );
 
 /// OpenSSL typedef `DartOSSL_CMP_SRV_certConf_cb_tFunction`.
-typedef DartOSSL_CMP_SRV_certConf_cb_tFunction = int Function(
-  ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
-  ffi.Pointer<OSSL_CMP_MSG> req,
-  int certReqId,
-  ffi.Pointer<ASN1_OCTET_STRING> certHash,
-  ffi.Pointer<OSSL_CMP_PKISI> si,
-);
+typedef DartOSSL_CMP_SRV_certConf_cb_tFunction =
+    int Function(
+      ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
+      ffi.Pointer<OSSL_CMP_MSG> req,
+      int certReqId,
+      ffi.Pointer<ASN1_OCTET_STRING> certHash,
+      ffi.Pointer<OSSL_CMP_PKISI> si,
+    );
 
 /// OpenSSL typedef `OSSL_CMP_SRV_cert_request_cb_t`.
 typedef OSSL_CMP_SRV_cert_request_cb_t =
@@ -83875,150 +83866,165 @@ typedef OSSL_CMP_SRV_clean_transaction_cb_t =
     >;
 
 /// OpenSSL typedef `OSSL_CMP_SRV_clean_transaction_cb_tFunction`.
-typedef OSSL_CMP_SRV_clean_transaction_cb_tFunction = ffi.Int Function(
-  ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
-  ffi.Pointer<ASN1_OCTET_STRING> id,
-);
+typedef OSSL_CMP_SRV_clean_transaction_cb_tFunction =
+    ffi.Int Function(
+      ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
+      ffi.Pointer<ASN1_OCTET_STRING> id,
+    );
 
 /// OpenSSL typedef `DartOSSL_CMP_SRV_clean_transaction_cb_tFunction`.
-typedef DartOSSL_CMP_SRV_clean_transaction_cb_tFunction = int Function(
-  ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
-  ffi.Pointer<ASN1_OCTET_STRING> id,
-);
+typedef DartOSSL_CMP_SRV_clean_transaction_cb_tFunction =
+    int Function(
+      ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
+      ffi.Pointer<ASN1_OCTET_STRING> id,
+    );
 
 /// OpenSSL typedef `OSSL_CMP_SRV_delayed_delivery_cb_t`.
 typedef OSSL_CMP_SRV_delayed_delivery_cb_t =
     ffi.Pointer<ffi.NativeFunction<OSSL_CMP_SRV_delayed_delivery_cb_tFunction>>;
 
 /// OpenSSL typedef `OSSL_CMP_SRV_delayed_delivery_cb_tFunction`.
-typedef OSSL_CMP_SRV_delayed_delivery_cb_tFunction = ffi.Int Function(
-  ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
-  ffi.Pointer<OSSL_CMP_MSG> req,
-);
+typedef OSSL_CMP_SRV_delayed_delivery_cb_tFunction =
+    ffi.Int Function(
+      ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
+      ffi.Pointer<OSSL_CMP_MSG> req,
+    );
 
 /// OpenSSL typedef `DartOSSL_CMP_SRV_delayed_delivery_cb_tFunction`.
-typedef DartOSSL_CMP_SRV_delayed_delivery_cb_tFunction = int Function(
-  ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
-  ffi.Pointer<OSSL_CMP_MSG> req,
-);
+typedef DartOSSL_CMP_SRV_delayed_delivery_cb_tFunction =
+    int Function(
+      ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
+      ffi.Pointer<OSSL_CMP_MSG> req,
+    );
 
 /// OpenSSL typedef `OSSL_CMP_SRV_error_cb_t`.
 typedef OSSL_CMP_SRV_error_cb_t =
     ffi.Pointer<ffi.NativeFunction<OSSL_CMP_SRV_error_cb_tFunction>>;
 
 /// OpenSSL typedef `OSSL_CMP_SRV_error_cb_tFunction`.
-typedef OSSL_CMP_SRV_error_cb_tFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
-  ffi.Pointer<OSSL_CMP_MSG> req,
-  ffi.Pointer<OSSL_CMP_PKISI> statusInfo,
-  ffi.Pointer<ASN1_INTEGER> errorCode,
-  ffi.Pointer<OSSL_CMP_PKIFREETEXT> errDetails,
-);
+typedef OSSL_CMP_SRV_error_cb_tFunction =
+    ffi.Void Function(
+      ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
+      ffi.Pointer<OSSL_CMP_MSG> req,
+      ffi.Pointer<OSSL_CMP_PKISI> statusInfo,
+      ffi.Pointer<ASN1_INTEGER> errorCode,
+      ffi.Pointer<OSSL_CMP_PKIFREETEXT> errDetails,
+    );
 
 /// OpenSSL typedef `DartOSSL_CMP_SRV_error_cb_tFunction`.
-typedef DartOSSL_CMP_SRV_error_cb_tFunction = void Function(
-  ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
-  ffi.Pointer<OSSL_CMP_MSG> req,
-  ffi.Pointer<OSSL_CMP_PKISI> statusInfo,
-  ffi.Pointer<ASN1_INTEGER> errorCode,
-  ffi.Pointer<OSSL_CMP_PKIFREETEXT> errDetails,
-);
+typedef DartOSSL_CMP_SRV_error_cb_tFunction =
+    void Function(
+      ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
+      ffi.Pointer<OSSL_CMP_MSG> req,
+      ffi.Pointer<OSSL_CMP_PKISI> statusInfo,
+      ffi.Pointer<ASN1_INTEGER> errorCode,
+      ffi.Pointer<OSSL_CMP_PKIFREETEXT> errDetails,
+    );
 
 /// OpenSSL typedef `OSSL_CMP_SRV_genm_cb_t`.
 typedef OSSL_CMP_SRV_genm_cb_t =
     ffi.Pointer<ffi.NativeFunction<OSSL_CMP_SRV_genm_cb_tFunction>>;
 
 /// OpenSSL typedef `OSSL_CMP_SRV_genm_cb_tFunction`.
-typedef OSSL_CMP_SRV_genm_cb_tFunction = ffi.Int Function(
-  ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
-  ffi.Pointer<OSSL_CMP_MSG> req,
-  ffi.Pointer<stack_st_OSSL_CMP_ITAV> in$,
-  ffi.Pointer<ffi.Pointer<stack_st_OSSL_CMP_ITAV>> out,
-);
+typedef OSSL_CMP_SRV_genm_cb_tFunction =
+    ffi.Int Function(
+      ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
+      ffi.Pointer<OSSL_CMP_MSG> req,
+      ffi.Pointer<stack_st_OSSL_CMP_ITAV> in$,
+      ffi.Pointer<ffi.Pointer<stack_st_OSSL_CMP_ITAV>> out,
+    );
 
 /// OpenSSL typedef `DartOSSL_CMP_SRV_genm_cb_tFunction`.
-typedef DartOSSL_CMP_SRV_genm_cb_tFunction = int Function(
-  ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
-  ffi.Pointer<OSSL_CMP_MSG> req,
-  ffi.Pointer<stack_st_OSSL_CMP_ITAV> in$,
-  ffi.Pointer<ffi.Pointer<stack_st_OSSL_CMP_ITAV>> out,
-);
+typedef DartOSSL_CMP_SRV_genm_cb_tFunction =
+    int Function(
+      ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
+      ffi.Pointer<OSSL_CMP_MSG> req,
+      ffi.Pointer<stack_st_OSSL_CMP_ITAV> in$,
+      ffi.Pointer<ffi.Pointer<stack_st_OSSL_CMP_ITAV>> out,
+    );
 
 /// OpenSSL typedef `OSSL_CMP_SRV_pollReq_cb_t`.
 typedef OSSL_CMP_SRV_pollReq_cb_t =
     ffi.Pointer<ffi.NativeFunction<OSSL_CMP_SRV_pollReq_cb_tFunction>>;
 
 /// OpenSSL typedef `OSSL_CMP_SRV_pollReq_cb_tFunction`.
-typedef OSSL_CMP_SRV_pollReq_cb_tFunction = ffi.Int Function(
-  ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
-  ffi.Pointer<OSSL_CMP_MSG> req,
-  ffi.Int certReqId,
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_MSG>> certReq,
-  ffi.Pointer<ffi.Int64> check_after,
-);
+typedef OSSL_CMP_SRV_pollReq_cb_tFunction =
+    ffi.Int Function(
+      ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
+      ffi.Pointer<OSSL_CMP_MSG> req,
+      ffi.Int certReqId,
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_MSG>> certReq,
+      ffi.Pointer<ffi.Int64> check_after,
+    );
 
 /// OpenSSL typedef `DartOSSL_CMP_SRV_pollReq_cb_tFunction`.
-typedef DartOSSL_CMP_SRV_pollReq_cb_tFunction = int Function(
-  ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
-  ffi.Pointer<OSSL_CMP_MSG> req,
-  int certReqId,
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_MSG>> certReq,
-  ffi.Pointer<ffi.Int64> check_after,
-);
+typedef DartOSSL_CMP_SRV_pollReq_cb_tFunction =
+    int Function(
+      ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
+      ffi.Pointer<OSSL_CMP_MSG> req,
+      int certReqId,
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_MSG>> certReq,
+      ffi.Pointer<ffi.Int64> check_after,
+    );
 
 /// OpenSSL typedef `OSSL_CMP_SRV_rr_cb_t`.
 typedef OSSL_CMP_SRV_rr_cb_t =
     ffi.Pointer<ffi.NativeFunction<OSSL_CMP_SRV_rr_cb_tFunction>>;
 
 /// OpenSSL typedef `OSSL_CMP_SRV_rr_cb_tFunction`.
-typedef OSSL_CMP_SRV_rr_cb_tFunction = ffi.Pointer<OSSL_CMP_PKISI> Function(
-  ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
-  ffi.Pointer<OSSL_CMP_MSG> req,
-  ffi.Pointer<X509_NAME> issuer,
-  ffi.Pointer<ASN1_INTEGER> serial,
-);
+typedef OSSL_CMP_SRV_rr_cb_tFunction =
+    ffi.Pointer<OSSL_CMP_PKISI> Function(
+      ffi.Pointer<OSSL_CMP_SRV_CTX> srv_ctx,
+      ffi.Pointer<OSSL_CMP_MSG> req,
+      ffi.Pointer<X509_NAME> issuer,
+      ffi.Pointer<ASN1_INTEGER> serial,
+    );
 
 /// OpenSSL typedef `OSSL_CMP_certConf_cb_t`.
 typedef OSSL_CMP_certConf_cb_t =
     ffi.Pointer<ffi.NativeFunction<OSSL_CMP_certConf_cb_tFunction>>;
 
 /// OpenSSL typedef `OSSL_CMP_certConf_cb_tFunction`.
-typedef OSSL_CMP_certConf_cb_tFunction = ffi.Int Function(
-  ffi.Pointer<OSSL_CMP_CTX> ctx,
-  ffi.Pointer<X509> cert,
-  ffi.Int fail_info,
-  ffi.Pointer<ffi.Pointer<ffi.Char>> txt,
-);
+typedef OSSL_CMP_certConf_cb_tFunction =
+    ffi.Int Function(
+      ffi.Pointer<OSSL_CMP_CTX> ctx,
+      ffi.Pointer<X509> cert,
+      ffi.Int fail_info,
+      ffi.Pointer<ffi.Pointer<ffi.Char>> txt,
+    );
 
 /// OpenSSL typedef `DartOSSL_CMP_certConf_cb_tFunction`.
-typedef DartOSSL_CMP_certConf_cb_tFunction = int Function(
-  ffi.Pointer<OSSL_CMP_CTX> ctx,
-  ffi.Pointer<X509> cert,
-  int fail_info,
-  ffi.Pointer<ffi.Pointer<ffi.Char>> txt,
-);
+typedef DartOSSL_CMP_certConf_cb_tFunction =
+    int Function(
+      ffi.Pointer<OSSL_CMP_CTX> ctx,
+      ffi.Pointer<X509> cert,
+      int fail_info,
+      ffi.Pointer<ffi.Pointer<ffi.Char>> txt,
+    );
 
 /// OpenSSL typedef `OSSL_CMP_log_cb_t`.
 typedef OSSL_CMP_log_cb_t =
     ffi.Pointer<ffi.NativeFunction<OSSL_CMP_log_cb_tFunction>>;
 
 /// OpenSSL typedef `OSSL_CMP_log_cb_tFunction`.
-typedef OSSL_CMP_log_cb_tFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Char> func,
-  ffi.Pointer<ffi.Char> file,
-  ffi.Int line,
-  OSSL_CMP_severity level,
-  ffi.Pointer<ffi.Char> msg,
-);
+typedef OSSL_CMP_log_cb_tFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Char> func,
+      ffi.Pointer<ffi.Char> file,
+      ffi.Int line,
+      OSSL_CMP_severity level,
+      ffi.Pointer<ffi.Char> msg,
+    );
 
 /// OpenSSL typedef `DartOSSL_CMP_log_cb_tFunction`.
-typedef DartOSSL_CMP_log_cb_tFunction = int Function(
-  ffi.Pointer<ffi.Char> func,
-  ffi.Pointer<ffi.Char> file,
-  int line,
-  DartOSSL_CMP_severity level,
-  ffi.Pointer<ffi.Char> msg,
-);
+typedef DartOSSL_CMP_log_cb_tFunction =
+    int Function(
+      ffi.Pointer<ffi.Char> func,
+      ffi.Pointer<ffi.Char> file,
+      int line,
+      DartOSSL_CMP_severity level,
+      ffi.Pointer<ffi.Char> msg,
+    );
 
 /// OpenSSL typedef `OSSL_CMP_severity`.
 typedef OSSL_CMP_severity = ffi.Int;
@@ -84031,10 +84037,11 @@ typedef OSSL_CMP_transfer_cb_t =
     ffi.Pointer<ffi.NativeFunction<OSSL_CMP_transfer_cb_tFunction>>;
 
 /// OpenSSL typedef `OSSL_CMP_transfer_cb_tFunction`.
-typedef OSSL_CMP_transfer_cb_tFunction = ffi.Pointer<OSSL_CMP_MSG> Function(
-  ffi.Pointer<OSSL_CMP_CTX> ctx,
-  ffi.Pointer<OSSL_CMP_MSG> req,
-);
+typedef OSSL_CMP_transfer_cb_tFunction =
+    ffi.Pointer<OSSL_CMP_MSG> Function(
+      ffi.Pointer<OSSL_CMP_CTX> ctx,
+      ffi.Pointer<OSSL_CMP_MSG> req,
+    );
 
 /// OpenSSL typedef `OSSL_CORE_BIO`.
 typedef OSSL_CORE_BIO = ossl_core_bio_st;
@@ -87854,20 +87861,22 @@ typedef OSSL_HTTP_bio_cb_t =
     ffi.Pointer<ffi.NativeFunction<OSSL_HTTP_bio_cb_tFunction>>;
 
 /// OpenSSL typedef `OSSL_HTTP_bio_cb_tFunction`.
-typedef OSSL_HTTP_bio_cb_tFunction = ffi.Pointer<BIO> Function(
-  ffi.Pointer<BIO> bio,
-  ffi.Pointer<ffi.Void> arg,
-  ffi.Int connect,
-  ffi.Int detail,
-);
+typedef OSSL_HTTP_bio_cb_tFunction =
+    ffi.Pointer<BIO> Function(
+      ffi.Pointer<BIO> bio,
+      ffi.Pointer<ffi.Void> arg,
+      ffi.Int connect,
+      ffi.Int detail,
+    );
 
 /// OpenSSL typedef `DartOSSL_HTTP_bio_cb_tFunction`.
-typedef DartOSSL_HTTP_bio_cb_tFunction = ffi.Pointer<BIO> Function(
-  ffi.Pointer<BIO> bio,
-  ffi.Pointer<ffi.Void> arg,
-  int connect,
-  int detail,
-);
+typedef DartOSSL_HTTP_bio_cb_tFunction =
+    ffi.Pointer<BIO> Function(
+      ffi.Pointer<BIO> bio,
+      ffi.Pointer<ffi.Void> arg,
+      int connect,
+      int detail,
+    );
 
 /// OpenSSL macro `OSSL_IETFAS_OCTETS`.
 const int OSSL_IETFAS_OCTETS = 0;
@@ -89821,103 +89830,98 @@ typedef OSSL_STORE_close_fn =
     ffi.Pointer<ffi.NativeFunction<OSSL_STORE_close_fnFunction>>;
 
 /// OpenSSL typedef `OSSL_STORE_close_fnFunction`.
-typedef OSSL_STORE_close_fnFunction = ffi.Int Function(
-  ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
-);
+typedef OSSL_STORE_close_fnFunction =
+    ffi.Int Function(ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx);
 
 /// OpenSSL typedef `DartOSSL_STORE_close_fnFunction`.
-typedef DartOSSL_STORE_close_fnFunction = int Function(
-  ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
-);
+typedef DartOSSL_STORE_close_fnFunction =
+    int Function(ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx);
 
 /// OpenSSL typedef `OSSL_STORE_ctrl_fn`.
 typedef OSSL_STORE_ctrl_fn =
     ffi.Pointer<ffi.NativeFunction<OSSL_STORE_ctrl_fnFunction>>;
 
 /// OpenSSL typedef `OSSL_STORE_ctrl_fnFunction`.
-typedef OSSL_STORE_ctrl_fnFunction = ffi.Int Function(
-  ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
-  ffi.Int cmd,
-  openssl3_va_list args,
-);
+typedef OSSL_STORE_ctrl_fnFunction =
+    ffi.Int Function(
+      ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
+      ffi.Int cmd,
+      openssl3_va_list args,
+    );
 
 /// OpenSSL typedef `DartOSSL_STORE_ctrl_fnFunction`.
-typedef DartOSSL_STORE_ctrl_fnFunction = int Function(
-  ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
-  int cmd,
-  openssl3_va_list args,
-);
+typedef DartOSSL_STORE_ctrl_fnFunction =
+    int Function(
+      ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
+      int cmd,
+      openssl3_va_list args,
+    );
 
 /// OpenSSL typedef `OSSL_STORE_eof_fn`.
 typedef OSSL_STORE_eof_fn =
     ffi.Pointer<ffi.NativeFunction<OSSL_STORE_eof_fnFunction>>;
 
 /// OpenSSL typedef `OSSL_STORE_eof_fnFunction`.
-typedef OSSL_STORE_eof_fnFunction = ffi.Int Function(
-  ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
-);
+typedef OSSL_STORE_eof_fnFunction =
+    ffi.Int Function(ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx);
 
 /// OpenSSL typedef `DartOSSL_STORE_eof_fnFunction`.
-typedef DartOSSL_STORE_eof_fnFunction = int Function(
-  ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
-);
+typedef DartOSSL_STORE_eof_fnFunction =
+    int Function(ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx);
 
 /// OpenSSL typedef `OSSL_STORE_error_fn`.
 typedef OSSL_STORE_error_fn =
     ffi.Pointer<ffi.NativeFunction<OSSL_STORE_error_fnFunction>>;
 
 /// OpenSSL typedef `OSSL_STORE_error_fnFunction`.
-typedef OSSL_STORE_error_fnFunction = ffi.Int Function(
-  ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
-);
+typedef OSSL_STORE_error_fnFunction =
+    ffi.Int Function(ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx);
 
 /// OpenSSL typedef `DartOSSL_STORE_error_fnFunction`.
-typedef DartOSSL_STORE_error_fnFunction = int Function(
-  ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
-);
+typedef DartOSSL_STORE_error_fnFunction =
+    int Function(ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx);
 
 /// OpenSSL typedef `OSSL_STORE_expect_fn`.
 typedef OSSL_STORE_expect_fn =
     ffi.Pointer<ffi.NativeFunction<OSSL_STORE_expect_fnFunction>>;
 
 /// OpenSSL typedef `OSSL_STORE_expect_fnFunction`.
-typedef OSSL_STORE_expect_fnFunction = ffi.Int Function(
-  ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
-  ffi.Int expected,
-);
+typedef OSSL_STORE_expect_fnFunction =
+    ffi.Int Function(ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx, ffi.Int expected);
 
 /// OpenSSL typedef `DartOSSL_STORE_expect_fnFunction`.
-typedef DartOSSL_STORE_expect_fnFunction = int Function(
-  ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
-  int expected,
-);
+typedef DartOSSL_STORE_expect_fnFunction =
+    int Function(ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx, int expected);
 
 /// OpenSSL typedef `OSSL_STORE_find_fn`.
 typedef OSSL_STORE_find_fn =
     ffi.Pointer<ffi.NativeFunction<OSSL_STORE_find_fnFunction>>;
 
 /// OpenSSL typedef `OSSL_STORE_find_fnFunction`.
-typedef OSSL_STORE_find_fnFunction = ffi.Int Function(
-  ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
-  ffi.Pointer<OSSL_STORE_SEARCH> criteria,
-);
+typedef OSSL_STORE_find_fnFunction =
+    ffi.Int Function(
+      ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
+      ffi.Pointer<OSSL_STORE_SEARCH> criteria,
+    );
 
 /// OpenSSL typedef `DartOSSL_STORE_find_fnFunction`.
-typedef DartOSSL_STORE_find_fnFunction = int Function(
-  ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
-  ffi.Pointer<OSSL_STORE_SEARCH> criteria,
-);
+typedef DartOSSL_STORE_find_fnFunction =
+    int Function(
+      ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
+      ffi.Pointer<OSSL_STORE_SEARCH> criteria,
+    );
 
 /// OpenSSL typedef `OSSL_STORE_load_fn`.
 typedef OSSL_STORE_load_fn =
     ffi.Pointer<ffi.NativeFunction<OSSL_STORE_load_fnFunction>>;
 
 /// OpenSSL typedef `OSSL_STORE_load_fnFunction`.
-typedef OSSL_STORE_load_fnFunction = ffi.Pointer<OSSL_STORE_INFO> Function(
-  ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
-  ffi.Pointer<UI_METHOD> ui_method,
-  ffi.Pointer<ffi.Void> ui_data,
-);
+typedef OSSL_STORE_load_fnFunction =
+    ffi.Pointer<OSSL_STORE_INFO> Function(
+      ffi.Pointer<OSSL_STORE_LOADER_CTX> ctx,
+      ffi.Pointer<UI_METHOD> ui_method,
+      ffi.Pointer<ffi.Void> ui_data,
+    );
 
 /// OpenSSL typedef `OSSL_STORE_open_ex_fn`.
 typedef OSSL_STORE_open_ex_fn =
@@ -90395,35 +90399,35 @@ typedef OSSL_thread_stop_handler_fn =
     ffi.Pointer<ffi.NativeFunction<OSSL_thread_stop_handler_fnFunction>>;
 
 /// OpenSSL typedef `OSSL_thread_stop_handler_fnFunction`.
-typedef OSSL_thread_stop_handler_fnFunction = ffi.Void Function(
-  ffi.Pointer<ffi.Void> arg,
-);
+typedef OSSL_thread_stop_handler_fnFunction =
+    ffi.Void Function(ffi.Pointer<ffi.Void> arg);
 
 /// OpenSSL typedef `DartOSSL_thread_stop_handler_fnFunction`.
-typedef DartOSSL_thread_stop_handler_fnFunction = void Function(
-  ffi.Pointer<ffi.Void> arg,
-);
+typedef DartOSSL_thread_stop_handler_fnFunction =
+    void Function(ffi.Pointer<ffi.Void> arg);
 
 /// OpenSSL typedef `OSSL_trace_cb`.
 typedef OSSL_trace_cb = ffi.Pointer<ffi.NativeFunction<OSSL_trace_cbFunction>>;
 
 /// OpenSSL typedef `OSSL_trace_cbFunction`.
-typedef OSSL_trace_cbFunction = ffi.Size Function(
-  ffi.Pointer<ffi.Char> buffer,
-  ffi.Size count,
-  ffi.Int category,
-  ffi.Int cmd,
-  ffi.Pointer<ffi.Void> data,
-);
+typedef OSSL_trace_cbFunction =
+    ffi.Size Function(
+      ffi.Pointer<ffi.Char> buffer,
+      ffi.Size count,
+      ffi.Int category,
+      ffi.Int cmd,
+      ffi.Pointer<ffi.Void> data,
+    );
 
 /// OpenSSL typedef `DartOSSL_trace_cbFunction`.
-typedef DartOSSL_trace_cbFunction = int Function(
-  ffi.Pointer<ffi.Char> buffer,
-  int count,
-  int category,
-  int cmd,
-  ffi.Pointer<ffi.Void> data,
-);
+typedef DartOSSL_trace_cbFunction =
+    int Function(
+      ffi.Pointer<ffi.Char> buffer,
+      int count,
+      int category,
+      int cmd,
+      ffi.Pointer<ffi.Void> data,
+    );
 
 /// OpenSSL typedef `OTHERNAME`.
 typedef OTHERNAME = otherName_st;
@@ -97932,18 +97936,20 @@ typedef TS_extension_cb =
     ffi.Pointer<ffi.NativeFunction<TS_extension_cbFunction>>;
 
 /// OpenSSL typedef `TS_extension_cbFunction`.
-typedef TS_extension_cbFunction = ffi.Int Function(
-  ffi.Pointer<TS_resp_ctx>,
-  ffi.Pointer<X509_EXTENSION>,
-  ffi.Pointer<ffi.Void>,
-);
+typedef TS_extension_cbFunction =
+    ffi.Int Function(
+      ffi.Pointer<TS_resp_ctx>,
+      ffi.Pointer<X509_EXTENSION>,
+      ffi.Pointer<ffi.Void>,
+    );
 
 /// OpenSSL typedef `DartTS_extension_cbFunction`.
-typedef DartTS_extension_cbFunction = int Function(
-  ffi.Pointer<TS_resp_ctx>,
-  ffi.Pointer<X509_EXTENSION>,
-  ffi.Pointer<ffi.Void>,
-);
+typedef DartTS_extension_cbFunction =
+    int Function(
+      ffi.Pointer<TS_resp_ctx>,
+      ffi.Pointer<X509_EXTENSION>,
+      ffi.Pointer<ffi.Void>,
+    );
 
 /// Opaque OpenSSL type `TS_msg_imprint_st`; only pointers to it are used.
 final class TS_msg_imprint_st extends ffi.Opaque {}
@@ -97961,10 +97967,11 @@ final class TS_resp_st extends ffi.Opaque {}
 typedef TS_serial_cb = ffi.Pointer<ffi.NativeFunction<TS_serial_cbFunction>>;
 
 /// OpenSSL typedef `TS_serial_cbFunction`.
-typedef TS_serial_cbFunction = ffi.Pointer<ASN1_INTEGER> Function(
-  ffi.Pointer<TS_resp_ctx>,
-  ffi.Pointer<ffi.Void>,
-);
+typedef TS_serial_cbFunction =
+    ffi.Pointer<ASN1_INTEGER> Function(
+      ffi.Pointer<TS_resp_ctx>,
+      ffi.Pointer<ffi.Void>,
+    );
 
 /// Opaque OpenSSL type `TS_status_info_st`; only pointers to it are used.
 final class TS_status_info_st extends ffi.Opaque {}
@@ -97973,20 +97980,22 @@ final class TS_status_info_st extends ffi.Opaque {}
 typedef TS_time_cb = ffi.Pointer<ffi.NativeFunction<TS_time_cbFunction>>;
 
 /// OpenSSL typedef `TS_time_cbFunction`.
-typedef TS_time_cbFunction = ffi.Int Function(
-  ffi.Pointer<TS_resp_ctx>,
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Long>,
-  ffi.Pointer<ffi.Long>,
-);
+typedef TS_time_cbFunction =
+    ffi.Int Function(
+      ffi.Pointer<TS_resp_ctx>,
+      ffi.Pointer<ffi.Void>,
+      ffi.Pointer<ffi.Long>,
+      ffi.Pointer<ffi.Long>,
+    );
 
 /// OpenSSL typedef `DartTS_time_cbFunction`.
-typedef DartTS_time_cbFunction = int Function(
-  ffi.Pointer<TS_resp_ctx>,
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Long>,
-  ffi.Pointer<ffi.Long>,
-);
+typedef DartTS_time_cbFunction =
+    int Function(
+      ffi.Pointer<TS_resp_ctx>,
+      ffi.Pointer<ffi.Void>,
+      ffi.Pointer<ffi.Long>,
+      ffi.Pointer<ffi.Long>,
+    );
 
 /// Opaque OpenSSL type `TS_tst_info_st`; only pointers to it are used.
 final class TS_tst_info_st extends ffi.Opaque {}
@@ -98719,18 +98728,20 @@ typedef X509V3_EXT_D2I =
     ffi.Pointer<ffi.NativeFunction<X509V3_EXT_D2IFunction>>;
 
 /// OpenSSL typedef `X509V3_EXT_D2IFunction`.
-typedef X509V3_EXT_D2IFunction = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>,
-  ffi.Long,
-);
+typedef X509V3_EXT_D2IFunction =
+    ffi.Pointer<ffi.Void> Function(
+      ffi.Pointer<ffi.Void>,
+      ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>,
+      ffi.Long,
+    );
 
 /// OpenSSL typedef `DartX509V3_EXT_D2IFunction`.
-typedef DartX509V3_EXT_D2IFunction = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>,
-  int,
-);
+typedef DartX509V3_EXT_D2IFunction =
+    ffi.Pointer<ffi.Void> Function(
+      ffi.Pointer<ffi.Void>,
+      ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>,
+      int,
+    );
 
 /// OpenSSL macro `X509V3_EXT_DEFAULT`.
 const int X509V3_EXT_DEFAULT = 0;
@@ -98759,57 +98770,63 @@ typedef X509V3_EXT_I2D =
     ffi.Pointer<ffi.NativeFunction<X509V3_EXT_I2DFunction>>;
 
 /// OpenSSL typedef `X509V3_EXT_I2DFunction`.
-typedef X509V3_EXT_I2DFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>,
-);
+typedef X509V3_EXT_I2DFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Void>,
+      ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>,
+    );
 
 /// OpenSSL typedef `DartX509V3_EXT_I2DFunction`.
-typedef DartX509V3_EXT_I2DFunction = int Function(
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>,
-);
+typedef DartX509V3_EXT_I2DFunction =
+    int Function(
+      ffi.Pointer<ffi.Void>,
+      ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>>,
+    );
 
 /// OpenSSL typedef `X509V3_EXT_I2R`.
 typedef X509V3_EXT_I2R =
     ffi.Pointer<ffi.NativeFunction<X509V3_EXT_I2RFunction>>;
 
 /// OpenSSL typedef `X509V3_EXT_I2RFunction`.
-typedef X509V3_EXT_I2RFunction = ffi.Int Function(
-  ffi.Pointer<v3_ext_method> method,
-  ffi.Pointer<ffi.Void> ext,
-  ffi.Pointer<BIO> out,
-  ffi.Int indent,
-);
+typedef X509V3_EXT_I2RFunction =
+    ffi.Int Function(
+      ffi.Pointer<v3_ext_method> method,
+      ffi.Pointer<ffi.Void> ext,
+      ffi.Pointer<BIO> out,
+      ffi.Int indent,
+    );
 
 /// OpenSSL typedef `DartX509V3_EXT_I2RFunction`.
-typedef DartX509V3_EXT_I2RFunction = int Function(
-  ffi.Pointer<v3_ext_method> method,
-  ffi.Pointer<ffi.Void> ext,
-  ffi.Pointer<BIO> out,
-  int indent,
-);
+typedef DartX509V3_EXT_I2RFunction =
+    int Function(
+      ffi.Pointer<v3_ext_method> method,
+      ffi.Pointer<ffi.Void> ext,
+      ffi.Pointer<BIO> out,
+      int indent,
+    );
 
 /// OpenSSL typedef `X509V3_EXT_I2S`.
 typedef X509V3_EXT_I2S =
     ffi.Pointer<ffi.NativeFunction<X509V3_EXT_I2SFunction>>;
 
 /// OpenSSL typedef `X509V3_EXT_I2SFunction`.
-typedef X509V3_EXT_I2SFunction = ffi.Pointer<ffi.Char> Function(
-  ffi.Pointer<v3_ext_method> method,
-  ffi.Pointer<ffi.Void> ext,
-);
+typedef X509V3_EXT_I2SFunction =
+    ffi.Pointer<ffi.Char> Function(
+      ffi.Pointer<v3_ext_method> method,
+      ffi.Pointer<ffi.Void> ext,
+    );
 
 /// OpenSSL typedef `X509V3_EXT_I2V`.
 typedef X509V3_EXT_I2V =
     ffi.Pointer<ffi.NativeFunction<X509V3_EXT_I2VFunction>>;
 
 /// OpenSSL typedef `X509V3_EXT_I2VFunction`.
-typedef X509V3_EXT_I2VFunction = ffi.Pointer<stack_st_CONF_VALUE> Function(
-  ffi.Pointer<v3_ext_method> method,
-  ffi.Pointer<ffi.Void> ext,
-  ffi.Pointer<stack_st_CONF_VALUE> extlist,
-);
+typedef X509V3_EXT_I2VFunction =
+    ffi.Pointer<stack_st_CONF_VALUE> Function(
+      ffi.Pointer<v3_ext_method> method,
+      ffi.Pointer<ffi.Void> ext,
+      ffi.Pointer<stack_st_CONF_VALUE> extlist,
+    );
 
 /// OpenSSL typedef `X509V3_EXT_METHOD`.
 typedef X509V3_EXT_METHOD = v3_ext_method;
@@ -98832,22 +98849,24 @@ typedef X509V3_EXT_R2I =
     ffi.Pointer<ffi.NativeFunction<X509V3_EXT_R2IFunction>>;
 
 /// OpenSSL typedef `X509V3_EXT_R2IFunction`.
-typedef X509V3_EXT_R2IFunction = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<v3_ext_method> method,
-  ffi.Pointer<v3_ext_ctx> ctx,
-  ffi.Pointer<ffi.Char> str,
-);
+typedef X509V3_EXT_R2IFunction =
+    ffi.Pointer<ffi.Void> Function(
+      ffi.Pointer<v3_ext_method> method,
+      ffi.Pointer<v3_ext_ctx> ctx,
+      ffi.Pointer<ffi.Char> str,
+    );
 
 /// OpenSSL typedef `X509V3_EXT_S2I`.
 typedef X509V3_EXT_S2I =
     ffi.Pointer<ffi.NativeFunction<X509V3_EXT_S2IFunction>>;
 
 /// OpenSSL typedef `X509V3_EXT_S2IFunction`.
-typedef X509V3_EXT_S2IFunction = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<v3_ext_method> method,
-  ffi.Pointer<v3_ext_ctx> ctx,
-  ffi.Pointer<ffi.Char> str,
-);
+typedef X509V3_EXT_S2IFunction =
+    ffi.Pointer<ffi.Void> Function(
+      ffi.Pointer<v3_ext_method> method,
+      ffi.Pointer<v3_ext_ctx> ctx,
+      ffi.Pointer<ffi.Char> str,
+    );
 
 /// OpenSSL macro `X509V3_EXT_UNKNOWN_MASK`.
 const int X509V3_EXT_UNKNOWN_MASK = 983040;
@@ -98857,11 +98876,12 @@ typedef X509V3_EXT_V2I =
     ffi.Pointer<ffi.NativeFunction<X509V3_EXT_V2IFunction>>;
 
 /// OpenSSL typedef `X509V3_EXT_V2IFunction`.
-typedef X509V3_EXT_V2IFunction = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<v3_ext_method> method,
-  ffi.Pointer<v3_ext_ctx> ctx,
-  ffi.Pointer<stack_st_CONF_VALUE> values,
-);
+typedef X509V3_EXT_V2IFunction =
+    ffi.Pointer<ffi.Void> Function(
+      ffi.Pointer<v3_ext_method> method,
+      ffi.Pointer<v3_ext_ctx> ctx,
+      ffi.Pointer<stack_st_CONF_VALUE> values,
+    );
 
 /// OpenSSL macro `X509V3_F_A2I_GENERAL_NAME`.
 const int X509V3_F_A2I_GENERAL_NAME = 0;
@@ -99641,92 +99661,100 @@ typedef X509_LOOKUP_ctrl_ex_fn =
     ffi.Pointer<ffi.NativeFunction<X509_LOOKUP_ctrl_ex_fnFunction>>;
 
 /// OpenSSL typedef `X509_LOOKUP_ctrl_ex_fnFunction`.
-typedef X509_LOOKUP_ctrl_ex_fnFunction = ffi.Int Function(
-  ffi.Pointer<X509_LOOKUP> ctx,
-  ffi.Int cmd,
-  ffi.Pointer<ffi.Char> argc,
-  ffi.Long argl,
-  ffi.Pointer<ffi.Pointer<ffi.Char>> ret,
-  ffi.Pointer<OSSL_LIB_CTX> libctx,
-  ffi.Pointer<ffi.Char> propq,
-);
+typedef X509_LOOKUP_ctrl_ex_fnFunction =
+    ffi.Int Function(
+      ffi.Pointer<X509_LOOKUP> ctx,
+      ffi.Int cmd,
+      ffi.Pointer<ffi.Char> argc,
+      ffi.Long argl,
+      ffi.Pointer<ffi.Pointer<ffi.Char>> ret,
+      ffi.Pointer<OSSL_LIB_CTX> libctx,
+      ffi.Pointer<ffi.Char> propq,
+    );
 
 /// OpenSSL typedef `DartX509_LOOKUP_ctrl_ex_fnFunction`.
-typedef DartX509_LOOKUP_ctrl_ex_fnFunction = int Function(
-  ffi.Pointer<X509_LOOKUP> ctx,
-  int cmd,
-  ffi.Pointer<ffi.Char> argc,
-  int argl,
-  ffi.Pointer<ffi.Pointer<ffi.Char>> ret,
-  ffi.Pointer<OSSL_LIB_CTX> libctx,
-  ffi.Pointer<ffi.Char> propq,
-);
+typedef DartX509_LOOKUP_ctrl_ex_fnFunction =
+    int Function(
+      ffi.Pointer<X509_LOOKUP> ctx,
+      int cmd,
+      ffi.Pointer<ffi.Char> argc,
+      int argl,
+      ffi.Pointer<ffi.Pointer<ffi.Char>> ret,
+      ffi.Pointer<OSSL_LIB_CTX> libctx,
+      ffi.Pointer<ffi.Char> propq,
+    );
 
 /// OpenSSL typedef `X509_LOOKUP_ctrl_fn`.
 typedef X509_LOOKUP_ctrl_fn =
     ffi.Pointer<ffi.NativeFunction<X509_LOOKUP_ctrl_fnFunction>>;
 
 /// OpenSSL typedef `X509_LOOKUP_ctrl_fnFunction`.
-typedef X509_LOOKUP_ctrl_fnFunction = ffi.Int Function(
-  ffi.Pointer<X509_LOOKUP> ctx,
-  ffi.Int cmd,
-  ffi.Pointer<ffi.Char> argc,
-  ffi.Long argl,
-  ffi.Pointer<ffi.Pointer<ffi.Char>> ret,
-);
+typedef X509_LOOKUP_ctrl_fnFunction =
+    ffi.Int Function(
+      ffi.Pointer<X509_LOOKUP> ctx,
+      ffi.Int cmd,
+      ffi.Pointer<ffi.Char> argc,
+      ffi.Long argl,
+      ffi.Pointer<ffi.Pointer<ffi.Char>> ret,
+    );
 
 /// OpenSSL typedef `DartX509_LOOKUP_ctrl_fnFunction`.
-typedef DartX509_LOOKUP_ctrl_fnFunction = int Function(
-  ffi.Pointer<X509_LOOKUP> ctx,
-  int cmd,
-  ffi.Pointer<ffi.Char> argc,
-  int argl,
-  ffi.Pointer<ffi.Pointer<ffi.Char>> ret,
-);
+typedef DartX509_LOOKUP_ctrl_fnFunction =
+    int Function(
+      ffi.Pointer<X509_LOOKUP> ctx,
+      int cmd,
+      ffi.Pointer<ffi.Char> argc,
+      int argl,
+      ffi.Pointer<ffi.Pointer<ffi.Char>> ret,
+    );
 
 /// OpenSSL typedef `X509_LOOKUP_get_by_alias_fn`.
 typedef X509_LOOKUP_get_by_alias_fn =
     ffi.Pointer<ffi.NativeFunction<X509_LOOKUP_get_by_alias_fnFunction>>;
 
 /// OpenSSL typedef `X509_LOOKUP_get_by_alias_fnFunction`.
-typedef X509_LOOKUP_get_by_alias_fnFunction = ffi.Int Function(
-  ffi.Pointer<X509_LOOKUP> ctx,
-  ffi.UnsignedInt type,
-  ffi.Pointer<ffi.Char> str,
-  ffi.Int len,
-  ffi.Pointer<X509_OBJECT> ret,
-);
+typedef X509_LOOKUP_get_by_alias_fnFunction =
+    ffi.Int Function(
+      ffi.Pointer<X509_LOOKUP> ctx,
+      ffi.UnsignedInt type,
+      ffi.Pointer<ffi.Char> str,
+      ffi.Int len,
+      ffi.Pointer<X509_OBJECT> ret,
+    );
 
 /// OpenSSL typedef `DartX509_LOOKUP_get_by_alias_fnFunction`.
-typedef DartX509_LOOKUP_get_by_alias_fnFunction = int Function(
-  ffi.Pointer<X509_LOOKUP> ctx,
-  X509_LOOKUP_TYPE type,
-  ffi.Pointer<ffi.Char> str,
-  int len,
-  ffi.Pointer<X509_OBJECT> ret,
-);
+typedef DartX509_LOOKUP_get_by_alias_fnFunction =
+    int Function(
+      ffi.Pointer<X509_LOOKUP> ctx,
+      X509_LOOKUP_TYPE type,
+      ffi.Pointer<ffi.Char> str,
+      int len,
+      ffi.Pointer<X509_OBJECT> ret,
+    );
 
 /// OpenSSL typedef `X509_LOOKUP_get_by_fingerprint_fn`.
 typedef X509_LOOKUP_get_by_fingerprint_fn =
     ffi.Pointer<ffi.NativeFunction<X509_LOOKUP_get_by_fingerprint_fnFunction>>;
 
 /// OpenSSL typedef `X509_LOOKUP_get_by_fingerprint_fnFunction`.
-typedef X509_LOOKUP_get_by_fingerprint_fnFunction = ffi.Int Function(
-  ffi.Pointer<X509_LOOKUP> ctx,
-  ffi.UnsignedInt type,
-  ffi.Pointer<ffi.UnsignedChar> bytes,
-  ffi.Int len,
-  ffi.Pointer<X509_OBJECT> ret,
-);
+typedef X509_LOOKUP_get_by_fingerprint_fnFunction =
+    ffi.Int Function(
+      ffi.Pointer<X509_LOOKUP> ctx,
+      ffi.UnsignedInt type,
+      ffi.Pointer<ffi.UnsignedChar> bytes,
+      ffi.Int len,
+      ffi.Pointer<X509_OBJECT> ret,
+    );
 
 /// OpenSSL typedef `DartX509_LOOKUP_get_by_fingerprint_fnFunction`.
-typedef DartX509_LOOKUP_get_by_fingerprint_fnFunction = int Function(
-  ffi.Pointer<X509_LOOKUP> ctx,
-  X509_LOOKUP_TYPE type,
-  ffi.Pointer<ffi.UnsignedChar> bytes,
-  int len,
-  ffi.Pointer<X509_OBJECT> ret,
-);
+typedef DartX509_LOOKUP_get_by_fingerprint_fnFunction =
+    int Function(
+      ffi.Pointer<X509_LOOKUP> ctx,
+      X509_LOOKUP_TYPE type,
+      ffi.Pointer<ffi.UnsignedChar> bytes,
+      int len,
+      ffi.Pointer<X509_OBJECT> ret,
+    );
 
 /// OpenSSL typedef `X509_LOOKUP_get_by_issuer_serial_fn`.
 typedef X509_LOOKUP_get_by_issuer_serial_fn =
@@ -99735,66 +99763,72 @@ typedef X509_LOOKUP_get_by_issuer_serial_fn =
     >;
 
 /// OpenSSL typedef `X509_LOOKUP_get_by_issuer_serial_fnFunction`.
-typedef X509_LOOKUP_get_by_issuer_serial_fnFunction = ffi.Int Function(
-  ffi.Pointer<X509_LOOKUP> ctx,
-  ffi.UnsignedInt type,
-  ffi.Pointer<X509_NAME> name,
-  ffi.Pointer<ASN1_INTEGER> serial,
-  ffi.Pointer<X509_OBJECT> ret,
-);
+typedef X509_LOOKUP_get_by_issuer_serial_fnFunction =
+    ffi.Int Function(
+      ffi.Pointer<X509_LOOKUP> ctx,
+      ffi.UnsignedInt type,
+      ffi.Pointer<X509_NAME> name,
+      ffi.Pointer<ASN1_INTEGER> serial,
+      ffi.Pointer<X509_OBJECT> ret,
+    );
 
 /// OpenSSL typedef `DartX509_LOOKUP_get_by_issuer_serial_fnFunction`.
-typedef DartX509_LOOKUP_get_by_issuer_serial_fnFunction = int Function(
-  ffi.Pointer<X509_LOOKUP> ctx,
-  X509_LOOKUP_TYPE type,
-  ffi.Pointer<X509_NAME> name,
-  ffi.Pointer<ASN1_INTEGER> serial,
-  ffi.Pointer<X509_OBJECT> ret,
-);
+typedef DartX509_LOOKUP_get_by_issuer_serial_fnFunction =
+    int Function(
+      ffi.Pointer<X509_LOOKUP> ctx,
+      X509_LOOKUP_TYPE type,
+      ffi.Pointer<X509_NAME> name,
+      ffi.Pointer<ASN1_INTEGER> serial,
+      ffi.Pointer<X509_OBJECT> ret,
+    );
 
 /// OpenSSL typedef `X509_LOOKUP_get_by_subject_ex_fn`.
 typedef X509_LOOKUP_get_by_subject_ex_fn =
     ffi.Pointer<ffi.NativeFunction<X509_LOOKUP_get_by_subject_ex_fnFunction>>;
 
 /// OpenSSL typedef `X509_LOOKUP_get_by_subject_ex_fnFunction`.
-typedef X509_LOOKUP_get_by_subject_ex_fnFunction = ffi.Int Function(
-  ffi.Pointer<X509_LOOKUP> ctx,
-  ffi.UnsignedInt type,
-  ffi.Pointer<X509_NAME> name,
-  ffi.Pointer<X509_OBJECT> ret,
-  ffi.Pointer<OSSL_LIB_CTX> libctx,
-  ffi.Pointer<ffi.Char> propq,
-);
+typedef X509_LOOKUP_get_by_subject_ex_fnFunction =
+    ffi.Int Function(
+      ffi.Pointer<X509_LOOKUP> ctx,
+      ffi.UnsignedInt type,
+      ffi.Pointer<X509_NAME> name,
+      ffi.Pointer<X509_OBJECT> ret,
+      ffi.Pointer<OSSL_LIB_CTX> libctx,
+      ffi.Pointer<ffi.Char> propq,
+    );
 
 /// OpenSSL typedef `DartX509_LOOKUP_get_by_subject_ex_fnFunction`.
-typedef DartX509_LOOKUP_get_by_subject_ex_fnFunction = int Function(
-  ffi.Pointer<X509_LOOKUP> ctx,
-  X509_LOOKUP_TYPE type,
-  ffi.Pointer<X509_NAME> name,
-  ffi.Pointer<X509_OBJECT> ret,
-  ffi.Pointer<OSSL_LIB_CTX> libctx,
-  ffi.Pointer<ffi.Char> propq,
-);
+typedef DartX509_LOOKUP_get_by_subject_ex_fnFunction =
+    int Function(
+      ffi.Pointer<X509_LOOKUP> ctx,
+      X509_LOOKUP_TYPE type,
+      ffi.Pointer<X509_NAME> name,
+      ffi.Pointer<X509_OBJECT> ret,
+      ffi.Pointer<OSSL_LIB_CTX> libctx,
+      ffi.Pointer<ffi.Char> propq,
+    );
 
 /// OpenSSL typedef `X509_LOOKUP_get_by_subject_fn`.
 typedef X509_LOOKUP_get_by_subject_fn =
     ffi.Pointer<ffi.NativeFunction<X509_LOOKUP_get_by_subject_fnFunction>>;
 
 /// OpenSSL typedef `X509_LOOKUP_get_by_subject_fnFunction`.
-typedef X509_LOOKUP_get_by_subject_fnFunction = ffi.Int Function(
-  ffi.Pointer<X509_LOOKUP> ctx,
-  ffi.UnsignedInt type,
-  ffi.Pointer<X509_NAME> name,
-  ffi.Pointer<X509_OBJECT> ret,
-);
+typedef X509_LOOKUP_get_by_subject_fnFunction =
+    ffi.Int Function(
+      ffi.Pointer<X509_LOOKUP> ctx,
+      ffi.UnsignedInt type,
+      ffi.Pointer<X509_NAME> name,
+      ffi.Pointer<X509_OBJECT> ret,
+    );
 
 /// OpenSSL typedef `DartX509_LOOKUP_get_by_subject_fnFunction`.
-typedef DartX509_LOOKUP_get_by_subject_fnFunction = int Function(
-  ffi.Pointer<X509_LOOKUP> ctx,
-  X509_LOOKUP_TYPE type,
-  ffi.Pointer<X509_NAME> name,
-  ffi.Pointer<X509_OBJECT> ret,
-);
+typedef DartX509_LOOKUP_get_by_subject_fnFunction =
+    int Function(
+      ffi.Pointer<X509_LOOKUP> ctx,
+      X509_LOOKUP_TYPE type,
+      ffi.Pointer<X509_NAME> name,
+      ffi.Pointer<X509_OBJECT> ret,
+    );
 
 /// OpenSSL macro `X509_LU_FAIL`.
 const int X509_LU_FAIL = 0;
@@ -100092,130 +100126,131 @@ typedef X509_STORE_CTX_cert_crl_fn =
     ffi.Pointer<ffi.NativeFunction<X509_STORE_CTX_cert_crl_fnFunction>>;
 
 /// OpenSSL typedef `X509_STORE_CTX_cert_crl_fnFunction`.
-typedef X509_STORE_CTX_cert_crl_fnFunction = ffi.Int Function(
-  ffi.Pointer<X509_STORE_CTX> ctx,
-  ffi.Pointer<X509_CRL> crl,
-  ffi.Pointer<X509> x,
-);
+typedef X509_STORE_CTX_cert_crl_fnFunction =
+    ffi.Int Function(
+      ffi.Pointer<X509_STORE_CTX> ctx,
+      ffi.Pointer<X509_CRL> crl,
+      ffi.Pointer<X509> x,
+    );
 
 /// OpenSSL typedef `DartX509_STORE_CTX_cert_crl_fnFunction`.
-typedef DartX509_STORE_CTX_cert_crl_fnFunction = int Function(
-  ffi.Pointer<X509_STORE_CTX> ctx,
-  ffi.Pointer<X509_CRL> crl,
-  ffi.Pointer<X509> x,
-);
+typedef DartX509_STORE_CTX_cert_crl_fnFunction =
+    int Function(
+      ffi.Pointer<X509_STORE_CTX> ctx,
+      ffi.Pointer<X509_CRL> crl,
+      ffi.Pointer<X509> x,
+    );
 
 /// OpenSSL typedef `X509_STORE_CTX_check_crl_fn`.
 typedef X509_STORE_CTX_check_crl_fn =
     ffi.Pointer<ffi.NativeFunction<X509_STORE_CTX_check_crl_fnFunction>>;
 
 /// OpenSSL typedef `X509_STORE_CTX_check_crl_fnFunction`.
-typedef X509_STORE_CTX_check_crl_fnFunction = ffi.Int Function(
-  ffi.Pointer<X509_STORE_CTX> ctx,
-  ffi.Pointer<X509_CRL> crl,
-);
+typedef X509_STORE_CTX_check_crl_fnFunction =
+    ffi.Int Function(
+      ffi.Pointer<X509_STORE_CTX> ctx,
+      ffi.Pointer<X509_CRL> crl,
+    );
 
 /// OpenSSL typedef `DartX509_STORE_CTX_check_crl_fnFunction`.
-typedef DartX509_STORE_CTX_check_crl_fnFunction = int Function(
-  ffi.Pointer<X509_STORE_CTX> ctx,
-  ffi.Pointer<X509_CRL> crl,
-);
+typedef DartX509_STORE_CTX_check_crl_fnFunction =
+    int Function(ffi.Pointer<X509_STORE_CTX> ctx, ffi.Pointer<X509_CRL> crl);
 
 /// OpenSSL typedef `X509_STORE_CTX_check_issued_fn`.
 typedef X509_STORE_CTX_check_issued_fn =
     ffi.Pointer<ffi.NativeFunction<X509_STORE_CTX_check_issued_fnFunction>>;
 
 /// OpenSSL typedef `X509_STORE_CTX_check_issued_fnFunction`.
-typedef X509_STORE_CTX_check_issued_fnFunction = ffi.Int Function(
-  ffi.Pointer<X509_STORE_CTX> ctx,
-  ffi.Pointer<X509> x,
-  ffi.Pointer<X509> issuer,
-);
+typedef X509_STORE_CTX_check_issued_fnFunction =
+    ffi.Int Function(
+      ffi.Pointer<X509_STORE_CTX> ctx,
+      ffi.Pointer<X509> x,
+      ffi.Pointer<X509> issuer,
+    );
 
 /// OpenSSL typedef `DartX509_STORE_CTX_check_issued_fnFunction`.
-typedef DartX509_STORE_CTX_check_issued_fnFunction = int Function(
-  ffi.Pointer<X509_STORE_CTX> ctx,
-  ffi.Pointer<X509> x,
-  ffi.Pointer<X509> issuer,
-);
+typedef DartX509_STORE_CTX_check_issued_fnFunction =
+    int Function(
+      ffi.Pointer<X509_STORE_CTX> ctx,
+      ffi.Pointer<X509> x,
+      ffi.Pointer<X509> issuer,
+    );
 
 /// OpenSSL typedef `X509_STORE_CTX_check_policy_fn`.
 typedef X509_STORE_CTX_check_policy_fn =
     ffi.Pointer<ffi.NativeFunction<X509_STORE_CTX_check_policy_fnFunction>>;
 
 /// OpenSSL typedef `X509_STORE_CTX_check_policy_fnFunction`.
-typedef X509_STORE_CTX_check_policy_fnFunction = ffi.Int Function(
-  ffi.Pointer<X509_STORE_CTX> ctx,
-);
+typedef X509_STORE_CTX_check_policy_fnFunction =
+    ffi.Int Function(ffi.Pointer<X509_STORE_CTX> ctx);
 
 /// OpenSSL typedef `DartX509_STORE_CTX_check_policy_fnFunction`.
-typedef DartX509_STORE_CTX_check_policy_fnFunction = int Function(
-  ffi.Pointer<X509_STORE_CTX> ctx,
-);
+typedef DartX509_STORE_CTX_check_policy_fnFunction =
+    int Function(ffi.Pointer<X509_STORE_CTX> ctx);
 
 /// OpenSSL typedef `X509_STORE_CTX_check_revocation_fn`.
 typedef X509_STORE_CTX_check_revocation_fn =
     ffi.Pointer<ffi.NativeFunction<X509_STORE_CTX_check_revocation_fnFunction>>;
 
 /// OpenSSL typedef `X509_STORE_CTX_check_revocation_fnFunction`.
-typedef X509_STORE_CTX_check_revocation_fnFunction = ffi.Int Function(
-  ffi.Pointer<X509_STORE_CTX> ctx,
-);
+typedef X509_STORE_CTX_check_revocation_fnFunction =
+    ffi.Int Function(ffi.Pointer<X509_STORE_CTX> ctx);
 
 /// OpenSSL typedef `DartX509_STORE_CTX_check_revocation_fnFunction`.
-typedef DartX509_STORE_CTX_check_revocation_fnFunction = int Function(
-  ffi.Pointer<X509_STORE_CTX> ctx,
-);
+typedef DartX509_STORE_CTX_check_revocation_fnFunction =
+    int Function(ffi.Pointer<X509_STORE_CTX> ctx);
 
 /// OpenSSL typedef `X509_STORE_CTX_cleanup_fn`.
 typedef X509_STORE_CTX_cleanup_fn =
     ffi.Pointer<ffi.NativeFunction<X509_STORE_CTX_cleanup_fnFunction>>;
 
 /// OpenSSL typedef `X509_STORE_CTX_cleanup_fnFunction`.
-typedef X509_STORE_CTX_cleanup_fnFunction = ffi.Int Function(
-  ffi.Pointer<X509_STORE_CTX> ctx,
-);
+typedef X509_STORE_CTX_cleanup_fnFunction =
+    ffi.Int Function(ffi.Pointer<X509_STORE_CTX> ctx);
 
 /// OpenSSL typedef `DartX509_STORE_CTX_cleanup_fnFunction`.
-typedef DartX509_STORE_CTX_cleanup_fnFunction = int Function(
-  ffi.Pointer<X509_STORE_CTX> ctx,
-);
+typedef DartX509_STORE_CTX_cleanup_fnFunction =
+    int Function(ffi.Pointer<X509_STORE_CTX> ctx);
 
 /// OpenSSL typedef `X509_STORE_CTX_get_crl_fn`.
 typedef X509_STORE_CTX_get_crl_fn =
     ffi.Pointer<ffi.NativeFunction<X509_STORE_CTX_get_crl_fnFunction>>;
 
 /// OpenSSL typedef `X509_STORE_CTX_get_crl_fnFunction`.
-typedef X509_STORE_CTX_get_crl_fnFunction = ffi.Int Function(
-  ffi.Pointer<X509_STORE_CTX> ctx,
-  ffi.Pointer<ffi.Pointer<X509_CRL>> crl,
-  ffi.Pointer<X509> x,
-);
+typedef X509_STORE_CTX_get_crl_fnFunction =
+    ffi.Int Function(
+      ffi.Pointer<X509_STORE_CTX> ctx,
+      ffi.Pointer<ffi.Pointer<X509_CRL>> crl,
+      ffi.Pointer<X509> x,
+    );
 
 /// OpenSSL typedef `DartX509_STORE_CTX_get_crl_fnFunction`.
-typedef DartX509_STORE_CTX_get_crl_fnFunction = int Function(
-  ffi.Pointer<X509_STORE_CTX> ctx,
-  ffi.Pointer<ffi.Pointer<X509_CRL>> crl,
-  ffi.Pointer<X509> x,
-);
+typedef DartX509_STORE_CTX_get_crl_fnFunction =
+    int Function(
+      ffi.Pointer<X509_STORE_CTX> ctx,
+      ffi.Pointer<ffi.Pointer<X509_CRL>> crl,
+      ffi.Pointer<X509> x,
+    );
 
 /// OpenSSL typedef `X509_STORE_CTX_get_issuer_fn`.
 typedef X509_STORE_CTX_get_issuer_fn =
     ffi.Pointer<ffi.NativeFunction<X509_STORE_CTX_get_issuer_fnFunction>>;
 
 /// OpenSSL typedef `X509_STORE_CTX_get_issuer_fnFunction`.
-typedef X509_STORE_CTX_get_issuer_fnFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509>> issuer,
-  ffi.Pointer<X509_STORE_CTX> ctx,
-  ffi.Pointer<X509> x,
-);
+typedef X509_STORE_CTX_get_issuer_fnFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509>> issuer,
+      ffi.Pointer<X509_STORE_CTX> ctx,
+      ffi.Pointer<X509> x,
+    );
 
 /// OpenSSL typedef `DartX509_STORE_CTX_get_issuer_fnFunction`.
-typedef DartX509_STORE_CTX_get_issuer_fnFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509>> issuer,
-  ffi.Pointer<X509_STORE_CTX> ctx,
-  ffi.Pointer<X509> x,
-);
+typedef DartX509_STORE_CTX_get_issuer_fnFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509>> issuer,
+      ffi.Pointer<X509_STORE_CTX> ctx,
+      ffi.Pointer<X509> x,
+    );
 
 /// OpenSSL typedef `X509_STORE_CTX_lookup_certs_fn`.
 typedef X509_STORE_CTX_lookup_certs_fn =
@@ -100244,30 +100279,24 @@ typedef X509_STORE_CTX_verify_cb =
     ffi.Pointer<ffi.NativeFunction<X509_STORE_CTX_verify_cbFunction>>;
 
 /// OpenSSL typedef `X509_STORE_CTX_verify_cbFunction`.
-typedef X509_STORE_CTX_verify_cbFunction = ffi.Int Function(
-  ffi.Int,
-  ffi.Pointer<X509_STORE_CTX>,
-);
+typedef X509_STORE_CTX_verify_cbFunction =
+    ffi.Int Function(ffi.Int, ffi.Pointer<X509_STORE_CTX>);
 
 /// OpenSSL typedef `DartX509_STORE_CTX_verify_cbFunction`.
-typedef DartX509_STORE_CTX_verify_cbFunction = int Function(
-  int,
-  ffi.Pointer<X509_STORE_CTX>,
-);
+typedef DartX509_STORE_CTX_verify_cbFunction =
+    int Function(int, ffi.Pointer<X509_STORE_CTX>);
 
 /// OpenSSL typedef `X509_STORE_CTX_verify_fn`.
 typedef X509_STORE_CTX_verify_fn =
     ffi.Pointer<ffi.NativeFunction<X509_STORE_CTX_verify_fnFunction>>;
 
 /// OpenSSL typedef `X509_STORE_CTX_verify_fnFunction`.
-typedef X509_STORE_CTX_verify_fnFunction = ffi.Int Function(
-  ffi.Pointer<X509_STORE_CTX>,
-);
+typedef X509_STORE_CTX_verify_fnFunction =
+    ffi.Int Function(ffi.Pointer<X509_STORE_CTX>);
 
 /// OpenSSL typedef `DartX509_STORE_CTX_verify_fnFunction`.
-typedef DartX509_STORE_CTX_verify_fnFunction = int Function(
-  ffi.Pointer<X509_STORE_CTX>,
-);
+typedef DartX509_STORE_CTX_verify_fnFunction =
+    int Function(ffi.Pointer<X509_STORE_CTX>);
 
 /// OpenSSL typedef `X509_TRUST`.
 typedef X509_TRUST = x509_trust_st;
@@ -101132,18 +101161,20 @@ final class bio_st extends ffi.Opaque {}
 typedef block128_f = ffi.Pointer<ffi.NativeFunction<block128_fFunction>>;
 
 /// OpenSSL typedef `block128_fFunction`.
-typedef block128_fFunction = ffi.Void Function(
-  ffi.Pointer<ffi.UnsignedChar> in$,
-  ffi.Pointer<ffi.UnsignedChar> out,
-  ffi.Pointer<ffi.Void> key,
-);
+typedef block128_fFunction =
+    ffi.Void Function(
+      ffi.Pointer<ffi.UnsignedChar> in$,
+      ffi.Pointer<ffi.UnsignedChar> out,
+      ffi.Pointer<ffi.Void> key,
+    );
 
 /// OpenSSL typedef `Dartblock128_fFunction`.
-typedef Dartblock128_fFunction = void Function(
-  ffi.Pointer<ffi.UnsignedChar> in$,
-  ffi.Pointer<ffi.UnsignedChar> out,
-  ffi.Pointer<ffi.Void> key,
-);
+typedef Dartblock128_fFunction =
+    void Function(
+      ffi.Pointer<ffi.UnsignedChar> in$,
+      ffi.Pointer<ffi.UnsignedChar> out,
+      ffi.Pointer<ffi.Void> key,
+    );
 
 /// Opaque OpenSSL type `bn_blinding_st`; only pointers to it are used.
 final class bn_blinding_st extends ffi.Opaque {}
@@ -101204,24 +101235,26 @@ final class cast_key_st extends ffi.Struct {
 typedef cbc128_f = ffi.Pointer<ffi.NativeFunction<cbc128_fFunction>>;
 
 /// OpenSSL typedef `cbc128_fFunction`.
-typedef cbc128_fFunction = ffi.Void Function(
-  ffi.Pointer<ffi.UnsignedChar> in$,
-  ffi.Pointer<ffi.UnsignedChar> out,
-  ffi.Size len,
-  ffi.Pointer<ffi.Void> key,
-  ffi.Pointer<ffi.UnsignedChar> ivec,
-  ffi.Int enc,
-);
+typedef cbc128_fFunction =
+    ffi.Void Function(
+      ffi.Pointer<ffi.UnsignedChar> in$,
+      ffi.Pointer<ffi.UnsignedChar> out,
+      ffi.Size len,
+      ffi.Pointer<ffi.Void> key,
+      ffi.Pointer<ffi.UnsignedChar> ivec,
+      ffi.Int enc,
+    );
 
 /// OpenSSL typedef `Dartcbc128_fFunction`.
-typedef Dartcbc128_fFunction = void Function(
-  ffi.Pointer<ffi.UnsignedChar> in$,
-  ffi.Pointer<ffi.UnsignedChar> out,
-  int len,
-  ffi.Pointer<ffi.Void> key,
-  ffi.Pointer<ffi.UnsignedChar> ivec,
-  int enc,
-);
+typedef Dartcbc128_fFunction =
+    void Function(
+      ffi.Pointer<ffi.UnsignedChar> in$,
+      ffi.Pointer<ffi.UnsignedChar> out,
+      int len,
+      ffi.Pointer<ffi.Void> key,
+      ffi.Pointer<ffi.UnsignedChar> ivec,
+      int enc,
+    );
 
 /// Opaque OpenSSL type `ccm128_context`; only pointers to it are used.
 final class ccm128_context extends ffi.Opaque {}
@@ -101230,24 +101263,26 @@ final class ccm128_context extends ffi.Opaque {}
 typedef ccm128_f = ffi.Pointer<ffi.NativeFunction<ccm128_fFunction>>;
 
 /// OpenSSL typedef `ccm128_fFunction`.
-typedef ccm128_fFunction = ffi.Void Function(
-  ffi.Pointer<ffi.UnsignedChar> in$,
-  ffi.Pointer<ffi.UnsignedChar> out,
-  ffi.Size blocks,
-  ffi.Pointer<ffi.Void> key,
-  ffi.Pointer<ffi.UnsignedChar> ivec,
-  ffi.Pointer<ffi.UnsignedChar> cmac,
-);
+typedef ccm128_fFunction =
+    ffi.Void Function(
+      ffi.Pointer<ffi.UnsignedChar> in$,
+      ffi.Pointer<ffi.UnsignedChar> out,
+      ffi.Size blocks,
+      ffi.Pointer<ffi.Void> key,
+      ffi.Pointer<ffi.UnsignedChar> ivec,
+      ffi.Pointer<ffi.UnsignedChar> cmac,
+    );
 
 /// OpenSSL typedef `Dartccm128_fFunction`.
-typedef Dartccm128_fFunction = void Function(
-  ffi.Pointer<ffi.UnsignedChar> in$,
-  ffi.Pointer<ffi.UnsignedChar> out,
-  int blocks,
-  ffi.Pointer<ffi.Void> key,
-  ffi.Pointer<ffi.UnsignedChar> ivec,
-  ffi.Pointer<ffi.UnsignedChar> cmac,
-);
+typedef Dartccm128_fFunction =
+    void Function(
+      ffi.Pointer<ffi.UnsignedChar> in$,
+      ffi.Pointer<ffi.UnsignedChar> out,
+      int blocks,
+      ffi.Pointer<ffi.Void> key,
+      ffi.Pointer<ffi.UnsignedChar> ivec,
+      ffi.Pointer<ffi.UnsignedChar> cmac,
+    );
 
 /// Opaque OpenSSL type `comp_ctx_st`; only pointers to it are used.
 final class comp_ctx_st extends ffi.Opaque {}
@@ -101497,22 +101532,24 @@ final class ctlog_store_st extends ffi.Opaque {}
 typedef ctr128_f = ffi.Pointer<ffi.NativeFunction<ctr128_fFunction>>;
 
 /// OpenSSL typedef `ctr128_fFunction`.
-typedef ctr128_fFunction = ffi.Void Function(
-  ffi.Pointer<ffi.UnsignedChar> in$,
-  ffi.Pointer<ffi.UnsignedChar> out,
-  ffi.Size blocks,
-  ffi.Pointer<ffi.Void> key,
-  ffi.Pointer<ffi.UnsignedChar> ivec,
-);
+typedef ctr128_fFunction =
+    ffi.Void Function(
+      ffi.Pointer<ffi.UnsignedChar> in$,
+      ffi.Pointer<ffi.UnsignedChar> out,
+      ffi.Size blocks,
+      ffi.Pointer<ffi.Void> key,
+      ffi.Pointer<ffi.UnsignedChar> ivec,
+    );
 
 /// OpenSSL typedef `Dartctr128_fFunction`.
-typedef Dartctr128_fFunction = void Function(
-  ffi.Pointer<ffi.UnsignedChar> in$,
-  ffi.Pointer<ffi.UnsignedChar> out,
-  int blocks,
-  ffi.Pointer<ffi.Void> key,
-  ffi.Pointer<ffi.UnsignedChar> ivec,
-);
+typedef Dartctr128_fFunction =
+    void Function(
+      ffi.Pointer<ffi.UnsignedChar> in$,
+      ffi.Pointer<ffi.UnsignedChar> out,
+      int blocks,
+      ffi.Pointer<ffi.Void> key,
+      ffi.Pointer<ffi.UnsignedChar> ivec,
+    );
 
 /// OpenSSL typedef `d2i_of_void`.
 typedef d2i_of_void =
@@ -101558,22 +101595,24 @@ final class ec_point_st extends ffi.Opaque {}
 typedef ecb128_f = ffi.Pointer<ffi.NativeFunction<ecb128_fFunction>>;
 
 /// OpenSSL typedef `ecb128_fFunction`.
-typedef ecb128_fFunction = ffi.Void Function(
-  ffi.Pointer<ffi.UnsignedChar> in$,
-  ffi.Pointer<ffi.UnsignedChar> out,
-  ffi.Size len,
-  ffi.Pointer<ffi.Void> key,
-  ffi.Int enc,
-);
+typedef ecb128_fFunction =
+    ffi.Void Function(
+      ffi.Pointer<ffi.UnsignedChar> in$,
+      ffi.Pointer<ffi.UnsignedChar> out,
+      ffi.Size len,
+      ffi.Pointer<ffi.Void> key,
+      ffi.Int enc,
+    );
 
 /// OpenSSL typedef `Dartecb128_fFunction`.
-typedef Dartecb128_fFunction = void Function(
-  ffi.Pointer<ffi.UnsignedChar> in$,
-  ffi.Pointer<ffi.UnsignedChar> out,
-  int len,
-  ffi.Pointer<ffi.Void> key,
-  int enc,
-);
+typedef Dartecb128_fFunction =
+    void Function(
+      ffi.Pointer<ffi.UnsignedChar> in$,
+      ffi.Pointer<ffi.UnsignedChar> out,
+      int len,
+      ffi.Pointer<ffi.Void> key,
+      int enc,
+    );
 
 /// Opaque OpenSSL type `ecpk_parameters_st`; only pointers to it are used.
 final class ecpk_parameters_st extends ffi.Opaque {}
@@ -101720,30 +101759,24 @@ typedef lh_CONF_VALUE_compfunc =
     ffi.Pointer<ffi.NativeFunction<lh_CONF_VALUE_compfuncFunction>>;
 
 /// OpenSSL typedef `lh_CONF_VALUE_compfuncFunction`.
-typedef lh_CONF_VALUE_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<CONF_VALUE> a,
-  ffi.Pointer<CONF_VALUE> b,
-);
+typedef lh_CONF_VALUE_compfuncFunction =
+    ffi.Int Function(ffi.Pointer<CONF_VALUE> a, ffi.Pointer<CONF_VALUE> b);
 
 /// OpenSSL typedef `Dartlh_CONF_VALUE_compfuncFunction`.
-typedef Dartlh_CONF_VALUE_compfuncFunction = int Function(
-  ffi.Pointer<CONF_VALUE> a,
-  ffi.Pointer<CONF_VALUE> b,
-);
+typedef Dartlh_CONF_VALUE_compfuncFunction =
+    int Function(ffi.Pointer<CONF_VALUE> a, ffi.Pointer<CONF_VALUE> b);
 
 /// OpenSSL typedef `lh_CONF_VALUE_doallfunc`.
 typedef lh_CONF_VALUE_doallfunc =
     ffi.Pointer<ffi.NativeFunction<lh_CONF_VALUE_doallfuncFunction>>;
 
 /// OpenSSL typedef `lh_CONF_VALUE_doallfuncFunction`.
-typedef lh_CONF_VALUE_doallfuncFunction = ffi.Void Function(
-  ffi.Pointer<CONF_VALUE> a,
-);
+typedef lh_CONF_VALUE_doallfuncFunction =
+    ffi.Void Function(ffi.Pointer<CONF_VALUE> a);
 
 /// OpenSSL typedef `Dartlh_CONF_VALUE_doallfuncFunction`.
-typedef Dartlh_CONF_VALUE_doallfuncFunction = void Function(
-  ffi.Pointer<CONF_VALUE> a,
-);
+typedef Dartlh_CONF_VALUE_doallfuncFunction =
+    void Function(ffi.Pointer<CONF_VALUE> a);
 
 /// OpenSSL union `lh_CONF_VALUE_dummy`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 final class lh_CONF_VALUE_dummy extends ffi.Union {
@@ -101761,44 +101794,42 @@ typedef lh_CONF_VALUE_hashfunc =
     ffi.Pointer<ffi.NativeFunction<lh_CONF_VALUE_hashfuncFunction>>;
 
 /// OpenSSL typedef `lh_CONF_VALUE_hashfuncFunction`.
-typedef lh_CONF_VALUE_hashfuncFunction = ffi.UnsignedLong Function(
-  ffi.Pointer<CONF_VALUE> a,
-);
+typedef lh_CONF_VALUE_hashfuncFunction =
+    ffi.UnsignedLong Function(ffi.Pointer<CONF_VALUE> a);
 
 /// OpenSSL typedef `Dartlh_CONF_VALUE_hashfuncFunction`.
-typedef Dartlh_CONF_VALUE_hashfuncFunction = int Function(
-  ffi.Pointer<CONF_VALUE> a,
-);
+typedef Dartlh_CONF_VALUE_hashfuncFunction =
+    int Function(ffi.Pointer<CONF_VALUE> a);
 
 /// OpenSSL typedef `lh_ERR_STRING_DATA_compfunc`.
 typedef lh_ERR_STRING_DATA_compfunc =
     ffi.Pointer<ffi.NativeFunction<lh_ERR_STRING_DATA_compfuncFunction>>;
 
 /// OpenSSL typedef `lh_ERR_STRING_DATA_compfuncFunction`.
-typedef lh_ERR_STRING_DATA_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ERR_STRING_DATA> a,
-  ffi.Pointer<ERR_STRING_DATA> b,
-);
+typedef lh_ERR_STRING_DATA_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ERR_STRING_DATA> a,
+      ffi.Pointer<ERR_STRING_DATA> b,
+    );
 
 /// OpenSSL typedef `Dartlh_ERR_STRING_DATA_compfuncFunction`.
-typedef Dartlh_ERR_STRING_DATA_compfuncFunction = int Function(
-  ffi.Pointer<ERR_STRING_DATA> a,
-  ffi.Pointer<ERR_STRING_DATA> b,
-);
+typedef Dartlh_ERR_STRING_DATA_compfuncFunction =
+    int Function(
+      ffi.Pointer<ERR_STRING_DATA> a,
+      ffi.Pointer<ERR_STRING_DATA> b,
+    );
 
 /// OpenSSL typedef `lh_ERR_STRING_DATA_doallfunc`.
 typedef lh_ERR_STRING_DATA_doallfunc =
     ffi.Pointer<ffi.NativeFunction<lh_ERR_STRING_DATA_doallfuncFunction>>;
 
 /// OpenSSL typedef `lh_ERR_STRING_DATA_doallfuncFunction`.
-typedef lh_ERR_STRING_DATA_doallfuncFunction = ffi.Void Function(
-  ffi.Pointer<ERR_STRING_DATA> a,
-);
+typedef lh_ERR_STRING_DATA_doallfuncFunction =
+    ffi.Void Function(ffi.Pointer<ERR_STRING_DATA> a);
 
 /// OpenSSL typedef `Dartlh_ERR_STRING_DATA_doallfuncFunction`.
-typedef Dartlh_ERR_STRING_DATA_doallfuncFunction = void Function(
-  ffi.Pointer<ERR_STRING_DATA> a,
-);
+typedef Dartlh_ERR_STRING_DATA_doallfuncFunction =
+    void Function(ffi.Pointer<ERR_STRING_DATA> a);
 
 /// OpenSSL union `lh_ERR_STRING_DATA_dummy`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 final class lh_ERR_STRING_DATA_dummy extends ffi.Union {
@@ -101816,44 +101847,42 @@ typedef lh_ERR_STRING_DATA_hashfunc =
     ffi.Pointer<ffi.NativeFunction<lh_ERR_STRING_DATA_hashfuncFunction>>;
 
 /// OpenSSL typedef `lh_ERR_STRING_DATA_hashfuncFunction`.
-typedef lh_ERR_STRING_DATA_hashfuncFunction = ffi.UnsignedLong Function(
-  ffi.Pointer<ERR_STRING_DATA> a,
-);
+typedef lh_ERR_STRING_DATA_hashfuncFunction =
+    ffi.UnsignedLong Function(ffi.Pointer<ERR_STRING_DATA> a);
 
 /// OpenSSL typedef `Dartlh_ERR_STRING_DATA_hashfuncFunction`.
-typedef Dartlh_ERR_STRING_DATA_hashfuncFunction = int Function(
-  ffi.Pointer<ERR_STRING_DATA> a,
-);
+typedef Dartlh_ERR_STRING_DATA_hashfuncFunction =
+    int Function(ffi.Pointer<ERR_STRING_DATA> a);
 
 /// OpenSSL typedef `lh_OPENSSL_CSTRING_compfunc`.
 typedef lh_OPENSSL_CSTRING_compfunc =
     ffi.Pointer<ffi.NativeFunction<lh_OPENSSL_CSTRING_compfuncFunction>>;
 
 /// OpenSSL typedef `lh_OPENSSL_CSTRING_compfuncFunction`.
-typedef lh_OPENSSL_CSTRING_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<OPENSSL_CSTRING> a,
-  ffi.Pointer<OPENSSL_CSTRING> b,
-);
+typedef lh_OPENSSL_CSTRING_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<OPENSSL_CSTRING> a,
+      ffi.Pointer<OPENSSL_CSTRING> b,
+    );
 
 /// OpenSSL typedef `Dartlh_OPENSSL_CSTRING_compfuncFunction`.
-typedef Dartlh_OPENSSL_CSTRING_compfuncFunction = int Function(
-  ffi.Pointer<OPENSSL_CSTRING> a,
-  ffi.Pointer<OPENSSL_CSTRING> b,
-);
+typedef Dartlh_OPENSSL_CSTRING_compfuncFunction =
+    int Function(
+      ffi.Pointer<OPENSSL_CSTRING> a,
+      ffi.Pointer<OPENSSL_CSTRING> b,
+    );
 
 /// OpenSSL typedef `lh_OPENSSL_CSTRING_doallfunc`.
 typedef lh_OPENSSL_CSTRING_doallfunc =
     ffi.Pointer<ffi.NativeFunction<lh_OPENSSL_CSTRING_doallfuncFunction>>;
 
 /// OpenSSL typedef `lh_OPENSSL_CSTRING_doallfuncFunction`.
-typedef lh_OPENSSL_CSTRING_doallfuncFunction = ffi.Void Function(
-  ffi.Pointer<OPENSSL_CSTRING> a,
-);
+typedef lh_OPENSSL_CSTRING_doallfuncFunction =
+    ffi.Void Function(ffi.Pointer<OPENSSL_CSTRING> a);
 
 /// OpenSSL typedef `Dartlh_OPENSSL_CSTRING_doallfuncFunction`.
-typedef Dartlh_OPENSSL_CSTRING_doallfuncFunction = void Function(
-  ffi.Pointer<OPENSSL_CSTRING> a,
-);
+typedef Dartlh_OPENSSL_CSTRING_doallfuncFunction =
+    void Function(ffi.Pointer<OPENSSL_CSTRING> a);
 
 /// OpenSSL union `lh_OPENSSL_CSTRING_dummy`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 final class lh_OPENSSL_CSTRING_dummy extends ffi.Union {
@@ -101871,44 +101900,39 @@ typedef lh_OPENSSL_CSTRING_hashfunc =
     ffi.Pointer<ffi.NativeFunction<lh_OPENSSL_CSTRING_hashfuncFunction>>;
 
 /// OpenSSL typedef `lh_OPENSSL_CSTRING_hashfuncFunction`.
-typedef lh_OPENSSL_CSTRING_hashfuncFunction = ffi.UnsignedLong Function(
-  ffi.Pointer<OPENSSL_CSTRING> a,
-);
+typedef lh_OPENSSL_CSTRING_hashfuncFunction =
+    ffi.UnsignedLong Function(ffi.Pointer<OPENSSL_CSTRING> a);
 
 /// OpenSSL typedef `Dartlh_OPENSSL_CSTRING_hashfuncFunction`.
-typedef Dartlh_OPENSSL_CSTRING_hashfuncFunction = int Function(
-  ffi.Pointer<OPENSSL_CSTRING> a,
-);
+typedef Dartlh_OPENSSL_CSTRING_hashfuncFunction =
+    int Function(ffi.Pointer<OPENSSL_CSTRING> a);
 
 /// OpenSSL typedef `lh_OPENSSL_STRING_compfunc`.
 typedef lh_OPENSSL_STRING_compfunc =
     ffi.Pointer<ffi.NativeFunction<lh_OPENSSL_STRING_compfuncFunction>>;
 
 /// OpenSSL typedef `lh_OPENSSL_STRING_compfuncFunction`.
-typedef lh_OPENSSL_STRING_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<OPENSSL_STRING> a,
-  ffi.Pointer<OPENSSL_STRING> b,
-);
+typedef lh_OPENSSL_STRING_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<OPENSSL_STRING> a,
+      ffi.Pointer<OPENSSL_STRING> b,
+    );
 
 /// OpenSSL typedef `Dartlh_OPENSSL_STRING_compfuncFunction`.
-typedef Dartlh_OPENSSL_STRING_compfuncFunction = int Function(
-  ffi.Pointer<OPENSSL_STRING> a,
-  ffi.Pointer<OPENSSL_STRING> b,
-);
+typedef Dartlh_OPENSSL_STRING_compfuncFunction =
+    int Function(ffi.Pointer<OPENSSL_STRING> a, ffi.Pointer<OPENSSL_STRING> b);
 
 /// OpenSSL typedef `lh_OPENSSL_STRING_doallfunc`.
 typedef lh_OPENSSL_STRING_doallfunc =
     ffi.Pointer<ffi.NativeFunction<lh_OPENSSL_STRING_doallfuncFunction>>;
 
 /// OpenSSL typedef `lh_OPENSSL_STRING_doallfuncFunction`.
-typedef lh_OPENSSL_STRING_doallfuncFunction = ffi.Void Function(
-  ffi.Pointer<OPENSSL_STRING> a,
-);
+typedef lh_OPENSSL_STRING_doallfuncFunction =
+    ffi.Void Function(ffi.Pointer<OPENSSL_STRING> a);
 
 /// OpenSSL typedef `Dartlh_OPENSSL_STRING_doallfuncFunction`.
-typedef Dartlh_OPENSSL_STRING_doallfuncFunction = void Function(
-  ffi.Pointer<OPENSSL_STRING> a,
-);
+typedef Dartlh_OPENSSL_STRING_doallfuncFunction =
+    void Function(ffi.Pointer<OPENSSL_STRING> a);
 
 /// OpenSSL union `lh_OPENSSL_STRING_dummy`. Manual: https://docs.openssl.org/3.5/man3/ (no dedicated page)
 final class lh_OPENSSL_STRING_dummy extends ffi.Union {
@@ -101926,14 +101950,12 @@ typedef lh_OPENSSL_STRING_hashfunc =
     ffi.Pointer<ffi.NativeFunction<lh_OPENSSL_STRING_hashfuncFunction>>;
 
 /// OpenSSL typedef `lh_OPENSSL_STRING_hashfuncFunction`.
-typedef lh_OPENSSL_STRING_hashfuncFunction = ffi.UnsignedLong Function(
-  ffi.Pointer<OPENSSL_STRING> a,
-);
+typedef lh_OPENSSL_STRING_hashfuncFunction =
+    ffi.UnsignedLong Function(ffi.Pointer<OPENSSL_STRING> a);
 
 /// OpenSSL typedef `Dartlh_OPENSSL_STRING_hashfuncFunction`.
-typedef Dartlh_OPENSSL_STRING_hashfuncFunction = int Function(
-  ffi.Pointer<OPENSSL_STRING> a,
-);
+typedef Dartlh_OPENSSL_STRING_hashfuncFunction =
+    int Function(ffi.Pointer<OPENSSL_STRING> a);
 
 /// Opaque OpenSSL type `lhash_node_st`; only pointers to it are used.
 final class lhash_node_st extends ffi.Opaque {}
@@ -102011,28 +102033,30 @@ final class ocb128_context extends ffi.Opaque {}
 typedef ocb128_f = ffi.Pointer<ffi.NativeFunction<ocb128_fFunction>>;
 
 /// OpenSSL typedef `ocb128_fFunction`.
-typedef ocb128_fFunction = ffi.Void Function(
-  ffi.Pointer<ffi.UnsignedChar> in$,
-  ffi.Pointer<ffi.UnsignedChar> out,
-  ffi.Size blocks,
-  ffi.Pointer<ffi.Void> key,
-  ffi.Size start_block_num,
-  ffi.Pointer<ffi.UnsignedChar> offset_i,
-  ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>> L_,
-  ffi.Pointer<ffi.UnsignedChar> checksum,
-);
+typedef ocb128_fFunction =
+    ffi.Void Function(
+      ffi.Pointer<ffi.UnsignedChar> in$,
+      ffi.Pointer<ffi.UnsignedChar> out,
+      ffi.Size blocks,
+      ffi.Pointer<ffi.Void> key,
+      ffi.Size start_block_num,
+      ffi.Pointer<ffi.UnsignedChar> offset_i,
+      ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>> L_,
+      ffi.Pointer<ffi.UnsignedChar> checksum,
+    );
 
 /// OpenSSL typedef `Dartocb128_fFunction`.
-typedef Dartocb128_fFunction = void Function(
-  ffi.Pointer<ffi.UnsignedChar> in$,
-  ffi.Pointer<ffi.UnsignedChar> out,
-  int blocks,
-  ffi.Pointer<ffi.Void> key,
-  int start_block_num,
-  ffi.Pointer<ffi.UnsignedChar> offset_i,
-  ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>> L_,
-  ffi.Pointer<ffi.UnsignedChar> checksum,
-);
+typedef Dartocb128_fFunction =
+    void Function(
+      ffi.Pointer<ffi.UnsignedChar> in$,
+      ffi.Pointer<ffi.UnsignedChar> out,
+      int blocks,
+      ffi.Pointer<ffi.Void> key,
+      int start_block_num,
+      ffi.Pointer<ffi.UnsignedChar> offset_i,
+      ffi.Pointer<ffi.Pointer<ffi.UnsignedChar>> L_,
+      ffi.Pointer<ffi.UnsignedChar> checksum,
+    );
 
 /// Opaque OpenSSL type `ocsp_basic_response_st`; only pointers to it are used.
 final class ocsp_basic_response_st extends ffi.Opaque {}
@@ -102929,16 +102953,18 @@ typedef sk_ACCESS_DESCRIPTION_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ACCESS_DESCRIPTION_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_ACCESS_DESCRIPTION_compfuncFunction`.
-typedef sk_ACCESS_DESCRIPTION_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ACCESS_DESCRIPTION>> a,
-  ffi.Pointer<ffi.Pointer<ACCESS_DESCRIPTION>> b,
-);
+typedef sk_ACCESS_DESCRIPTION_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ACCESS_DESCRIPTION>> a,
+      ffi.Pointer<ffi.Pointer<ACCESS_DESCRIPTION>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_ACCESS_DESCRIPTION_compfuncFunction`.
-typedef Dartsk_ACCESS_DESCRIPTION_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ACCESS_DESCRIPTION>> a,
-  ffi.Pointer<ffi.Pointer<ACCESS_DESCRIPTION>> b,
-);
+typedef Dartsk_ACCESS_DESCRIPTION_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ACCESS_DESCRIPTION>> a,
+      ffi.Pointer<ffi.Pointer<ACCESS_DESCRIPTION>> b,
+    );
 
 /// OpenSSL typedef `sk_ACCESS_DESCRIPTION_copyfunc`.
 typedef sk_ACCESS_DESCRIPTION_copyfunc =
@@ -102953,108 +102979,106 @@ typedef sk_ACCESS_DESCRIPTION_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_ACCESS_DESCRIPTION_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_ACCESS_DESCRIPTION_freefuncFunction`.
-typedef sk_ACCESS_DESCRIPTION_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ACCESS_DESCRIPTION> a,
-);
+typedef sk_ACCESS_DESCRIPTION_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ACCESS_DESCRIPTION> a);
 
 /// OpenSSL typedef `Dartsk_ACCESS_DESCRIPTION_freefuncFunction`.
-typedef Dartsk_ACCESS_DESCRIPTION_freefuncFunction = void Function(
-  ffi.Pointer<ACCESS_DESCRIPTION> a,
-);
+typedef Dartsk_ACCESS_DESCRIPTION_freefuncFunction =
+    void Function(ffi.Pointer<ACCESS_DESCRIPTION> a);
 
 /// OpenSSL typedef `sk_ADMISSIONS_compfunc`.
 typedef sk_ADMISSIONS_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ADMISSIONS_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_ADMISSIONS_compfuncFunction`.
-typedef sk_ADMISSIONS_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ADMISSIONS>> a,
-  ffi.Pointer<ffi.Pointer<ADMISSIONS>> b,
-);
+typedef sk_ADMISSIONS_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ADMISSIONS>> a,
+      ffi.Pointer<ffi.Pointer<ADMISSIONS>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_ADMISSIONS_compfuncFunction`.
-typedef Dartsk_ADMISSIONS_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ADMISSIONS>> a,
-  ffi.Pointer<ffi.Pointer<ADMISSIONS>> b,
-);
+typedef Dartsk_ADMISSIONS_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ADMISSIONS>> a,
+      ffi.Pointer<ffi.Pointer<ADMISSIONS>> b,
+    );
 
 /// OpenSSL typedef `sk_ADMISSIONS_copyfunc`.
 typedef sk_ADMISSIONS_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ADMISSIONS_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_ADMISSIONS_copyfuncFunction`.
-typedef sk_ADMISSIONS_copyfuncFunction = ffi.Pointer<ADMISSIONS> Function(
-  ffi.Pointer<ADMISSIONS> a,
-);
+typedef sk_ADMISSIONS_copyfuncFunction =
+    ffi.Pointer<ADMISSIONS> Function(ffi.Pointer<ADMISSIONS> a);
 
 /// OpenSSL typedef `sk_ADMISSIONS_freefunc`.
 typedef sk_ADMISSIONS_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_ADMISSIONS_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_ADMISSIONS_freefuncFunction`.
-typedef sk_ADMISSIONS_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ADMISSIONS> a,
-);
+typedef sk_ADMISSIONS_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ADMISSIONS> a);
 
 /// OpenSSL typedef `Dartsk_ADMISSIONS_freefuncFunction`.
-typedef Dartsk_ADMISSIONS_freefuncFunction = void Function(
-  ffi.Pointer<ADMISSIONS> a,
-);
+typedef Dartsk_ADMISSIONS_freefuncFunction =
+    void Function(ffi.Pointer<ADMISSIONS> a);
 
 /// OpenSSL typedef `sk_ASIdOrRange_compfunc`.
 typedef sk_ASIdOrRange_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASIdOrRange_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_ASIdOrRange_compfuncFunction`.
-typedef sk_ASIdOrRange_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ASIdOrRange>> a,
-  ffi.Pointer<ffi.Pointer<ASIdOrRange>> b,
-);
+typedef sk_ASIdOrRange_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ASIdOrRange>> a,
+      ffi.Pointer<ffi.Pointer<ASIdOrRange>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_ASIdOrRange_compfuncFunction`.
-typedef Dartsk_ASIdOrRange_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ASIdOrRange>> a,
-  ffi.Pointer<ffi.Pointer<ASIdOrRange>> b,
-);
+typedef Dartsk_ASIdOrRange_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ASIdOrRange>> a,
+      ffi.Pointer<ffi.Pointer<ASIdOrRange>> b,
+    );
 
 /// OpenSSL typedef `sk_ASIdOrRange_copyfunc`.
 typedef sk_ASIdOrRange_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASIdOrRange_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_ASIdOrRange_copyfuncFunction`.
-typedef sk_ASIdOrRange_copyfuncFunction = ffi.Pointer<ASIdOrRange> Function(
-  ffi.Pointer<ASIdOrRange> a,
-);
+typedef sk_ASIdOrRange_copyfuncFunction =
+    ffi.Pointer<ASIdOrRange> Function(ffi.Pointer<ASIdOrRange> a);
 
 /// OpenSSL typedef `sk_ASIdOrRange_freefunc`.
 typedef sk_ASIdOrRange_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASIdOrRange_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_ASIdOrRange_freefuncFunction`.
-typedef sk_ASIdOrRange_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ASIdOrRange> a,
-);
+typedef sk_ASIdOrRange_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ASIdOrRange> a);
 
 /// OpenSSL typedef `Dartsk_ASIdOrRange_freefuncFunction`.
-typedef Dartsk_ASIdOrRange_freefuncFunction = void Function(
-  ffi.Pointer<ASIdOrRange> a,
-);
+typedef Dartsk_ASIdOrRange_freefuncFunction =
+    void Function(ffi.Pointer<ASIdOrRange> a);
 
 /// OpenSSL typedef `sk_ASN1_GENERALSTRING_compfunc`.
 typedef sk_ASN1_GENERALSTRING_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_GENERALSTRING_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_GENERALSTRING_compfuncFunction`.
-typedef sk_ASN1_GENERALSTRING_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_GENERALSTRING>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_GENERALSTRING>> b,
-);
+typedef sk_ASN1_GENERALSTRING_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_GENERALSTRING>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_GENERALSTRING>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_ASN1_GENERALSTRING_compfuncFunction`.
-typedef Dartsk_ASN1_GENERALSTRING_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_GENERALSTRING>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_GENERALSTRING>> b,
-);
+typedef Dartsk_ASN1_GENERALSTRING_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_GENERALSTRING>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_GENERALSTRING>> b,
+    );
 
 /// OpenSSL typedef `sk_ASN1_GENERALSTRING_copyfunc`.
 typedef sk_ASN1_GENERALSTRING_copyfunc =
@@ -103069,108 +103093,106 @@ typedef sk_ASN1_GENERALSTRING_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_GENERALSTRING_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_GENERALSTRING_freefuncFunction`.
-typedef sk_ASN1_GENERALSTRING_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ASN1_GENERALSTRING> a,
-);
+typedef sk_ASN1_GENERALSTRING_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ASN1_GENERALSTRING> a);
 
 /// OpenSSL typedef `Dartsk_ASN1_GENERALSTRING_freefuncFunction`.
-typedef Dartsk_ASN1_GENERALSTRING_freefuncFunction = void Function(
-  ffi.Pointer<ASN1_GENERALSTRING> a,
-);
+typedef Dartsk_ASN1_GENERALSTRING_freefuncFunction =
+    void Function(ffi.Pointer<ASN1_GENERALSTRING> a);
 
 /// OpenSSL typedef `sk_ASN1_INTEGER_compfunc`.
 typedef sk_ASN1_INTEGER_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_INTEGER_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_INTEGER_compfuncFunction`.
-typedef sk_ASN1_INTEGER_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_INTEGER>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_INTEGER>> b,
-);
+typedef sk_ASN1_INTEGER_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_INTEGER>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_INTEGER>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_ASN1_INTEGER_compfuncFunction`.
-typedef Dartsk_ASN1_INTEGER_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_INTEGER>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_INTEGER>> b,
-);
+typedef Dartsk_ASN1_INTEGER_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_INTEGER>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_INTEGER>> b,
+    );
 
 /// OpenSSL typedef `sk_ASN1_INTEGER_copyfunc`.
 typedef sk_ASN1_INTEGER_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_INTEGER_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_INTEGER_copyfuncFunction`.
-typedef sk_ASN1_INTEGER_copyfuncFunction = ffi.Pointer<ASN1_INTEGER> Function(
-  ffi.Pointer<ASN1_INTEGER> a,
-);
+typedef sk_ASN1_INTEGER_copyfuncFunction =
+    ffi.Pointer<ASN1_INTEGER> Function(ffi.Pointer<ASN1_INTEGER> a);
 
 /// OpenSSL typedef `sk_ASN1_INTEGER_freefunc`.
 typedef sk_ASN1_INTEGER_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_INTEGER_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_INTEGER_freefuncFunction`.
-typedef sk_ASN1_INTEGER_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ASN1_INTEGER> a,
-);
+typedef sk_ASN1_INTEGER_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ASN1_INTEGER> a);
 
 /// OpenSSL typedef `Dartsk_ASN1_INTEGER_freefuncFunction`.
-typedef Dartsk_ASN1_INTEGER_freefuncFunction = void Function(
-  ffi.Pointer<ASN1_INTEGER> a,
-);
+typedef Dartsk_ASN1_INTEGER_freefuncFunction =
+    void Function(ffi.Pointer<ASN1_INTEGER> a);
 
 /// OpenSSL typedef `sk_ASN1_OBJECT_compfunc`.
 typedef sk_ASN1_OBJECT_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_OBJECT_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_OBJECT_compfuncFunction`.
-typedef sk_ASN1_OBJECT_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_OBJECT>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_OBJECT>> b,
-);
+typedef sk_ASN1_OBJECT_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_OBJECT>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_OBJECT>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_ASN1_OBJECT_compfuncFunction`.
-typedef Dartsk_ASN1_OBJECT_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_OBJECT>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_OBJECT>> b,
-);
+typedef Dartsk_ASN1_OBJECT_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_OBJECT>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_OBJECT>> b,
+    );
 
 /// OpenSSL typedef `sk_ASN1_OBJECT_copyfunc`.
 typedef sk_ASN1_OBJECT_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_OBJECT_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_OBJECT_copyfuncFunction`.
-typedef sk_ASN1_OBJECT_copyfuncFunction = ffi.Pointer<ASN1_OBJECT> Function(
-  ffi.Pointer<ASN1_OBJECT> a,
-);
+typedef sk_ASN1_OBJECT_copyfuncFunction =
+    ffi.Pointer<ASN1_OBJECT> Function(ffi.Pointer<ASN1_OBJECT> a);
 
 /// OpenSSL typedef `sk_ASN1_OBJECT_freefunc`.
 typedef sk_ASN1_OBJECT_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_OBJECT_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_OBJECT_freefuncFunction`.
-typedef sk_ASN1_OBJECT_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ASN1_OBJECT> a,
-);
+typedef sk_ASN1_OBJECT_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ASN1_OBJECT> a);
 
 /// OpenSSL typedef `Dartsk_ASN1_OBJECT_freefuncFunction`.
-typedef Dartsk_ASN1_OBJECT_freefuncFunction = void Function(
-  ffi.Pointer<ASN1_OBJECT> a,
-);
+typedef Dartsk_ASN1_OBJECT_freefuncFunction =
+    void Function(ffi.Pointer<ASN1_OBJECT> a);
 
 /// OpenSSL typedef `sk_ASN1_STRING_TABLE_compfunc`.
 typedef sk_ASN1_STRING_TABLE_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_STRING_TABLE_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_STRING_TABLE_compfuncFunction`.
-typedef sk_ASN1_STRING_TABLE_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_STRING_TABLE>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_STRING_TABLE>> b,
-);
+typedef sk_ASN1_STRING_TABLE_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_STRING_TABLE>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_STRING_TABLE>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_ASN1_STRING_TABLE_compfuncFunction`.
-typedef Dartsk_ASN1_STRING_TABLE_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_STRING_TABLE>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_STRING_TABLE>> b,
-);
+typedef Dartsk_ASN1_STRING_TABLE_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_STRING_TABLE>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_STRING_TABLE>> b,
+    );
 
 /// OpenSSL typedef `sk_ASN1_STRING_TABLE_copyfunc`.
 typedef sk_ASN1_STRING_TABLE_copyfunc =
@@ -103185,108 +103207,106 @@ typedef sk_ASN1_STRING_TABLE_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_STRING_TABLE_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_STRING_TABLE_freefuncFunction`.
-typedef sk_ASN1_STRING_TABLE_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ASN1_STRING_TABLE> a,
-);
+typedef sk_ASN1_STRING_TABLE_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ASN1_STRING_TABLE> a);
 
 /// OpenSSL typedef `Dartsk_ASN1_STRING_TABLE_freefuncFunction`.
-typedef Dartsk_ASN1_STRING_TABLE_freefuncFunction = void Function(
-  ffi.Pointer<ASN1_STRING_TABLE> a,
-);
+typedef Dartsk_ASN1_STRING_TABLE_freefuncFunction =
+    void Function(ffi.Pointer<ASN1_STRING_TABLE> a);
 
 /// OpenSSL typedef `sk_ASN1_STRING_compfunc`.
 typedef sk_ASN1_STRING_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_STRING_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_STRING_compfuncFunction`.
-typedef sk_ASN1_STRING_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_STRING>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_STRING>> b,
-);
+typedef sk_ASN1_STRING_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_STRING>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_STRING>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_ASN1_STRING_compfuncFunction`.
-typedef Dartsk_ASN1_STRING_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_STRING>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_STRING>> b,
-);
+typedef Dartsk_ASN1_STRING_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_STRING>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_STRING>> b,
+    );
 
 /// OpenSSL typedef `sk_ASN1_STRING_copyfunc`.
 typedef sk_ASN1_STRING_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_STRING_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_STRING_copyfuncFunction`.
-typedef sk_ASN1_STRING_copyfuncFunction = ffi.Pointer<ASN1_STRING> Function(
-  ffi.Pointer<ASN1_STRING> a,
-);
+typedef sk_ASN1_STRING_copyfuncFunction =
+    ffi.Pointer<ASN1_STRING> Function(ffi.Pointer<ASN1_STRING> a);
 
 /// OpenSSL typedef `sk_ASN1_STRING_freefunc`.
 typedef sk_ASN1_STRING_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_STRING_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_STRING_freefuncFunction`.
-typedef sk_ASN1_STRING_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ASN1_STRING> a,
-);
+typedef sk_ASN1_STRING_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ASN1_STRING> a);
 
 /// OpenSSL typedef `Dartsk_ASN1_STRING_freefuncFunction`.
-typedef Dartsk_ASN1_STRING_freefuncFunction = void Function(
-  ffi.Pointer<ASN1_STRING> a,
-);
+typedef Dartsk_ASN1_STRING_freefuncFunction =
+    void Function(ffi.Pointer<ASN1_STRING> a);
 
 /// OpenSSL typedef `sk_ASN1_TYPE_compfunc`.
 typedef sk_ASN1_TYPE_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_TYPE_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_TYPE_compfuncFunction`.
-typedef sk_ASN1_TYPE_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_TYPE>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_TYPE>> b,
-);
+typedef sk_ASN1_TYPE_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_TYPE>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_TYPE>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_ASN1_TYPE_compfuncFunction`.
-typedef Dartsk_ASN1_TYPE_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_TYPE>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_TYPE>> b,
-);
+typedef Dartsk_ASN1_TYPE_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_TYPE>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_TYPE>> b,
+    );
 
 /// OpenSSL typedef `sk_ASN1_TYPE_copyfunc`.
 typedef sk_ASN1_TYPE_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_TYPE_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_TYPE_copyfuncFunction`.
-typedef sk_ASN1_TYPE_copyfuncFunction = ffi.Pointer<ASN1_TYPE> Function(
-  ffi.Pointer<ASN1_TYPE> a,
-);
+typedef sk_ASN1_TYPE_copyfuncFunction =
+    ffi.Pointer<ASN1_TYPE> Function(ffi.Pointer<ASN1_TYPE> a);
 
 /// OpenSSL typedef `sk_ASN1_TYPE_freefunc`.
 typedef sk_ASN1_TYPE_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_TYPE_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_TYPE_freefuncFunction`.
-typedef sk_ASN1_TYPE_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ASN1_TYPE> a,
-);
+typedef sk_ASN1_TYPE_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ASN1_TYPE> a);
 
 /// OpenSSL typedef `Dartsk_ASN1_TYPE_freefuncFunction`.
-typedef Dartsk_ASN1_TYPE_freefuncFunction = void Function(
-  ffi.Pointer<ASN1_TYPE> a,
-);
+typedef Dartsk_ASN1_TYPE_freefuncFunction =
+    void Function(ffi.Pointer<ASN1_TYPE> a);
 
 /// OpenSSL typedef `sk_ASN1_UTF8STRING_compfunc`.
 typedef sk_ASN1_UTF8STRING_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_UTF8STRING_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_UTF8STRING_compfuncFunction`.
-typedef sk_ASN1_UTF8STRING_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_UTF8STRING>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_UTF8STRING>> b,
-);
+typedef sk_ASN1_UTF8STRING_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_UTF8STRING>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_UTF8STRING>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_ASN1_UTF8STRING_compfuncFunction`.
-typedef Dartsk_ASN1_UTF8STRING_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_UTF8STRING>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_UTF8STRING>> b,
-);
+typedef Dartsk_ASN1_UTF8STRING_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_UTF8STRING>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_UTF8STRING>> b,
+    );
 
 /// OpenSSL typedef `sk_ASN1_UTF8STRING_copyfunc`.
 typedef sk_ASN1_UTF8STRING_copyfunc =
@@ -103301,69 +103321,68 @@ typedef sk_ASN1_UTF8STRING_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_UTF8STRING_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_UTF8STRING_freefuncFunction`.
-typedef sk_ASN1_UTF8STRING_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ASN1_UTF8STRING> a,
-);
+typedef sk_ASN1_UTF8STRING_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ASN1_UTF8STRING> a);
 
 /// OpenSSL typedef `Dartsk_ASN1_UTF8STRING_freefuncFunction`.
-typedef Dartsk_ASN1_UTF8STRING_freefuncFunction = void Function(
-  ffi.Pointer<ASN1_UTF8STRING> a,
-);
+typedef Dartsk_ASN1_UTF8STRING_freefuncFunction =
+    void Function(ffi.Pointer<ASN1_UTF8STRING> a);
 
 /// OpenSSL typedef `sk_ASN1_VALUE_compfunc`.
 typedef sk_ASN1_VALUE_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_VALUE_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_VALUE_compfuncFunction`.
-typedef sk_ASN1_VALUE_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_VALUE>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_VALUE>> b,
-);
+typedef sk_ASN1_VALUE_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_VALUE>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_VALUE>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_ASN1_VALUE_compfuncFunction`.
-typedef Dartsk_ASN1_VALUE_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ASN1_VALUE>> a,
-  ffi.Pointer<ffi.Pointer<ASN1_VALUE>> b,
-);
+typedef Dartsk_ASN1_VALUE_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ASN1_VALUE>> a,
+      ffi.Pointer<ffi.Pointer<ASN1_VALUE>> b,
+    );
 
 /// OpenSSL typedef `sk_ASN1_VALUE_copyfunc`.
 typedef sk_ASN1_VALUE_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_VALUE_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_VALUE_copyfuncFunction`.
-typedef sk_ASN1_VALUE_copyfuncFunction = ffi.Pointer<ASN1_VALUE> Function(
-  ffi.Pointer<ASN1_VALUE> a,
-);
+typedef sk_ASN1_VALUE_copyfuncFunction =
+    ffi.Pointer<ASN1_VALUE> Function(ffi.Pointer<ASN1_VALUE> a);
 
 /// OpenSSL typedef `sk_ASN1_VALUE_freefunc`.
 typedef sk_ASN1_VALUE_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_ASN1_VALUE_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_ASN1_VALUE_freefuncFunction`.
-typedef sk_ASN1_VALUE_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ASN1_VALUE> a,
-);
+typedef sk_ASN1_VALUE_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ASN1_VALUE> a);
 
 /// OpenSSL typedef `Dartsk_ASN1_VALUE_freefuncFunction`.
-typedef Dartsk_ASN1_VALUE_freefuncFunction = void Function(
-  ffi.Pointer<ASN1_VALUE> a,
-);
+typedef Dartsk_ASN1_VALUE_freefuncFunction =
+    void Function(ffi.Pointer<ASN1_VALUE> a);
 
 /// OpenSSL typedef `sk_BIO_compfunc`.
 typedef sk_BIO_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_BIO_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_BIO_compfuncFunction`.
-typedef sk_BIO_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<BIO>> a,
-  ffi.Pointer<ffi.Pointer<BIO>> b,
-);
+typedef sk_BIO_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<BIO>> a,
+      ffi.Pointer<ffi.Pointer<BIO>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_BIO_compfuncFunction`.
-typedef Dartsk_BIO_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<BIO>> a,
-  ffi.Pointer<ffi.Pointer<BIO>> b,
-);
+typedef Dartsk_BIO_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<BIO>> a,
+      ffi.Pointer<ffi.Pointer<BIO>> b,
+    );
 
 /// OpenSSL typedef `sk_BIO_copyfunc`.
 typedef sk_BIO_copyfunc =
@@ -103389,16 +103408,18 @@ typedef sk_CMS_RecipientEncryptedKey_compfunc =
     >;
 
 /// OpenSSL typedef `sk_CMS_RecipientEncryptedKey_compfuncFunction`.
-typedef sk_CMS_RecipientEncryptedKey_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<CMS_RecipientEncryptedKey>> a,
-  ffi.Pointer<ffi.Pointer<CMS_RecipientEncryptedKey>> b,
-);
+typedef sk_CMS_RecipientEncryptedKey_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<CMS_RecipientEncryptedKey>> a,
+      ffi.Pointer<ffi.Pointer<CMS_RecipientEncryptedKey>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_CMS_RecipientEncryptedKey_compfuncFunction`.
-typedef Dartsk_CMS_RecipientEncryptedKey_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<CMS_RecipientEncryptedKey>> a,
-  ffi.Pointer<ffi.Pointer<CMS_RecipientEncryptedKey>> b,
-);
+typedef Dartsk_CMS_RecipientEncryptedKey_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<CMS_RecipientEncryptedKey>> a,
+      ffi.Pointer<ffi.Pointer<CMS_RecipientEncryptedKey>> b,
+    );
 
 /// OpenSSL typedef `sk_CMS_RecipientEncryptedKey_copyfunc`.
 typedef sk_CMS_RecipientEncryptedKey_copyfunc =
@@ -103419,30 +103440,30 @@ typedef sk_CMS_RecipientEncryptedKey_freefunc =
     >;
 
 /// OpenSSL typedef `sk_CMS_RecipientEncryptedKey_freefuncFunction`.
-typedef sk_CMS_RecipientEncryptedKey_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<CMS_RecipientEncryptedKey> a,
-);
+typedef sk_CMS_RecipientEncryptedKey_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<CMS_RecipientEncryptedKey> a);
 
 /// OpenSSL typedef `Dartsk_CMS_RecipientEncryptedKey_freefuncFunction`.
-typedef Dartsk_CMS_RecipientEncryptedKey_freefuncFunction = void Function(
-  ffi.Pointer<CMS_RecipientEncryptedKey> a,
-);
+typedef Dartsk_CMS_RecipientEncryptedKey_freefuncFunction =
+    void Function(ffi.Pointer<CMS_RecipientEncryptedKey> a);
 
 /// OpenSSL typedef `sk_CMS_RecipientInfo_compfunc`.
 typedef sk_CMS_RecipientInfo_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_CMS_RecipientInfo_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_CMS_RecipientInfo_compfuncFunction`.
-typedef sk_CMS_RecipientInfo_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<CMS_RecipientInfo>> a,
-  ffi.Pointer<ffi.Pointer<CMS_RecipientInfo>> b,
-);
+typedef sk_CMS_RecipientInfo_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<CMS_RecipientInfo>> a,
+      ffi.Pointer<ffi.Pointer<CMS_RecipientInfo>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_CMS_RecipientInfo_compfuncFunction`.
-typedef Dartsk_CMS_RecipientInfo_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<CMS_RecipientInfo>> a,
-  ffi.Pointer<ffi.Pointer<CMS_RecipientInfo>> b,
-);
+typedef Dartsk_CMS_RecipientInfo_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<CMS_RecipientInfo>> a,
+      ffi.Pointer<ffi.Pointer<CMS_RecipientInfo>> b,
+    );
 
 /// OpenSSL typedef `sk_CMS_RecipientInfo_copyfunc`.
 typedef sk_CMS_RecipientInfo_copyfunc =
@@ -103457,14 +103478,12 @@ typedef sk_CMS_RecipientInfo_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_CMS_RecipientInfo_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_CMS_RecipientInfo_freefuncFunction`.
-typedef sk_CMS_RecipientInfo_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<CMS_RecipientInfo> a,
-);
+typedef sk_CMS_RecipientInfo_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<CMS_RecipientInfo> a);
 
 /// OpenSSL typedef `Dartsk_CMS_RecipientInfo_freefuncFunction`.
-typedef Dartsk_CMS_RecipientInfo_freefuncFunction = void Function(
-  ffi.Pointer<CMS_RecipientInfo> a,
-);
+typedef Dartsk_CMS_RecipientInfo_freefuncFunction =
+    void Function(ffi.Pointer<CMS_RecipientInfo> a);
 
 /// OpenSSL typedef `sk_CMS_RevocationInfoChoice_compfunc`.
 typedef sk_CMS_RevocationInfoChoice_compfunc =
@@ -103473,16 +103492,18 @@ typedef sk_CMS_RevocationInfoChoice_compfunc =
     >;
 
 /// OpenSSL typedef `sk_CMS_RevocationInfoChoice_compfuncFunction`.
-typedef sk_CMS_RevocationInfoChoice_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<CMS_RevocationInfoChoice>> a,
-  ffi.Pointer<ffi.Pointer<CMS_RevocationInfoChoice>> b,
-);
+typedef sk_CMS_RevocationInfoChoice_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<CMS_RevocationInfoChoice>> a,
+      ffi.Pointer<ffi.Pointer<CMS_RevocationInfoChoice>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_CMS_RevocationInfoChoice_compfuncFunction`.
-typedef Dartsk_CMS_RevocationInfoChoice_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<CMS_RevocationInfoChoice>> a,
-  ffi.Pointer<ffi.Pointer<CMS_RevocationInfoChoice>> b,
-);
+typedef Dartsk_CMS_RevocationInfoChoice_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<CMS_RevocationInfoChoice>> a,
+      ffi.Pointer<ffi.Pointer<CMS_RevocationInfoChoice>> b,
+    );
 
 /// OpenSSL typedef `sk_CMS_RevocationInfoChoice_copyfunc`.
 typedef sk_CMS_RevocationInfoChoice_copyfunc =
@@ -103503,30 +103524,30 @@ typedef sk_CMS_RevocationInfoChoice_freefunc =
     >;
 
 /// OpenSSL typedef `sk_CMS_RevocationInfoChoice_freefuncFunction`.
-typedef sk_CMS_RevocationInfoChoice_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<CMS_RevocationInfoChoice> a,
-);
+typedef sk_CMS_RevocationInfoChoice_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<CMS_RevocationInfoChoice> a);
 
 /// OpenSSL typedef `Dartsk_CMS_RevocationInfoChoice_freefuncFunction`.
-typedef Dartsk_CMS_RevocationInfoChoice_freefuncFunction = void Function(
-  ffi.Pointer<CMS_RevocationInfoChoice> a,
-);
+typedef Dartsk_CMS_RevocationInfoChoice_freefuncFunction =
+    void Function(ffi.Pointer<CMS_RevocationInfoChoice> a);
 
 /// OpenSSL typedef `sk_CMS_SignerInfo_compfunc`.
 typedef sk_CMS_SignerInfo_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_CMS_SignerInfo_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_CMS_SignerInfo_compfuncFunction`.
-typedef sk_CMS_SignerInfo_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<CMS_SignerInfo>> a,
-  ffi.Pointer<ffi.Pointer<CMS_SignerInfo>> b,
-);
+typedef sk_CMS_SignerInfo_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<CMS_SignerInfo>> a,
+      ffi.Pointer<ffi.Pointer<CMS_SignerInfo>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_CMS_SignerInfo_compfuncFunction`.
-typedef Dartsk_CMS_SignerInfo_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<CMS_SignerInfo>> a,
-  ffi.Pointer<ffi.Pointer<CMS_SignerInfo>> b,
-);
+typedef Dartsk_CMS_SignerInfo_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<CMS_SignerInfo>> a,
+      ffi.Pointer<ffi.Pointer<CMS_SignerInfo>> b,
+    );
 
 /// OpenSSL typedef `sk_CMS_SignerInfo_copyfunc`.
 typedef sk_CMS_SignerInfo_copyfunc =
@@ -103541,78 +103562,76 @@ typedef sk_CMS_SignerInfo_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_CMS_SignerInfo_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_CMS_SignerInfo_freefuncFunction`.
-typedef sk_CMS_SignerInfo_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<CMS_SignerInfo> a,
-);
+typedef sk_CMS_SignerInfo_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<CMS_SignerInfo> a);
 
 /// OpenSSL typedef `Dartsk_CMS_SignerInfo_freefuncFunction`.
-typedef Dartsk_CMS_SignerInfo_freefuncFunction = void Function(
-  ffi.Pointer<CMS_SignerInfo> a,
-);
+typedef Dartsk_CMS_SignerInfo_freefuncFunction =
+    void Function(ffi.Pointer<CMS_SignerInfo> a);
 
 /// OpenSSL typedef `sk_CONF_VALUE_compfunc`.
 typedef sk_CONF_VALUE_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_CONF_VALUE_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_CONF_VALUE_compfuncFunction`.
-typedef sk_CONF_VALUE_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<CONF_VALUE>> a,
-  ffi.Pointer<ffi.Pointer<CONF_VALUE>> b,
-);
+typedef sk_CONF_VALUE_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<CONF_VALUE>> a,
+      ffi.Pointer<ffi.Pointer<CONF_VALUE>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_CONF_VALUE_compfuncFunction`.
-typedef Dartsk_CONF_VALUE_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<CONF_VALUE>> a,
-  ffi.Pointer<ffi.Pointer<CONF_VALUE>> b,
-);
+typedef Dartsk_CONF_VALUE_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<CONF_VALUE>> a,
+      ffi.Pointer<ffi.Pointer<CONF_VALUE>> b,
+    );
 
 /// OpenSSL typedef `sk_CONF_VALUE_copyfunc`.
 typedef sk_CONF_VALUE_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_CONF_VALUE_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_CONF_VALUE_copyfuncFunction`.
-typedef sk_CONF_VALUE_copyfuncFunction = ffi.Pointer<CONF_VALUE> Function(
-  ffi.Pointer<CONF_VALUE> a,
-);
+typedef sk_CONF_VALUE_copyfuncFunction =
+    ffi.Pointer<CONF_VALUE> Function(ffi.Pointer<CONF_VALUE> a);
 
 /// OpenSSL typedef `sk_CONF_VALUE_freefunc`.
 typedef sk_CONF_VALUE_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_CONF_VALUE_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_CONF_VALUE_freefuncFunction`.
-typedef sk_CONF_VALUE_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<CONF_VALUE> a,
-);
+typedef sk_CONF_VALUE_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<CONF_VALUE> a);
 
 /// OpenSSL typedef `Dartsk_CONF_VALUE_freefuncFunction`.
-typedef Dartsk_CONF_VALUE_freefuncFunction = void Function(
-  ffi.Pointer<CONF_VALUE> a,
-);
+typedef Dartsk_CONF_VALUE_freefuncFunction =
+    void Function(ffi.Pointer<CONF_VALUE> a);
 
 /// OpenSSL typedef `sk_CTLOG_compfunc`.
 typedef sk_CTLOG_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_CTLOG_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_CTLOG_compfuncFunction`.
-typedef sk_CTLOG_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<CTLOG>> a,
-  ffi.Pointer<ffi.Pointer<CTLOG>> b,
-);
+typedef sk_CTLOG_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<CTLOG>> a,
+      ffi.Pointer<ffi.Pointer<CTLOG>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_CTLOG_compfuncFunction`.
-typedef Dartsk_CTLOG_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<CTLOG>> a,
-  ffi.Pointer<ffi.Pointer<CTLOG>> b,
-);
+typedef Dartsk_CTLOG_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<CTLOG>> a,
+      ffi.Pointer<ffi.Pointer<CTLOG>> b,
+    );
 
 /// OpenSSL typedef `sk_CTLOG_copyfunc`.
 typedef sk_CTLOG_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_CTLOG_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_CTLOG_copyfuncFunction`.
-typedef sk_CTLOG_copyfuncFunction = ffi.Pointer<CTLOG> Function(
-  ffi.Pointer<CTLOG> a,
-);
+typedef sk_CTLOG_copyfuncFunction =
+    ffi.Pointer<CTLOG> Function(ffi.Pointer<CTLOG> a);
 
 /// OpenSSL typedef `sk_CTLOG_freefunc`.
 typedef sk_CTLOG_freefunc =
@@ -103629,55 +103648,56 @@ typedef sk_DIST_POINT_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_DIST_POINT_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_DIST_POINT_compfuncFunction`.
-typedef sk_DIST_POINT_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<DIST_POINT>> a,
-  ffi.Pointer<ffi.Pointer<DIST_POINT>> b,
-);
+typedef sk_DIST_POINT_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<DIST_POINT>> a,
+      ffi.Pointer<ffi.Pointer<DIST_POINT>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_DIST_POINT_compfuncFunction`.
-typedef Dartsk_DIST_POINT_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<DIST_POINT>> a,
-  ffi.Pointer<ffi.Pointer<DIST_POINT>> b,
-);
+typedef Dartsk_DIST_POINT_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<DIST_POINT>> a,
+      ffi.Pointer<ffi.Pointer<DIST_POINT>> b,
+    );
 
 /// OpenSSL typedef `sk_DIST_POINT_copyfunc`.
 typedef sk_DIST_POINT_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_DIST_POINT_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_DIST_POINT_copyfuncFunction`.
-typedef sk_DIST_POINT_copyfuncFunction = ffi.Pointer<DIST_POINT> Function(
-  ffi.Pointer<DIST_POINT> a,
-);
+typedef sk_DIST_POINT_copyfuncFunction =
+    ffi.Pointer<DIST_POINT> Function(ffi.Pointer<DIST_POINT> a);
 
 /// OpenSSL typedef `sk_DIST_POINT_freefunc`.
 typedef sk_DIST_POINT_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_DIST_POINT_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_DIST_POINT_freefuncFunction`.
-typedef sk_DIST_POINT_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<DIST_POINT> a,
-);
+typedef sk_DIST_POINT_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<DIST_POINT> a);
 
 /// OpenSSL typedef `Dartsk_DIST_POINT_freefuncFunction`.
-typedef Dartsk_DIST_POINT_freefuncFunction = void Function(
-  ffi.Pointer<DIST_POINT> a,
-);
+typedef Dartsk_DIST_POINT_freefuncFunction =
+    void Function(ffi.Pointer<DIST_POINT> a);
 
 /// OpenSSL typedef `sk_ESS_CERT_ID_V2_compfunc`.
 typedef sk_ESS_CERT_ID_V2_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ESS_CERT_ID_V2_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_ESS_CERT_ID_V2_compfuncFunction`.
-typedef sk_ESS_CERT_ID_V2_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ESS_CERT_ID_V2>> a,
-  ffi.Pointer<ffi.Pointer<ESS_CERT_ID_V2>> b,
-);
+typedef sk_ESS_CERT_ID_V2_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ESS_CERT_ID_V2>> a,
+      ffi.Pointer<ffi.Pointer<ESS_CERT_ID_V2>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_ESS_CERT_ID_V2_compfuncFunction`.
-typedef Dartsk_ESS_CERT_ID_V2_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ESS_CERT_ID_V2>> a,
-  ffi.Pointer<ffi.Pointer<ESS_CERT_ID_V2>> b,
-);
+typedef Dartsk_ESS_CERT_ID_V2_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ESS_CERT_ID_V2>> a,
+      ffi.Pointer<ffi.Pointer<ESS_CERT_ID_V2>> b,
+    );
 
 /// OpenSSL typedef `sk_ESS_CERT_ID_V2_copyfunc`.
 typedef sk_ESS_CERT_ID_V2_copyfunc =
@@ -103692,147 +103712,144 @@ typedef sk_ESS_CERT_ID_V2_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_ESS_CERT_ID_V2_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_ESS_CERT_ID_V2_freefuncFunction`.
-typedef sk_ESS_CERT_ID_V2_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ESS_CERT_ID_V2> a,
-);
+typedef sk_ESS_CERT_ID_V2_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ESS_CERT_ID_V2> a);
 
 /// OpenSSL typedef `Dartsk_ESS_CERT_ID_V2_freefuncFunction`.
-typedef Dartsk_ESS_CERT_ID_V2_freefuncFunction = void Function(
-  ffi.Pointer<ESS_CERT_ID_V2> a,
-);
+typedef Dartsk_ESS_CERT_ID_V2_freefuncFunction =
+    void Function(ffi.Pointer<ESS_CERT_ID_V2> a);
 
 /// OpenSSL typedef `sk_ESS_CERT_ID_compfunc`.
 typedef sk_ESS_CERT_ID_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ESS_CERT_ID_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_ESS_CERT_ID_compfuncFunction`.
-typedef sk_ESS_CERT_ID_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ESS_CERT_ID>> a,
-  ffi.Pointer<ffi.Pointer<ESS_CERT_ID>> b,
-);
+typedef sk_ESS_CERT_ID_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ESS_CERT_ID>> a,
+      ffi.Pointer<ffi.Pointer<ESS_CERT_ID>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_ESS_CERT_ID_compfuncFunction`.
-typedef Dartsk_ESS_CERT_ID_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ESS_CERT_ID>> a,
-  ffi.Pointer<ffi.Pointer<ESS_CERT_ID>> b,
-);
+typedef Dartsk_ESS_CERT_ID_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ESS_CERT_ID>> a,
+      ffi.Pointer<ffi.Pointer<ESS_CERT_ID>> b,
+    );
 
 /// OpenSSL typedef `sk_ESS_CERT_ID_copyfunc`.
 typedef sk_ESS_CERT_ID_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_ESS_CERT_ID_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_ESS_CERT_ID_copyfuncFunction`.
-typedef sk_ESS_CERT_ID_copyfuncFunction = ffi.Pointer<ESS_CERT_ID> Function(
-  ffi.Pointer<ESS_CERT_ID> a,
-);
+typedef sk_ESS_CERT_ID_copyfuncFunction =
+    ffi.Pointer<ESS_CERT_ID> Function(ffi.Pointer<ESS_CERT_ID> a);
 
 /// OpenSSL typedef `sk_ESS_CERT_ID_freefunc`.
 typedef sk_ESS_CERT_ID_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_ESS_CERT_ID_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_ESS_CERT_ID_freefuncFunction`.
-typedef sk_ESS_CERT_ID_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ESS_CERT_ID> a,
-);
+typedef sk_ESS_CERT_ID_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ESS_CERT_ID> a);
 
 /// OpenSSL typedef `Dartsk_ESS_CERT_ID_freefuncFunction`.
-typedef Dartsk_ESS_CERT_ID_freefuncFunction = void Function(
-  ffi.Pointer<ESS_CERT_ID> a,
-);
+typedef Dartsk_ESS_CERT_ID_freefuncFunction =
+    void Function(ffi.Pointer<ESS_CERT_ID> a);
 
 /// OpenSSL typedef `sk_GENERAL_NAMES_compfunc`.
 typedef sk_GENERAL_NAMES_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_GENERAL_NAMES_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_GENERAL_NAMES_compfuncFunction`.
-typedef sk_GENERAL_NAMES_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<GENERAL_NAMES>> a,
-  ffi.Pointer<ffi.Pointer<GENERAL_NAMES>> b,
-);
+typedef sk_GENERAL_NAMES_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<GENERAL_NAMES>> a,
+      ffi.Pointer<ffi.Pointer<GENERAL_NAMES>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_GENERAL_NAMES_compfuncFunction`.
-typedef Dartsk_GENERAL_NAMES_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<GENERAL_NAMES>> a,
-  ffi.Pointer<ffi.Pointer<GENERAL_NAMES>> b,
-);
+typedef Dartsk_GENERAL_NAMES_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<GENERAL_NAMES>> a,
+      ffi.Pointer<ffi.Pointer<GENERAL_NAMES>> b,
+    );
 
 /// OpenSSL typedef `sk_GENERAL_NAMES_copyfunc`.
 typedef sk_GENERAL_NAMES_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_GENERAL_NAMES_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_GENERAL_NAMES_copyfuncFunction`.
-typedef sk_GENERAL_NAMES_copyfuncFunction = ffi.Pointer<GENERAL_NAMES> Function(
-  ffi.Pointer<GENERAL_NAMES> a,
-);
+typedef sk_GENERAL_NAMES_copyfuncFunction =
+    ffi.Pointer<GENERAL_NAMES> Function(ffi.Pointer<GENERAL_NAMES> a);
 
 /// OpenSSL typedef `sk_GENERAL_NAMES_freefunc`.
 typedef sk_GENERAL_NAMES_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_GENERAL_NAMES_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_GENERAL_NAMES_freefuncFunction`.
-typedef sk_GENERAL_NAMES_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<GENERAL_NAMES> a,
-);
+typedef sk_GENERAL_NAMES_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<GENERAL_NAMES> a);
 
 /// OpenSSL typedef `Dartsk_GENERAL_NAMES_freefuncFunction`.
-typedef Dartsk_GENERAL_NAMES_freefuncFunction = void Function(
-  ffi.Pointer<GENERAL_NAMES> a,
-);
+typedef Dartsk_GENERAL_NAMES_freefuncFunction =
+    void Function(ffi.Pointer<GENERAL_NAMES> a);
 
 /// OpenSSL typedef `sk_GENERAL_NAME_compfunc`.
 typedef sk_GENERAL_NAME_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_GENERAL_NAME_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_GENERAL_NAME_compfuncFunction`.
-typedef sk_GENERAL_NAME_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<GENERAL_NAME>> a,
-  ffi.Pointer<ffi.Pointer<GENERAL_NAME>> b,
-);
+typedef sk_GENERAL_NAME_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<GENERAL_NAME>> a,
+      ffi.Pointer<ffi.Pointer<GENERAL_NAME>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_GENERAL_NAME_compfuncFunction`.
-typedef Dartsk_GENERAL_NAME_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<GENERAL_NAME>> a,
-  ffi.Pointer<ffi.Pointer<GENERAL_NAME>> b,
-);
+typedef Dartsk_GENERAL_NAME_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<GENERAL_NAME>> a,
+      ffi.Pointer<ffi.Pointer<GENERAL_NAME>> b,
+    );
 
 /// OpenSSL typedef `sk_GENERAL_NAME_copyfunc`.
 typedef sk_GENERAL_NAME_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_GENERAL_NAME_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_GENERAL_NAME_copyfuncFunction`.
-typedef sk_GENERAL_NAME_copyfuncFunction = ffi.Pointer<GENERAL_NAME> Function(
-  ffi.Pointer<GENERAL_NAME> a,
-);
+typedef sk_GENERAL_NAME_copyfuncFunction =
+    ffi.Pointer<GENERAL_NAME> Function(ffi.Pointer<GENERAL_NAME> a);
 
 /// OpenSSL typedef `sk_GENERAL_NAME_freefunc`.
 typedef sk_GENERAL_NAME_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_GENERAL_NAME_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_GENERAL_NAME_freefuncFunction`.
-typedef sk_GENERAL_NAME_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<GENERAL_NAME> a,
-);
+typedef sk_GENERAL_NAME_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<GENERAL_NAME> a);
 
 /// OpenSSL typedef `Dartsk_GENERAL_NAME_freefuncFunction`.
-typedef Dartsk_GENERAL_NAME_freefuncFunction = void Function(
-  ffi.Pointer<GENERAL_NAME> a,
-);
+typedef Dartsk_GENERAL_NAME_freefuncFunction =
+    void Function(ffi.Pointer<GENERAL_NAME> a);
 
 /// OpenSSL typedef `sk_GENERAL_SUBTREE_compfunc`.
 typedef sk_GENERAL_SUBTREE_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_GENERAL_SUBTREE_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_GENERAL_SUBTREE_compfuncFunction`.
-typedef sk_GENERAL_SUBTREE_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<GENERAL_SUBTREE>> a,
-  ffi.Pointer<ffi.Pointer<GENERAL_SUBTREE>> b,
-);
+typedef sk_GENERAL_SUBTREE_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<GENERAL_SUBTREE>> a,
+      ffi.Pointer<ffi.Pointer<GENERAL_SUBTREE>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_GENERAL_SUBTREE_compfuncFunction`.
-typedef Dartsk_GENERAL_SUBTREE_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<GENERAL_SUBTREE>> a,
-  ffi.Pointer<ffi.Pointer<GENERAL_SUBTREE>> b,
-);
+typedef Dartsk_GENERAL_SUBTREE_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<GENERAL_SUBTREE>> a,
+      ffi.Pointer<ffi.Pointer<GENERAL_SUBTREE>> b,
+    );
 
 /// OpenSSL typedef `sk_GENERAL_SUBTREE_copyfunc`.
 typedef sk_GENERAL_SUBTREE_copyfunc =
@@ -103847,30 +103864,30 @@ typedef sk_GENERAL_SUBTREE_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_GENERAL_SUBTREE_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_GENERAL_SUBTREE_freefuncFunction`.
-typedef sk_GENERAL_SUBTREE_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<GENERAL_SUBTREE> a,
-);
+typedef sk_GENERAL_SUBTREE_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<GENERAL_SUBTREE> a);
 
 /// OpenSSL typedef `Dartsk_GENERAL_SUBTREE_freefuncFunction`.
-typedef Dartsk_GENERAL_SUBTREE_freefuncFunction = void Function(
-  ffi.Pointer<GENERAL_SUBTREE> a,
-);
+typedef Dartsk_GENERAL_SUBTREE_freefuncFunction =
+    void Function(ffi.Pointer<GENERAL_SUBTREE> a);
 
 /// OpenSSL typedef `sk_IPAddressFamily_compfunc`.
 typedef sk_IPAddressFamily_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_IPAddressFamily_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_IPAddressFamily_compfuncFunction`.
-typedef sk_IPAddressFamily_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<IPAddressFamily>> a,
-  ffi.Pointer<ffi.Pointer<IPAddressFamily>> b,
-);
+typedef sk_IPAddressFamily_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<IPAddressFamily>> a,
+      ffi.Pointer<ffi.Pointer<IPAddressFamily>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_IPAddressFamily_compfuncFunction`.
-typedef Dartsk_IPAddressFamily_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<IPAddressFamily>> a,
-  ffi.Pointer<ffi.Pointer<IPAddressFamily>> b,
-);
+typedef Dartsk_IPAddressFamily_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<IPAddressFamily>> a,
+      ffi.Pointer<ffi.Pointer<IPAddressFamily>> b,
+    );
 
 /// OpenSSL typedef `sk_IPAddressFamily_copyfunc`.
 typedef sk_IPAddressFamily_copyfunc =
@@ -103885,30 +103902,30 @@ typedef sk_IPAddressFamily_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_IPAddressFamily_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_IPAddressFamily_freefuncFunction`.
-typedef sk_IPAddressFamily_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<IPAddressFamily> a,
-);
+typedef sk_IPAddressFamily_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<IPAddressFamily> a);
 
 /// OpenSSL typedef `Dartsk_IPAddressFamily_freefuncFunction`.
-typedef Dartsk_IPAddressFamily_freefuncFunction = void Function(
-  ffi.Pointer<IPAddressFamily> a,
-);
+typedef Dartsk_IPAddressFamily_freefuncFunction =
+    void Function(ffi.Pointer<IPAddressFamily> a);
 
 /// OpenSSL typedef `sk_IPAddressOrRange_compfunc`.
 typedef sk_IPAddressOrRange_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_IPAddressOrRange_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_IPAddressOrRange_compfuncFunction`.
-typedef sk_IPAddressOrRange_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<IPAddressOrRange>> a,
-  ffi.Pointer<ffi.Pointer<IPAddressOrRange>> b,
-);
+typedef sk_IPAddressOrRange_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<IPAddressOrRange>> a,
+      ffi.Pointer<ffi.Pointer<IPAddressOrRange>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_IPAddressOrRange_compfuncFunction`.
-typedef Dartsk_IPAddressOrRange_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<IPAddressOrRange>> a,
-  ffi.Pointer<ffi.Pointer<IPAddressOrRange>> b,
-);
+typedef Dartsk_IPAddressOrRange_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<IPAddressOrRange>> a,
+      ffi.Pointer<ffi.Pointer<IPAddressOrRange>> b,
+    );
 
 /// OpenSSL typedef `sk_IPAddressOrRange_copyfunc`.
 typedef sk_IPAddressOrRange_copyfunc =
@@ -103923,147 +103940,144 @@ typedef sk_IPAddressOrRange_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_IPAddressOrRange_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_IPAddressOrRange_freefuncFunction`.
-typedef sk_IPAddressOrRange_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<IPAddressOrRange> a,
-);
+typedef sk_IPAddressOrRange_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<IPAddressOrRange> a);
 
 /// OpenSSL typedef `Dartsk_IPAddressOrRange_freefuncFunction`.
-typedef Dartsk_IPAddressOrRange_freefuncFunction = void Function(
-  ffi.Pointer<IPAddressOrRange> a,
-);
+typedef Dartsk_IPAddressOrRange_freefuncFunction =
+    void Function(ffi.Pointer<IPAddressOrRange> a);
 
 /// OpenSSL typedef `sk_OCSP_CERTID_compfunc`.
 typedef sk_OCSP_CERTID_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OCSP_CERTID_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OCSP_CERTID_compfuncFunction`.
-typedef sk_OCSP_CERTID_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OCSP_CERTID>> a,
-  ffi.Pointer<ffi.Pointer<OCSP_CERTID>> b,
-);
+typedef sk_OCSP_CERTID_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OCSP_CERTID>> a,
+      ffi.Pointer<ffi.Pointer<OCSP_CERTID>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OCSP_CERTID_compfuncFunction`.
-typedef Dartsk_OCSP_CERTID_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OCSP_CERTID>> a,
-  ffi.Pointer<ffi.Pointer<OCSP_CERTID>> b,
-);
+typedef Dartsk_OCSP_CERTID_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OCSP_CERTID>> a,
+      ffi.Pointer<ffi.Pointer<OCSP_CERTID>> b,
+    );
 
 /// OpenSSL typedef `sk_OCSP_CERTID_copyfunc`.
 typedef sk_OCSP_CERTID_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OCSP_CERTID_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_OCSP_CERTID_copyfuncFunction`.
-typedef sk_OCSP_CERTID_copyfuncFunction = ffi.Pointer<OCSP_CERTID> Function(
-  ffi.Pointer<OCSP_CERTID> a,
-);
+typedef sk_OCSP_CERTID_copyfuncFunction =
+    ffi.Pointer<OCSP_CERTID> Function(ffi.Pointer<OCSP_CERTID> a);
 
 /// OpenSSL typedef `sk_OCSP_CERTID_freefunc`.
 typedef sk_OCSP_CERTID_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OCSP_CERTID_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OCSP_CERTID_freefuncFunction`.
-typedef sk_OCSP_CERTID_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OCSP_CERTID> a,
-);
+typedef sk_OCSP_CERTID_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OCSP_CERTID> a);
 
 /// OpenSSL typedef `Dartsk_OCSP_CERTID_freefuncFunction`.
-typedef Dartsk_OCSP_CERTID_freefuncFunction = void Function(
-  ffi.Pointer<OCSP_CERTID> a,
-);
+typedef Dartsk_OCSP_CERTID_freefuncFunction =
+    void Function(ffi.Pointer<OCSP_CERTID> a);
 
 /// OpenSSL typedef `sk_OCSP_ONEREQ_compfunc`.
 typedef sk_OCSP_ONEREQ_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OCSP_ONEREQ_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OCSP_ONEREQ_compfuncFunction`.
-typedef sk_OCSP_ONEREQ_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OCSP_ONEREQ>> a,
-  ffi.Pointer<ffi.Pointer<OCSP_ONEREQ>> b,
-);
+typedef sk_OCSP_ONEREQ_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OCSP_ONEREQ>> a,
+      ffi.Pointer<ffi.Pointer<OCSP_ONEREQ>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OCSP_ONEREQ_compfuncFunction`.
-typedef Dartsk_OCSP_ONEREQ_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OCSP_ONEREQ>> a,
-  ffi.Pointer<ffi.Pointer<OCSP_ONEREQ>> b,
-);
+typedef Dartsk_OCSP_ONEREQ_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OCSP_ONEREQ>> a,
+      ffi.Pointer<ffi.Pointer<OCSP_ONEREQ>> b,
+    );
 
 /// OpenSSL typedef `sk_OCSP_ONEREQ_copyfunc`.
 typedef sk_OCSP_ONEREQ_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OCSP_ONEREQ_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_OCSP_ONEREQ_copyfuncFunction`.
-typedef sk_OCSP_ONEREQ_copyfuncFunction = ffi.Pointer<OCSP_ONEREQ> Function(
-  ffi.Pointer<OCSP_ONEREQ> a,
-);
+typedef sk_OCSP_ONEREQ_copyfuncFunction =
+    ffi.Pointer<OCSP_ONEREQ> Function(ffi.Pointer<OCSP_ONEREQ> a);
 
 /// OpenSSL typedef `sk_OCSP_ONEREQ_freefunc`.
 typedef sk_OCSP_ONEREQ_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OCSP_ONEREQ_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OCSP_ONEREQ_freefuncFunction`.
-typedef sk_OCSP_ONEREQ_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OCSP_ONEREQ> a,
-);
+typedef sk_OCSP_ONEREQ_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OCSP_ONEREQ> a);
 
 /// OpenSSL typedef `Dartsk_OCSP_ONEREQ_freefuncFunction`.
-typedef Dartsk_OCSP_ONEREQ_freefuncFunction = void Function(
-  ffi.Pointer<OCSP_ONEREQ> a,
-);
+typedef Dartsk_OCSP_ONEREQ_freefuncFunction =
+    void Function(ffi.Pointer<OCSP_ONEREQ> a);
 
 /// OpenSSL typedef `sk_OCSP_RESPID_compfunc`.
 typedef sk_OCSP_RESPID_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OCSP_RESPID_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OCSP_RESPID_compfuncFunction`.
-typedef sk_OCSP_RESPID_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OCSP_RESPID>> a,
-  ffi.Pointer<ffi.Pointer<OCSP_RESPID>> b,
-);
+typedef sk_OCSP_RESPID_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OCSP_RESPID>> a,
+      ffi.Pointer<ffi.Pointer<OCSP_RESPID>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OCSP_RESPID_compfuncFunction`.
-typedef Dartsk_OCSP_RESPID_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OCSP_RESPID>> a,
-  ffi.Pointer<ffi.Pointer<OCSP_RESPID>> b,
-);
+typedef Dartsk_OCSP_RESPID_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OCSP_RESPID>> a,
+      ffi.Pointer<ffi.Pointer<OCSP_RESPID>> b,
+    );
 
 /// OpenSSL typedef `sk_OCSP_RESPID_copyfunc`.
 typedef sk_OCSP_RESPID_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OCSP_RESPID_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_OCSP_RESPID_copyfuncFunction`.
-typedef sk_OCSP_RESPID_copyfuncFunction = ffi.Pointer<OCSP_RESPID> Function(
-  ffi.Pointer<OCSP_RESPID> a,
-);
+typedef sk_OCSP_RESPID_copyfuncFunction =
+    ffi.Pointer<OCSP_RESPID> Function(ffi.Pointer<OCSP_RESPID> a);
 
 /// OpenSSL typedef `sk_OCSP_RESPID_freefunc`.
 typedef sk_OCSP_RESPID_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OCSP_RESPID_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OCSP_RESPID_freefuncFunction`.
-typedef sk_OCSP_RESPID_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OCSP_RESPID> a,
-);
+typedef sk_OCSP_RESPID_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OCSP_RESPID> a);
 
 /// OpenSSL typedef `Dartsk_OCSP_RESPID_freefuncFunction`.
-typedef Dartsk_OCSP_RESPID_freefuncFunction = void Function(
-  ffi.Pointer<OCSP_RESPID> a,
-);
+typedef Dartsk_OCSP_RESPID_freefuncFunction =
+    void Function(ffi.Pointer<OCSP_RESPID> a);
 
 /// OpenSSL typedef `sk_OCSP_SINGLERESP_compfunc`.
 typedef sk_OCSP_SINGLERESP_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OCSP_SINGLERESP_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OCSP_SINGLERESP_compfuncFunction`.
-typedef sk_OCSP_SINGLERESP_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OCSP_SINGLERESP>> a,
-  ffi.Pointer<ffi.Pointer<OCSP_SINGLERESP>> b,
-);
+typedef sk_OCSP_SINGLERESP_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OCSP_SINGLERESP>> a,
+      ffi.Pointer<ffi.Pointer<OCSP_SINGLERESP>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OCSP_SINGLERESP_compfuncFunction`.
-typedef Dartsk_OCSP_SINGLERESP_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OCSP_SINGLERESP>> a,
-  ffi.Pointer<ffi.Pointer<OCSP_SINGLERESP>> b,
-);
+typedef Dartsk_OCSP_SINGLERESP_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OCSP_SINGLERESP>> a,
+      ffi.Pointer<ffi.Pointer<OCSP_SINGLERESP>> b,
+    );
 
 /// OpenSSL typedef `sk_OCSP_SINGLERESP_copyfunc`.
 typedef sk_OCSP_SINGLERESP_copyfunc =
@@ -104078,108 +104092,106 @@ typedef sk_OCSP_SINGLERESP_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OCSP_SINGLERESP_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OCSP_SINGLERESP_freefuncFunction`.
-typedef sk_OCSP_SINGLERESP_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OCSP_SINGLERESP> a,
-);
+typedef sk_OCSP_SINGLERESP_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OCSP_SINGLERESP> a);
 
 /// OpenSSL typedef `Dartsk_OCSP_SINGLERESP_freefuncFunction`.
-typedef Dartsk_OCSP_SINGLERESP_freefuncFunction = void Function(
-  ffi.Pointer<OCSP_SINGLERESP> a,
-);
+typedef Dartsk_OCSP_SINGLERESP_freefuncFunction =
+    void Function(ffi.Pointer<OCSP_SINGLERESP> a);
 
 /// OpenSSL typedef `sk_OPENSSL_BLOCK_compfunc`.
 typedef sk_OPENSSL_BLOCK_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OPENSSL_BLOCK_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OPENSSL_BLOCK_compfuncFunction`.
-typedef sk_OPENSSL_BLOCK_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ffi.Void>> a,
-  ffi.Pointer<ffi.Pointer<ffi.Void>> b,
-);
+typedef sk_OPENSSL_BLOCK_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ffi.Void>> a,
+      ffi.Pointer<ffi.Pointer<ffi.Void>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OPENSSL_BLOCK_compfuncFunction`.
-typedef Dartsk_OPENSSL_BLOCK_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ffi.Void>> a,
-  ffi.Pointer<ffi.Pointer<ffi.Void>> b,
-);
+typedef Dartsk_OPENSSL_BLOCK_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ffi.Void>> a,
+      ffi.Pointer<ffi.Pointer<ffi.Void>> b,
+    );
 
 /// OpenSSL typedef `sk_OPENSSL_BLOCK_copyfunc`.
 typedef sk_OPENSSL_BLOCK_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OPENSSL_BLOCK_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_OPENSSL_BLOCK_copyfuncFunction`.
-typedef sk_OPENSSL_BLOCK_copyfuncFunction = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<ffi.Void> a,
-);
+typedef sk_OPENSSL_BLOCK_copyfuncFunction =
+    ffi.Pointer<ffi.Void> Function(ffi.Pointer<ffi.Void> a);
 
 /// OpenSSL typedef `sk_OPENSSL_BLOCK_freefunc`.
 typedef sk_OPENSSL_BLOCK_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OPENSSL_BLOCK_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OPENSSL_BLOCK_freefuncFunction`.
-typedef sk_OPENSSL_BLOCK_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ffi.Void> a,
-);
+typedef sk_OPENSSL_BLOCK_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ffi.Void> a);
 
 /// OpenSSL typedef `Dartsk_OPENSSL_BLOCK_freefuncFunction`.
-typedef Dartsk_OPENSSL_BLOCK_freefuncFunction = void Function(
-  ffi.Pointer<ffi.Void> a,
-);
+typedef Dartsk_OPENSSL_BLOCK_freefuncFunction =
+    void Function(ffi.Pointer<ffi.Void> a);
 
 /// OpenSSL typedef `sk_OPENSSL_CSTRING_compfunc`.
 typedef sk_OPENSSL_CSTRING_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OPENSSL_CSTRING_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OPENSSL_CSTRING_compfuncFunction`.
-typedef sk_OPENSSL_CSTRING_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ffi.Char>> a,
-  ffi.Pointer<ffi.Pointer<ffi.Char>> b,
-);
+typedef sk_OPENSSL_CSTRING_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ffi.Char>> a,
+      ffi.Pointer<ffi.Pointer<ffi.Char>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OPENSSL_CSTRING_compfuncFunction`.
-typedef Dartsk_OPENSSL_CSTRING_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ffi.Char>> a,
-  ffi.Pointer<ffi.Pointer<ffi.Char>> b,
-);
+typedef Dartsk_OPENSSL_CSTRING_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ffi.Char>> a,
+      ffi.Pointer<ffi.Pointer<ffi.Char>> b,
+    );
 
 /// OpenSSL typedef `sk_OPENSSL_CSTRING_copyfunc`.
 typedef sk_OPENSSL_CSTRING_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OPENSSL_CSTRING_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_OPENSSL_CSTRING_copyfuncFunction`.
-typedef sk_OPENSSL_CSTRING_copyfuncFunction = ffi.Pointer<ffi.Char> Function(
-  ffi.Pointer<ffi.Char> a,
-);
+typedef sk_OPENSSL_CSTRING_copyfuncFunction =
+    ffi.Pointer<ffi.Char> Function(ffi.Pointer<ffi.Char> a);
 
 /// OpenSSL typedef `sk_OPENSSL_CSTRING_freefunc`.
 typedef sk_OPENSSL_CSTRING_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OPENSSL_CSTRING_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OPENSSL_CSTRING_freefuncFunction`.
-typedef sk_OPENSSL_CSTRING_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ffi.Char> a,
-);
+typedef sk_OPENSSL_CSTRING_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ffi.Char> a);
 
 /// OpenSSL typedef `Dartsk_OPENSSL_CSTRING_freefuncFunction`.
-typedef Dartsk_OPENSSL_CSTRING_freefuncFunction = void Function(
-  ffi.Pointer<ffi.Char> a,
-);
+typedef Dartsk_OPENSSL_CSTRING_freefuncFunction =
+    void Function(ffi.Pointer<ffi.Char> a);
 
 /// OpenSSL typedef `sk_OPENSSL_PSTRING_compfunc`.
 typedef sk_OPENSSL_PSTRING_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OPENSSL_PSTRING_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OPENSSL_PSTRING_compfuncFunction`.
-typedef sk_OPENSSL_PSTRING_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OPENSSL_STRING>> a,
-  ffi.Pointer<ffi.Pointer<OPENSSL_STRING>> b,
-);
+typedef sk_OPENSSL_PSTRING_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OPENSSL_STRING>> a,
+      ffi.Pointer<ffi.Pointer<OPENSSL_STRING>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OPENSSL_PSTRING_compfuncFunction`.
-typedef Dartsk_OPENSSL_PSTRING_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OPENSSL_STRING>> a,
-  ffi.Pointer<ffi.Pointer<OPENSSL_STRING>> b,
-);
+typedef Dartsk_OPENSSL_PSTRING_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OPENSSL_STRING>> a,
+      ffi.Pointer<ffi.Pointer<OPENSSL_STRING>> b,
+    );
 
 /// OpenSSL typedef `sk_OPENSSL_PSTRING_copyfunc`.
 typedef sk_OPENSSL_PSTRING_copyfunc =
@@ -104194,53 +104206,50 @@ typedef sk_OPENSSL_PSTRING_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OPENSSL_PSTRING_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OPENSSL_PSTRING_freefuncFunction`.
-typedef sk_OPENSSL_PSTRING_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OPENSSL_STRING> a,
-);
+typedef sk_OPENSSL_PSTRING_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OPENSSL_STRING> a);
 
 /// OpenSSL typedef `Dartsk_OPENSSL_PSTRING_freefuncFunction`.
-typedef Dartsk_OPENSSL_PSTRING_freefuncFunction = void Function(
-  ffi.Pointer<OPENSSL_STRING> a,
-);
+typedef Dartsk_OPENSSL_PSTRING_freefuncFunction =
+    void Function(ffi.Pointer<OPENSSL_STRING> a);
 
 /// OpenSSL typedef `sk_OPENSSL_STRING_compfunc`.
 typedef sk_OPENSSL_STRING_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OPENSSL_STRING_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OPENSSL_STRING_compfuncFunction`.
-typedef sk_OPENSSL_STRING_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ffi.Char>> a,
-  ffi.Pointer<ffi.Pointer<ffi.Char>> b,
-);
+typedef sk_OPENSSL_STRING_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ffi.Char>> a,
+      ffi.Pointer<ffi.Pointer<ffi.Char>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OPENSSL_STRING_compfuncFunction`.
-typedef Dartsk_OPENSSL_STRING_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ffi.Char>> a,
-  ffi.Pointer<ffi.Pointer<ffi.Char>> b,
-);
+typedef Dartsk_OPENSSL_STRING_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ffi.Char>> a,
+      ffi.Pointer<ffi.Pointer<ffi.Char>> b,
+    );
 
 /// OpenSSL typedef `sk_OPENSSL_STRING_copyfunc`.
 typedef sk_OPENSSL_STRING_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OPENSSL_STRING_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_OPENSSL_STRING_copyfuncFunction`.
-typedef sk_OPENSSL_STRING_copyfuncFunction = ffi.Pointer<ffi.Char> Function(
-  ffi.Pointer<ffi.Char> a,
-);
+typedef sk_OPENSSL_STRING_copyfuncFunction =
+    ffi.Pointer<ffi.Char> Function(ffi.Pointer<ffi.Char> a);
 
 /// OpenSSL typedef `sk_OPENSSL_STRING_freefunc`.
 typedef sk_OPENSSL_STRING_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OPENSSL_STRING_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OPENSSL_STRING_freefuncFunction`.
-typedef sk_OPENSSL_STRING_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<ffi.Char> a,
-);
+typedef sk_OPENSSL_STRING_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<ffi.Char> a);
 
 /// OpenSSL typedef `Dartsk_OPENSSL_STRING_freefuncFunction`.
-typedef Dartsk_OPENSSL_STRING_freefuncFunction = void Function(
-  ffi.Pointer<ffi.Char> a,
-);
+typedef Dartsk_OPENSSL_STRING_freefuncFunction =
+    void Function(ffi.Pointer<ffi.Char> a);
 
 /// OpenSSL typedef `sk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_compfunc`.
 typedef sk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_compfunc =
@@ -104249,16 +104258,18 @@ typedef sk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_compfunc =
     >;
 
 /// OpenSSL typedef `sk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_compfuncFunction`.
-typedef sk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_CHOICE>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_CHOICE>> b,
-);
+typedef sk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_CHOICE>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_CHOICE>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_compfuncFunction`.
-typedef Dartsk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_CHOICE>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_CHOICE>> b,
-);
+typedef Dartsk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_CHOICE>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_CHOICE>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_copyfunc`.
 typedef sk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_copyfunc =
@@ -104279,14 +104290,12 @@ typedef sk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_freefunc =
     >;
 
 /// OpenSSL typedef `sk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_freefuncFunction`.
-typedef sk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_CHOICE> a,
-);
+typedef sk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_CHOICE> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_freefuncFunction`.
-typedef Dartsk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_CHOICE> a,
-);
+typedef Dartsk_OSSL_ALLOWED_ATTRIBUTES_CHOICE_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_CHOICE> a);
 
 /// OpenSSL typedef `sk_OSSL_ALLOWED_ATTRIBUTES_ITEM_compfunc`.
 typedef sk_OSSL_ALLOWED_ATTRIBUTES_ITEM_compfunc =
@@ -104295,16 +104304,18 @@ typedef sk_OSSL_ALLOWED_ATTRIBUTES_ITEM_compfunc =
     >;
 
 /// OpenSSL typedef `sk_OSSL_ALLOWED_ATTRIBUTES_ITEM_compfuncFunction`.
-typedef sk_OSSL_ALLOWED_ATTRIBUTES_ITEM_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_ITEM>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_ITEM>> b,
-);
+typedef sk_OSSL_ALLOWED_ATTRIBUTES_ITEM_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_ITEM>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_ITEM>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_ALLOWED_ATTRIBUTES_ITEM_compfuncFunction`.
-typedef Dartsk_OSSL_ALLOWED_ATTRIBUTES_ITEM_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_ITEM>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_ITEM>> b,
-);
+typedef Dartsk_OSSL_ALLOWED_ATTRIBUTES_ITEM_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_ITEM>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_ITEM>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_ALLOWED_ATTRIBUTES_ITEM_copyfunc`.
 typedef sk_OSSL_ALLOWED_ATTRIBUTES_ITEM_copyfunc =
@@ -104325,30 +104336,30 @@ typedef sk_OSSL_ALLOWED_ATTRIBUTES_ITEM_freefunc =
     >;
 
 /// OpenSSL typedef `sk_OSSL_ALLOWED_ATTRIBUTES_ITEM_freefuncFunction`.
-typedef sk_OSSL_ALLOWED_ATTRIBUTES_ITEM_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_ITEM> a,
-);
+typedef sk_OSSL_ALLOWED_ATTRIBUTES_ITEM_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_ITEM> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_ALLOWED_ATTRIBUTES_ITEM_freefuncFunction`.
-typedef Dartsk_OSSL_ALLOWED_ATTRIBUTES_ITEM_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_ITEM> a,
-);
+typedef Dartsk_OSSL_ALLOWED_ATTRIBUTES_ITEM_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_ALLOWED_ATTRIBUTES_ITEM> a);
 
 /// OpenSSL typedef `sk_OSSL_ATTRIBUTE_MAPPING_compfunc`.
 typedef sk_OSSL_ATTRIBUTE_MAPPING_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_ATTRIBUTE_MAPPING_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_ATTRIBUTE_MAPPING_compfuncFunction`.
-typedef sk_OSSL_ATTRIBUTE_MAPPING_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_ATTRIBUTE_MAPPING>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_ATTRIBUTE_MAPPING>> b,
-);
+typedef sk_OSSL_ATTRIBUTE_MAPPING_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_ATTRIBUTE_MAPPING>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_ATTRIBUTE_MAPPING>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_ATTRIBUTE_MAPPING_compfuncFunction`.
-typedef Dartsk_OSSL_ATTRIBUTE_MAPPING_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_ATTRIBUTE_MAPPING>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_ATTRIBUTE_MAPPING>> b,
-);
+typedef Dartsk_OSSL_ATTRIBUTE_MAPPING_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_ATTRIBUTE_MAPPING>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_ATTRIBUTE_MAPPING>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_ATTRIBUTE_MAPPING_copyfunc`.
 typedef sk_OSSL_ATTRIBUTE_MAPPING_copyfunc =
@@ -104365,14 +104376,12 @@ typedef sk_OSSL_ATTRIBUTE_MAPPING_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_ATTRIBUTE_MAPPING_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_ATTRIBUTE_MAPPING_freefuncFunction`.
-typedef sk_OSSL_ATTRIBUTE_MAPPING_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_ATTRIBUTE_MAPPING> a,
-);
+typedef sk_OSSL_ATTRIBUTE_MAPPING_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_ATTRIBUTE_MAPPING> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_ATTRIBUTE_MAPPING_freefuncFunction`.
-typedef Dartsk_OSSL_ATTRIBUTE_MAPPING_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_ATTRIBUTE_MAPPING> a,
-);
+typedef Dartsk_OSSL_ATTRIBUTE_MAPPING_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_ATTRIBUTE_MAPPING> a);
 
 /// OpenSSL typedef `sk_OSSL_CMP_CERTREPMESSAGE_compfunc`.
 typedef sk_OSSL_CMP_CERTREPMESSAGE_compfunc =
@@ -104381,16 +104390,18 @@ typedef sk_OSSL_CMP_CERTREPMESSAGE_compfunc =
     >;
 
 /// OpenSSL typedef `sk_OSSL_CMP_CERTREPMESSAGE_compfuncFunction`.
-typedef sk_OSSL_CMP_CERTREPMESSAGE_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTREPMESSAGE>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTREPMESSAGE>> b,
-);
+typedef sk_OSSL_CMP_CERTREPMESSAGE_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTREPMESSAGE>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTREPMESSAGE>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_CMP_CERTREPMESSAGE_compfuncFunction`.
-typedef Dartsk_OSSL_CMP_CERTREPMESSAGE_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTREPMESSAGE>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTREPMESSAGE>> b,
-);
+typedef Dartsk_OSSL_CMP_CERTREPMESSAGE_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTREPMESSAGE>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTREPMESSAGE>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_CMP_CERTREPMESSAGE_copyfunc`.
 typedef sk_OSSL_CMP_CERTREPMESSAGE_copyfunc =
@@ -104411,30 +104422,30 @@ typedef sk_OSSL_CMP_CERTREPMESSAGE_freefunc =
     >;
 
 /// OpenSSL typedef `sk_OSSL_CMP_CERTREPMESSAGE_freefuncFunction`.
-typedef sk_OSSL_CMP_CERTREPMESSAGE_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_CMP_CERTREPMESSAGE> a,
-);
+typedef sk_OSSL_CMP_CERTREPMESSAGE_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_CMP_CERTREPMESSAGE> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_CMP_CERTREPMESSAGE_freefuncFunction`.
-typedef Dartsk_OSSL_CMP_CERTREPMESSAGE_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_CMP_CERTREPMESSAGE> a,
-);
+typedef Dartsk_OSSL_CMP_CERTREPMESSAGE_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_CMP_CERTREPMESSAGE> a);
 
 /// OpenSSL typedef `sk_OSSL_CMP_CERTRESPONSE_compfunc`.
 typedef sk_OSSL_CMP_CERTRESPONSE_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CMP_CERTRESPONSE_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CMP_CERTRESPONSE_compfuncFunction`.
-typedef sk_OSSL_CMP_CERTRESPONSE_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTRESPONSE>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTRESPONSE>> b,
-);
+typedef sk_OSSL_CMP_CERTRESPONSE_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTRESPONSE>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTRESPONSE>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_CMP_CERTRESPONSE_compfuncFunction`.
-typedef Dartsk_OSSL_CMP_CERTRESPONSE_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTRESPONSE>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTRESPONSE>> b,
-);
+typedef Dartsk_OSSL_CMP_CERTRESPONSE_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTRESPONSE>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTRESPONSE>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_CMP_CERTRESPONSE_copyfunc`.
 typedef sk_OSSL_CMP_CERTRESPONSE_copyfunc =
@@ -104451,30 +104462,30 @@ typedef sk_OSSL_CMP_CERTRESPONSE_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CMP_CERTRESPONSE_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CMP_CERTRESPONSE_freefuncFunction`.
-typedef sk_OSSL_CMP_CERTRESPONSE_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_CMP_CERTRESPONSE> a,
-);
+typedef sk_OSSL_CMP_CERTRESPONSE_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_CMP_CERTRESPONSE> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_CMP_CERTRESPONSE_freefuncFunction`.
-typedef Dartsk_OSSL_CMP_CERTRESPONSE_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_CMP_CERTRESPONSE> a,
-);
+typedef Dartsk_OSSL_CMP_CERTRESPONSE_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_CMP_CERTRESPONSE> a);
 
 /// OpenSSL typedef `sk_OSSL_CMP_CERTSTATUS_compfunc`.
 typedef sk_OSSL_CMP_CERTSTATUS_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CMP_CERTSTATUS_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CMP_CERTSTATUS_compfuncFunction`.
-typedef sk_OSSL_CMP_CERTSTATUS_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTSTATUS>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTSTATUS>> b,
-);
+typedef sk_OSSL_CMP_CERTSTATUS_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTSTATUS>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTSTATUS>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_CMP_CERTSTATUS_compfuncFunction`.
-typedef Dartsk_OSSL_CMP_CERTSTATUS_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTSTATUS>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTSTATUS>> b,
-);
+typedef Dartsk_OSSL_CMP_CERTSTATUS_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTSTATUS>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CERTSTATUS>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_CMP_CERTSTATUS_copyfunc`.
 typedef sk_OSSL_CMP_CERTSTATUS_copyfunc =
@@ -104491,30 +104502,30 @@ typedef sk_OSSL_CMP_CERTSTATUS_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CMP_CERTSTATUS_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CMP_CERTSTATUS_freefuncFunction`.
-typedef sk_OSSL_CMP_CERTSTATUS_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_CMP_CERTSTATUS> a,
-);
+typedef sk_OSSL_CMP_CERTSTATUS_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_CMP_CERTSTATUS> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_CMP_CERTSTATUS_freefuncFunction`.
-typedef Dartsk_OSSL_CMP_CERTSTATUS_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_CMP_CERTSTATUS> a,
-);
+typedef Dartsk_OSSL_CMP_CERTSTATUS_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_CMP_CERTSTATUS> a);
 
 /// OpenSSL typedef `sk_OSSL_CMP_CRLSTATUS_compfunc`.
 typedef sk_OSSL_CMP_CRLSTATUS_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CMP_CRLSTATUS_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CMP_CRLSTATUS_compfuncFunction`.
-typedef sk_OSSL_CMP_CRLSTATUS_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CRLSTATUS>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CRLSTATUS>> b,
-);
+typedef sk_OSSL_CMP_CRLSTATUS_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CRLSTATUS>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CRLSTATUS>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_CMP_CRLSTATUS_compfuncFunction`.
-typedef Dartsk_OSSL_CMP_CRLSTATUS_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CRLSTATUS>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_CRLSTATUS>> b,
-);
+typedef Dartsk_OSSL_CMP_CRLSTATUS_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CRLSTATUS>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_CRLSTATUS>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_CMP_CRLSTATUS_copyfunc`.
 typedef sk_OSSL_CMP_CRLSTATUS_copyfunc =
@@ -104529,69 +104540,68 @@ typedef sk_OSSL_CMP_CRLSTATUS_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CMP_CRLSTATUS_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CMP_CRLSTATUS_freefuncFunction`.
-typedef sk_OSSL_CMP_CRLSTATUS_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_CMP_CRLSTATUS> a,
-);
+typedef sk_OSSL_CMP_CRLSTATUS_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_CMP_CRLSTATUS> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_CMP_CRLSTATUS_freefuncFunction`.
-typedef Dartsk_OSSL_CMP_CRLSTATUS_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_CMP_CRLSTATUS> a,
-);
+typedef Dartsk_OSSL_CMP_CRLSTATUS_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_CMP_CRLSTATUS> a);
 
 /// OpenSSL typedef `sk_OSSL_CMP_ITAV_compfunc`.
 typedef sk_OSSL_CMP_ITAV_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CMP_ITAV_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CMP_ITAV_compfuncFunction`.
-typedef sk_OSSL_CMP_ITAV_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_ITAV>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_ITAV>> b,
-);
+typedef sk_OSSL_CMP_ITAV_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_ITAV>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_ITAV>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_CMP_ITAV_compfuncFunction`.
-typedef Dartsk_OSSL_CMP_ITAV_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_ITAV>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_ITAV>> b,
-);
+typedef Dartsk_OSSL_CMP_ITAV_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_ITAV>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_ITAV>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_CMP_ITAV_copyfunc`.
 typedef sk_OSSL_CMP_ITAV_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CMP_ITAV_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CMP_ITAV_copyfuncFunction`.
-typedef sk_OSSL_CMP_ITAV_copyfuncFunction = ffi.Pointer<OSSL_CMP_ITAV> Function(
-  ffi.Pointer<OSSL_CMP_ITAV> a,
-);
+typedef sk_OSSL_CMP_ITAV_copyfuncFunction =
+    ffi.Pointer<OSSL_CMP_ITAV> Function(ffi.Pointer<OSSL_CMP_ITAV> a);
 
 /// OpenSSL typedef `sk_OSSL_CMP_ITAV_freefunc`.
 typedef sk_OSSL_CMP_ITAV_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CMP_ITAV_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CMP_ITAV_freefuncFunction`.
-typedef sk_OSSL_CMP_ITAV_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_CMP_ITAV> a,
-);
+typedef sk_OSSL_CMP_ITAV_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_CMP_ITAV> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_CMP_ITAV_freefuncFunction`.
-typedef Dartsk_OSSL_CMP_ITAV_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_CMP_ITAV> a,
-);
+typedef Dartsk_OSSL_CMP_ITAV_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_CMP_ITAV> a);
 
 /// OpenSSL typedef `sk_OSSL_CMP_PKISI_compfunc`.
 typedef sk_OSSL_CMP_PKISI_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CMP_PKISI_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CMP_PKISI_compfuncFunction`.
-typedef sk_OSSL_CMP_PKISI_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_PKISI>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_PKISI>> b,
-);
+typedef sk_OSSL_CMP_PKISI_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_PKISI>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_PKISI>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_CMP_PKISI_compfuncFunction`.
-typedef Dartsk_OSSL_CMP_PKISI_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_PKISI>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CMP_PKISI>> b,
-);
+typedef Dartsk_OSSL_CMP_PKISI_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_PKISI>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CMP_PKISI>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_CMP_PKISI_copyfunc`.
 typedef sk_OSSL_CMP_PKISI_copyfunc =
@@ -104606,14 +104616,12 @@ typedef sk_OSSL_CMP_PKISI_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CMP_PKISI_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CMP_PKISI_freefuncFunction`.
-typedef sk_OSSL_CMP_PKISI_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_CMP_PKISI> a,
-);
+typedef sk_OSSL_CMP_PKISI_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_CMP_PKISI> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_CMP_PKISI_freefuncFunction`.
-typedef Dartsk_OSSL_CMP_PKISI_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_CMP_PKISI> a,
-);
+typedef Dartsk_OSSL_CMP_PKISI_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_CMP_PKISI> a);
 
 /// OpenSSL typedef `sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_compfunc`.
 typedef sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_compfunc =
@@ -104622,16 +104630,18 @@ typedef sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_compfunc =
     >;
 
 /// OpenSSL typedef `sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_compfuncFunction`.
-typedef sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CRMF_ATTRIBUTETYPEANDVALUE>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CRMF_ATTRIBUTETYPEANDVALUE>> b,
-);
+typedef sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CRMF_ATTRIBUTETYPEANDVALUE>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CRMF_ATTRIBUTETYPEANDVALUE>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_compfuncFunction`.
-typedef Dartsk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CRMF_ATTRIBUTETYPEANDVALUE>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CRMF_ATTRIBUTETYPEANDVALUE>> b,
-);
+typedef Dartsk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CRMF_ATTRIBUTETYPEANDVALUE>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CRMF_ATTRIBUTETYPEANDVALUE>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_copyfunc`.
 typedef sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_copyfunc =
@@ -104652,30 +104662,30 @@ typedef sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_freefunc =
     >;
 
 /// OpenSSL typedef `sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_freefuncFunction`.
-typedef sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_CRMF_ATTRIBUTETYPEANDVALUE> a,
-);
+typedef sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_CRMF_ATTRIBUTETYPEANDVALUE> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_freefuncFunction`.
-typedef Dartsk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_CRMF_ATTRIBUTETYPEANDVALUE> a,
-);
+typedef Dartsk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_CRMF_ATTRIBUTETYPEANDVALUE> a);
 
 /// OpenSSL typedef `sk_OSSL_CRMF_CERTID_compfunc`.
 typedef sk_OSSL_CRMF_CERTID_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CRMF_CERTID_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CRMF_CERTID_compfuncFunction`.
-typedef sk_OSSL_CRMF_CERTID_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CRMF_CERTID>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CRMF_CERTID>> b,
-);
+typedef sk_OSSL_CRMF_CERTID_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CRMF_CERTID>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CRMF_CERTID>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_CRMF_CERTID_compfuncFunction`.
-typedef Dartsk_OSSL_CRMF_CERTID_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CRMF_CERTID>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CRMF_CERTID>> b,
-);
+typedef Dartsk_OSSL_CRMF_CERTID_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CRMF_CERTID>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CRMF_CERTID>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_CRMF_CERTID_copyfunc`.
 typedef sk_OSSL_CRMF_CERTID_copyfunc =
@@ -104690,69 +104700,68 @@ typedef sk_OSSL_CRMF_CERTID_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CRMF_CERTID_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CRMF_CERTID_freefuncFunction`.
-typedef sk_OSSL_CRMF_CERTID_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_CRMF_CERTID> a,
-);
+typedef sk_OSSL_CRMF_CERTID_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_CRMF_CERTID> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_CRMF_CERTID_freefuncFunction`.
-typedef Dartsk_OSSL_CRMF_CERTID_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_CRMF_CERTID> a,
-);
+typedef Dartsk_OSSL_CRMF_CERTID_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_CRMF_CERTID> a);
 
 /// OpenSSL typedef `sk_OSSL_CRMF_MSG_compfunc`.
 typedef sk_OSSL_CRMF_MSG_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CRMF_MSG_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CRMF_MSG_compfuncFunction`.
-typedef sk_OSSL_CRMF_MSG_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CRMF_MSG>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CRMF_MSG>> b,
-);
+typedef sk_OSSL_CRMF_MSG_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CRMF_MSG>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CRMF_MSG>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_CRMF_MSG_compfuncFunction`.
-typedef Dartsk_OSSL_CRMF_MSG_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_CRMF_MSG>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_CRMF_MSG>> b,
-);
+typedef Dartsk_OSSL_CRMF_MSG_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_CRMF_MSG>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_CRMF_MSG>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_CRMF_MSG_copyfunc`.
 typedef sk_OSSL_CRMF_MSG_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CRMF_MSG_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CRMF_MSG_copyfuncFunction`.
-typedef sk_OSSL_CRMF_MSG_copyfuncFunction = ffi.Pointer<OSSL_CRMF_MSG> Function(
-  ffi.Pointer<OSSL_CRMF_MSG> a,
-);
+typedef sk_OSSL_CRMF_MSG_copyfuncFunction =
+    ffi.Pointer<OSSL_CRMF_MSG> Function(ffi.Pointer<OSSL_CRMF_MSG> a);
 
 /// OpenSSL typedef `sk_OSSL_CRMF_MSG_freefunc`.
 typedef sk_OSSL_CRMF_MSG_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_CRMF_MSG_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_CRMF_MSG_freefuncFunction`.
-typedef sk_OSSL_CRMF_MSG_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_CRMF_MSG> a,
-);
+typedef sk_OSSL_CRMF_MSG_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_CRMF_MSG> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_CRMF_MSG_freefuncFunction`.
-typedef Dartsk_OSSL_CRMF_MSG_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_CRMF_MSG> a,
-);
+typedef Dartsk_OSSL_CRMF_MSG_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_CRMF_MSG> a);
 
 /// OpenSSL typedef `sk_OSSL_DAY_TIME_BAND_compfunc`.
 typedef sk_OSSL_DAY_TIME_BAND_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_DAY_TIME_BAND_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_DAY_TIME_BAND_compfuncFunction`.
-typedef sk_OSSL_DAY_TIME_BAND_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_DAY_TIME_BAND>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_DAY_TIME_BAND>> b,
-);
+typedef sk_OSSL_DAY_TIME_BAND_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_DAY_TIME_BAND>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_DAY_TIME_BAND>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_DAY_TIME_BAND_compfuncFunction`.
-typedef Dartsk_OSSL_DAY_TIME_BAND_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_DAY_TIME_BAND>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_DAY_TIME_BAND>> b,
-);
+typedef Dartsk_OSSL_DAY_TIME_BAND_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_DAY_TIME_BAND>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_DAY_TIME_BAND>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_DAY_TIME_BAND_copyfunc`.
 typedef sk_OSSL_DAY_TIME_BAND_copyfunc =
@@ -104767,14 +104776,12 @@ typedef sk_OSSL_DAY_TIME_BAND_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_DAY_TIME_BAND_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_DAY_TIME_BAND_freefuncFunction`.
-typedef sk_OSSL_DAY_TIME_BAND_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_DAY_TIME_BAND> a,
-);
+typedef sk_OSSL_DAY_TIME_BAND_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_DAY_TIME_BAND> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_DAY_TIME_BAND_freefuncFunction`.
-typedef Dartsk_OSSL_DAY_TIME_BAND_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_DAY_TIME_BAND> a,
-);
+typedef Dartsk_OSSL_DAY_TIME_BAND_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_DAY_TIME_BAND> a);
 
 /// OpenSSL typedef `sk_OSSL_IETF_ATTR_SYNTAX_VALUE_compfunc`.
 typedef sk_OSSL_IETF_ATTR_SYNTAX_VALUE_compfunc =
@@ -104783,16 +104790,18 @@ typedef sk_OSSL_IETF_ATTR_SYNTAX_VALUE_compfunc =
     >;
 
 /// OpenSSL typedef `sk_OSSL_IETF_ATTR_SYNTAX_VALUE_compfuncFunction`.
-typedef sk_OSSL_IETF_ATTR_SYNTAX_VALUE_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_IETF_ATTR_SYNTAX_VALUE>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_IETF_ATTR_SYNTAX_VALUE>> b,
-);
+typedef sk_OSSL_IETF_ATTR_SYNTAX_VALUE_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_IETF_ATTR_SYNTAX_VALUE>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_IETF_ATTR_SYNTAX_VALUE>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_IETF_ATTR_SYNTAX_VALUE_compfuncFunction`.
-typedef Dartsk_OSSL_IETF_ATTR_SYNTAX_VALUE_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_IETF_ATTR_SYNTAX_VALUE>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_IETF_ATTR_SYNTAX_VALUE>> b,
-);
+typedef Dartsk_OSSL_IETF_ATTR_SYNTAX_VALUE_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_IETF_ATTR_SYNTAX_VALUE>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_IETF_ATTR_SYNTAX_VALUE>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_IETF_ATTR_SYNTAX_VALUE_copyfunc`.
 typedef sk_OSSL_IETF_ATTR_SYNTAX_VALUE_copyfunc =
@@ -104813,30 +104822,30 @@ typedef sk_OSSL_IETF_ATTR_SYNTAX_VALUE_freefunc =
     >;
 
 /// OpenSSL typedef `sk_OSSL_IETF_ATTR_SYNTAX_VALUE_freefuncFunction`.
-typedef sk_OSSL_IETF_ATTR_SYNTAX_VALUE_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_IETF_ATTR_SYNTAX_VALUE> a,
-);
+typedef sk_OSSL_IETF_ATTR_SYNTAX_VALUE_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_IETF_ATTR_SYNTAX_VALUE> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_IETF_ATTR_SYNTAX_VALUE_freefuncFunction`.
-typedef Dartsk_OSSL_IETF_ATTR_SYNTAX_VALUE_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_IETF_ATTR_SYNTAX_VALUE> a,
-);
+typedef Dartsk_OSSL_IETF_ATTR_SYNTAX_VALUE_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_IETF_ATTR_SYNTAX_VALUE> a);
 
 /// OpenSSL typedef `sk_OSSL_ISSUER_SERIAL_compfunc`.
 typedef sk_OSSL_ISSUER_SERIAL_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_ISSUER_SERIAL_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_ISSUER_SERIAL_compfuncFunction`.
-typedef sk_OSSL_ISSUER_SERIAL_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_ISSUER_SERIAL>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_ISSUER_SERIAL>> b,
-);
+typedef sk_OSSL_ISSUER_SERIAL_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_ISSUER_SERIAL>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_ISSUER_SERIAL>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_ISSUER_SERIAL_compfuncFunction`.
-typedef Dartsk_OSSL_ISSUER_SERIAL_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_ISSUER_SERIAL>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_ISSUER_SERIAL>> b,
-);
+typedef Dartsk_OSSL_ISSUER_SERIAL_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_ISSUER_SERIAL>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_ISSUER_SERIAL>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_ISSUER_SERIAL_copyfunc`.
 typedef sk_OSSL_ISSUER_SERIAL_copyfunc =
@@ -104851,30 +104860,30 @@ typedef sk_OSSL_ISSUER_SERIAL_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_ISSUER_SERIAL_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_ISSUER_SERIAL_freefuncFunction`.
-typedef sk_OSSL_ISSUER_SERIAL_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_ISSUER_SERIAL> a,
-);
+typedef sk_OSSL_ISSUER_SERIAL_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_ISSUER_SERIAL> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_ISSUER_SERIAL_freefuncFunction`.
-typedef Dartsk_OSSL_ISSUER_SERIAL_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_ISSUER_SERIAL> a,
-);
+typedef Dartsk_OSSL_ISSUER_SERIAL_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_ISSUER_SERIAL> a);
 
 /// OpenSSL typedef `sk_OSSL_ROLE_SPEC_CERT_ID_compfunc`.
 typedef sk_OSSL_ROLE_SPEC_CERT_ID_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_ROLE_SPEC_CERT_ID_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_ROLE_SPEC_CERT_ID_compfuncFunction`.
-typedef sk_OSSL_ROLE_SPEC_CERT_ID_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_ROLE_SPEC_CERT_ID>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_ROLE_SPEC_CERT_ID>> b,
-);
+typedef sk_OSSL_ROLE_SPEC_CERT_ID_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_ROLE_SPEC_CERT_ID>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_ROLE_SPEC_CERT_ID>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_ROLE_SPEC_CERT_ID_compfuncFunction`.
-typedef Dartsk_OSSL_ROLE_SPEC_CERT_ID_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_ROLE_SPEC_CERT_ID>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_ROLE_SPEC_CERT_ID>> b,
-);
+typedef Dartsk_OSSL_ROLE_SPEC_CERT_ID_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_ROLE_SPEC_CERT_ID>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_ROLE_SPEC_CERT_ID>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_ROLE_SPEC_CERT_ID_copyfunc`.
 typedef sk_OSSL_ROLE_SPEC_CERT_ID_copyfunc =
@@ -104891,108 +104900,106 @@ typedef sk_OSSL_ROLE_SPEC_CERT_ID_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_ROLE_SPEC_CERT_ID_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_ROLE_SPEC_CERT_ID_freefuncFunction`.
-typedef sk_OSSL_ROLE_SPEC_CERT_ID_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_ROLE_SPEC_CERT_ID> a,
-);
+typedef sk_OSSL_ROLE_SPEC_CERT_ID_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_ROLE_SPEC_CERT_ID> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_ROLE_SPEC_CERT_ID_freefuncFunction`.
-typedef Dartsk_OSSL_ROLE_SPEC_CERT_ID_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_ROLE_SPEC_CERT_ID> a,
-);
+typedef Dartsk_OSSL_ROLE_SPEC_CERT_ID_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_ROLE_SPEC_CERT_ID> a);
 
 /// OpenSSL typedef `sk_OSSL_TARGETS_compfunc`.
 typedef sk_OSSL_TARGETS_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_TARGETS_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_TARGETS_compfuncFunction`.
-typedef sk_OSSL_TARGETS_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_TARGETS>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_TARGETS>> b,
-);
+typedef sk_OSSL_TARGETS_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_TARGETS>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_TARGETS>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_TARGETS_compfuncFunction`.
-typedef Dartsk_OSSL_TARGETS_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_TARGETS>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_TARGETS>> b,
-);
+typedef Dartsk_OSSL_TARGETS_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_TARGETS>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_TARGETS>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_TARGETS_copyfunc`.
 typedef sk_OSSL_TARGETS_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_TARGETS_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_TARGETS_copyfuncFunction`.
-typedef sk_OSSL_TARGETS_copyfuncFunction = ffi.Pointer<OSSL_TARGETS> Function(
-  ffi.Pointer<OSSL_TARGETS> a,
-);
+typedef sk_OSSL_TARGETS_copyfuncFunction =
+    ffi.Pointer<OSSL_TARGETS> Function(ffi.Pointer<OSSL_TARGETS> a);
 
 /// OpenSSL typedef `sk_OSSL_TARGETS_freefunc`.
 typedef sk_OSSL_TARGETS_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_TARGETS_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_TARGETS_freefuncFunction`.
-typedef sk_OSSL_TARGETS_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_TARGETS> a,
-);
+typedef sk_OSSL_TARGETS_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_TARGETS> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_TARGETS_freefuncFunction`.
-typedef Dartsk_OSSL_TARGETS_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_TARGETS> a,
-);
+typedef Dartsk_OSSL_TARGETS_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_TARGETS> a);
 
 /// OpenSSL typedef `sk_OSSL_TARGET_compfunc`.
 typedef sk_OSSL_TARGET_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_TARGET_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_TARGET_compfuncFunction`.
-typedef sk_OSSL_TARGET_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_TARGET>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_TARGET>> b,
-);
+typedef sk_OSSL_TARGET_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_TARGET>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_TARGET>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_TARGET_compfuncFunction`.
-typedef Dartsk_OSSL_TARGET_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_TARGET>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_TARGET>> b,
-);
+typedef Dartsk_OSSL_TARGET_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_TARGET>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_TARGET>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_TARGET_copyfunc`.
 typedef sk_OSSL_TARGET_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_TARGET_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_TARGET_copyfuncFunction`.
-typedef sk_OSSL_TARGET_copyfuncFunction = ffi.Pointer<OSSL_TARGET> Function(
-  ffi.Pointer<OSSL_TARGET> a,
-);
+typedef sk_OSSL_TARGET_copyfuncFunction =
+    ffi.Pointer<OSSL_TARGET> Function(ffi.Pointer<OSSL_TARGET> a);
 
 /// OpenSSL typedef `sk_OSSL_TARGET_freefunc`.
 typedef sk_OSSL_TARGET_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_TARGET_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_TARGET_freefuncFunction`.
-typedef sk_OSSL_TARGET_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_TARGET> a,
-);
+typedef sk_OSSL_TARGET_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_TARGET> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_TARGET_freefuncFunction`.
-typedef Dartsk_OSSL_TARGET_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_TARGET> a,
-);
+typedef Dartsk_OSSL_TARGET_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_TARGET> a);
 
 /// OpenSSL typedef `sk_OSSL_TIME_PERIOD_compfunc`.
 typedef sk_OSSL_TIME_PERIOD_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_TIME_PERIOD_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_TIME_PERIOD_compfuncFunction`.
-typedef sk_OSSL_TIME_PERIOD_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_TIME_PERIOD>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_TIME_PERIOD>> b,
-);
+typedef sk_OSSL_TIME_PERIOD_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_TIME_PERIOD>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_TIME_PERIOD>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_OSSL_TIME_PERIOD_compfuncFunction`.
-typedef Dartsk_OSSL_TIME_PERIOD_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<OSSL_TIME_PERIOD>> a,
-  ffi.Pointer<ffi.Pointer<OSSL_TIME_PERIOD>> b,
-);
+typedef Dartsk_OSSL_TIME_PERIOD_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<OSSL_TIME_PERIOD>> a,
+      ffi.Pointer<ffi.Pointer<OSSL_TIME_PERIOD>> b,
+    );
 
 /// OpenSSL typedef `sk_OSSL_TIME_PERIOD_copyfunc`.
 typedef sk_OSSL_TIME_PERIOD_copyfunc =
@@ -105007,30 +105014,30 @@ typedef sk_OSSL_TIME_PERIOD_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_OSSL_TIME_PERIOD_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_OSSL_TIME_PERIOD_freefuncFunction`.
-typedef sk_OSSL_TIME_PERIOD_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<OSSL_TIME_PERIOD> a,
-);
+typedef sk_OSSL_TIME_PERIOD_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<OSSL_TIME_PERIOD> a);
 
 /// OpenSSL typedef `Dartsk_OSSL_TIME_PERIOD_freefuncFunction`.
-typedef Dartsk_OSSL_TIME_PERIOD_freefuncFunction = void Function(
-  ffi.Pointer<OSSL_TIME_PERIOD> a,
-);
+typedef Dartsk_OSSL_TIME_PERIOD_freefuncFunction =
+    void Function(ffi.Pointer<OSSL_TIME_PERIOD> a);
 
 /// OpenSSL typedef `sk_PKCS12_SAFEBAG_compfunc`.
 typedef sk_PKCS12_SAFEBAG_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_PKCS12_SAFEBAG_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_PKCS12_SAFEBAG_compfuncFunction`.
-typedef sk_PKCS12_SAFEBAG_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<PKCS12_SAFEBAG>> a,
-  ffi.Pointer<ffi.Pointer<PKCS12_SAFEBAG>> b,
-);
+typedef sk_PKCS12_SAFEBAG_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<PKCS12_SAFEBAG>> a,
+      ffi.Pointer<ffi.Pointer<PKCS12_SAFEBAG>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_PKCS12_SAFEBAG_compfuncFunction`.
-typedef Dartsk_PKCS12_SAFEBAG_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<PKCS12_SAFEBAG>> a,
-  ffi.Pointer<ffi.Pointer<PKCS12_SAFEBAG>> b,
-);
+typedef Dartsk_PKCS12_SAFEBAG_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<PKCS12_SAFEBAG>> a,
+      ffi.Pointer<ffi.Pointer<PKCS12_SAFEBAG>> b,
+    );
 
 /// OpenSSL typedef `sk_PKCS12_SAFEBAG_copyfunc`.
 typedef sk_PKCS12_SAFEBAG_copyfunc =
@@ -105045,30 +105052,30 @@ typedef sk_PKCS12_SAFEBAG_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_PKCS12_SAFEBAG_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_PKCS12_SAFEBAG_freefuncFunction`.
-typedef sk_PKCS12_SAFEBAG_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<PKCS12_SAFEBAG> a,
-);
+typedef sk_PKCS12_SAFEBAG_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<PKCS12_SAFEBAG> a);
 
 /// OpenSSL typedef `Dartsk_PKCS12_SAFEBAG_freefuncFunction`.
-typedef Dartsk_PKCS12_SAFEBAG_freefuncFunction = void Function(
-  ffi.Pointer<PKCS12_SAFEBAG> a,
-);
+typedef Dartsk_PKCS12_SAFEBAG_freefuncFunction =
+    void Function(ffi.Pointer<PKCS12_SAFEBAG> a);
 
 /// OpenSSL typedef `sk_PKCS7_RECIP_INFO_compfunc`.
 typedef sk_PKCS7_RECIP_INFO_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_PKCS7_RECIP_INFO_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_PKCS7_RECIP_INFO_compfuncFunction`.
-typedef sk_PKCS7_RECIP_INFO_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<PKCS7_RECIP_INFO>> a,
-  ffi.Pointer<ffi.Pointer<PKCS7_RECIP_INFO>> b,
-);
+typedef sk_PKCS7_RECIP_INFO_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<PKCS7_RECIP_INFO>> a,
+      ffi.Pointer<ffi.Pointer<PKCS7_RECIP_INFO>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_PKCS7_RECIP_INFO_compfuncFunction`.
-typedef Dartsk_PKCS7_RECIP_INFO_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<PKCS7_RECIP_INFO>> a,
-  ffi.Pointer<ffi.Pointer<PKCS7_RECIP_INFO>> b,
-);
+typedef Dartsk_PKCS7_RECIP_INFO_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<PKCS7_RECIP_INFO>> a,
+      ffi.Pointer<ffi.Pointer<PKCS7_RECIP_INFO>> b,
+    );
 
 /// OpenSSL typedef `sk_PKCS7_RECIP_INFO_copyfunc`.
 typedef sk_PKCS7_RECIP_INFO_copyfunc =
@@ -105083,30 +105090,30 @@ typedef sk_PKCS7_RECIP_INFO_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_PKCS7_RECIP_INFO_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_PKCS7_RECIP_INFO_freefuncFunction`.
-typedef sk_PKCS7_RECIP_INFO_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<PKCS7_RECIP_INFO> a,
-);
+typedef sk_PKCS7_RECIP_INFO_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<PKCS7_RECIP_INFO> a);
 
 /// OpenSSL typedef `Dartsk_PKCS7_RECIP_INFO_freefuncFunction`.
-typedef Dartsk_PKCS7_RECIP_INFO_freefuncFunction = void Function(
-  ffi.Pointer<PKCS7_RECIP_INFO> a,
-);
+typedef Dartsk_PKCS7_RECIP_INFO_freefuncFunction =
+    void Function(ffi.Pointer<PKCS7_RECIP_INFO> a);
 
 /// OpenSSL typedef `sk_PKCS7_SIGNER_INFO_compfunc`.
 typedef sk_PKCS7_SIGNER_INFO_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_PKCS7_SIGNER_INFO_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_PKCS7_SIGNER_INFO_compfuncFunction`.
-typedef sk_PKCS7_SIGNER_INFO_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<PKCS7_SIGNER_INFO>> a,
-  ffi.Pointer<ffi.Pointer<PKCS7_SIGNER_INFO>> b,
-);
+typedef sk_PKCS7_SIGNER_INFO_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<PKCS7_SIGNER_INFO>> a,
+      ffi.Pointer<ffi.Pointer<PKCS7_SIGNER_INFO>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_PKCS7_SIGNER_INFO_compfuncFunction`.
-typedef Dartsk_PKCS7_SIGNER_INFO_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<PKCS7_SIGNER_INFO>> a,
-  ffi.Pointer<ffi.Pointer<PKCS7_SIGNER_INFO>> b,
-);
+typedef Dartsk_PKCS7_SIGNER_INFO_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<PKCS7_SIGNER_INFO>> a,
+      ffi.Pointer<ffi.Pointer<PKCS7_SIGNER_INFO>> b,
+    );
 
 /// OpenSSL typedef `sk_PKCS7_SIGNER_INFO_copyfunc`.
 typedef sk_PKCS7_SIGNER_INFO_copyfunc =
@@ -105121,39 +105128,38 @@ typedef sk_PKCS7_SIGNER_INFO_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_PKCS7_SIGNER_INFO_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_PKCS7_SIGNER_INFO_freefuncFunction`.
-typedef sk_PKCS7_SIGNER_INFO_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<PKCS7_SIGNER_INFO> a,
-);
+typedef sk_PKCS7_SIGNER_INFO_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<PKCS7_SIGNER_INFO> a);
 
 /// OpenSSL typedef `Dartsk_PKCS7_SIGNER_INFO_freefuncFunction`.
-typedef Dartsk_PKCS7_SIGNER_INFO_freefuncFunction = void Function(
-  ffi.Pointer<PKCS7_SIGNER_INFO> a,
-);
+typedef Dartsk_PKCS7_SIGNER_INFO_freefuncFunction =
+    void Function(ffi.Pointer<PKCS7_SIGNER_INFO> a);
 
 /// OpenSSL typedef `sk_PKCS7_compfunc`.
 typedef sk_PKCS7_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_PKCS7_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_PKCS7_compfuncFunction`.
-typedef sk_PKCS7_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<PKCS7>> a,
-  ffi.Pointer<ffi.Pointer<PKCS7>> b,
-);
+typedef sk_PKCS7_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<PKCS7>> a,
+      ffi.Pointer<ffi.Pointer<PKCS7>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_PKCS7_compfuncFunction`.
-typedef Dartsk_PKCS7_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<PKCS7>> a,
-  ffi.Pointer<ffi.Pointer<PKCS7>> b,
-);
+typedef Dartsk_PKCS7_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<PKCS7>> a,
+      ffi.Pointer<ffi.Pointer<PKCS7>> b,
+    );
 
 /// OpenSSL typedef `sk_PKCS7_copyfunc`.
 typedef sk_PKCS7_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_PKCS7_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_PKCS7_copyfuncFunction`.
-typedef sk_PKCS7_copyfuncFunction = ffi.Pointer<PKCS7> Function(
-  ffi.Pointer<PKCS7> a,
-);
+typedef sk_PKCS7_copyfuncFunction =
+    ffi.Pointer<PKCS7> Function(ffi.Pointer<PKCS7> a);
 
 /// OpenSSL typedef `sk_PKCS7_freefunc`.
 typedef sk_PKCS7_freefunc =
@@ -105170,55 +105176,56 @@ typedef sk_POLICYINFO_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_POLICYINFO_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_POLICYINFO_compfuncFunction`.
-typedef sk_POLICYINFO_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<POLICYINFO>> a,
-  ffi.Pointer<ffi.Pointer<POLICYINFO>> b,
-);
+typedef sk_POLICYINFO_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<POLICYINFO>> a,
+      ffi.Pointer<ffi.Pointer<POLICYINFO>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_POLICYINFO_compfuncFunction`.
-typedef Dartsk_POLICYINFO_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<POLICYINFO>> a,
-  ffi.Pointer<ffi.Pointer<POLICYINFO>> b,
-);
+typedef Dartsk_POLICYINFO_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<POLICYINFO>> a,
+      ffi.Pointer<ffi.Pointer<POLICYINFO>> b,
+    );
 
 /// OpenSSL typedef `sk_POLICYINFO_copyfunc`.
 typedef sk_POLICYINFO_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_POLICYINFO_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_POLICYINFO_copyfuncFunction`.
-typedef sk_POLICYINFO_copyfuncFunction = ffi.Pointer<POLICYINFO> Function(
-  ffi.Pointer<POLICYINFO> a,
-);
+typedef sk_POLICYINFO_copyfuncFunction =
+    ffi.Pointer<POLICYINFO> Function(ffi.Pointer<POLICYINFO> a);
 
 /// OpenSSL typedef `sk_POLICYINFO_freefunc`.
 typedef sk_POLICYINFO_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_POLICYINFO_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_POLICYINFO_freefuncFunction`.
-typedef sk_POLICYINFO_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<POLICYINFO> a,
-);
+typedef sk_POLICYINFO_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<POLICYINFO> a);
 
 /// OpenSSL typedef `Dartsk_POLICYINFO_freefuncFunction`.
-typedef Dartsk_POLICYINFO_freefuncFunction = void Function(
-  ffi.Pointer<POLICYINFO> a,
-);
+typedef Dartsk_POLICYINFO_freefuncFunction =
+    void Function(ffi.Pointer<POLICYINFO> a);
 
 /// OpenSSL typedef `sk_POLICYQUALINFO_compfunc`.
 typedef sk_POLICYQUALINFO_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_POLICYQUALINFO_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_POLICYQUALINFO_compfuncFunction`.
-typedef sk_POLICYQUALINFO_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<POLICYQUALINFO>> a,
-  ffi.Pointer<ffi.Pointer<POLICYQUALINFO>> b,
-);
+typedef sk_POLICYQUALINFO_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<POLICYQUALINFO>> a,
+      ffi.Pointer<ffi.Pointer<POLICYQUALINFO>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_POLICYQUALINFO_compfuncFunction`.
-typedef Dartsk_POLICYQUALINFO_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<POLICYQUALINFO>> a,
-  ffi.Pointer<ffi.Pointer<POLICYQUALINFO>> b,
-);
+typedef Dartsk_POLICYQUALINFO_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<POLICYQUALINFO>> a,
+      ffi.Pointer<ffi.Pointer<POLICYQUALINFO>> b,
+    );
 
 /// OpenSSL typedef `sk_POLICYQUALINFO_copyfunc`.
 typedef sk_POLICYQUALINFO_copyfunc =
@@ -105233,30 +105240,30 @@ typedef sk_POLICYQUALINFO_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_POLICYQUALINFO_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_POLICYQUALINFO_freefuncFunction`.
-typedef sk_POLICYQUALINFO_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<POLICYQUALINFO> a,
-);
+typedef sk_POLICYQUALINFO_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<POLICYQUALINFO> a);
 
 /// OpenSSL typedef `Dartsk_POLICYQUALINFO_freefuncFunction`.
-typedef Dartsk_POLICYQUALINFO_freefuncFunction = void Function(
-  ffi.Pointer<POLICYQUALINFO> a,
-);
+typedef Dartsk_POLICYQUALINFO_freefuncFunction =
+    void Function(ffi.Pointer<POLICYQUALINFO> a);
 
 /// OpenSSL typedef `sk_POLICY_MAPPING_compfunc`.
 typedef sk_POLICY_MAPPING_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_POLICY_MAPPING_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_POLICY_MAPPING_compfuncFunction`.
-typedef sk_POLICY_MAPPING_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<POLICY_MAPPING>> a,
-  ffi.Pointer<ffi.Pointer<POLICY_MAPPING>> b,
-);
+typedef sk_POLICY_MAPPING_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<POLICY_MAPPING>> a,
+      ffi.Pointer<ffi.Pointer<POLICY_MAPPING>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_POLICY_MAPPING_compfuncFunction`.
-typedef Dartsk_POLICY_MAPPING_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<POLICY_MAPPING>> a,
-  ffi.Pointer<ffi.Pointer<POLICY_MAPPING>> b,
-);
+typedef Dartsk_POLICY_MAPPING_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<POLICY_MAPPING>> a,
+      ffi.Pointer<ffi.Pointer<POLICY_MAPPING>> b,
+    );
 
 /// OpenSSL typedef `sk_POLICY_MAPPING_copyfunc`.
 typedef sk_POLICY_MAPPING_copyfunc =
@@ -105271,30 +105278,30 @@ typedef sk_POLICY_MAPPING_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_POLICY_MAPPING_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_POLICY_MAPPING_freefuncFunction`.
-typedef sk_POLICY_MAPPING_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<POLICY_MAPPING> a,
-);
+typedef sk_POLICY_MAPPING_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<POLICY_MAPPING> a);
 
 /// OpenSSL typedef `Dartsk_POLICY_MAPPING_freefuncFunction`.
-typedef Dartsk_POLICY_MAPPING_freefuncFunction = void Function(
-  ffi.Pointer<POLICY_MAPPING> a,
-);
+typedef Dartsk_POLICY_MAPPING_freefuncFunction =
+    void Function(ffi.Pointer<POLICY_MAPPING> a);
 
 /// OpenSSL typedef `sk_PROFESSION_INFO_compfunc`.
 typedef sk_PROFESSION_INFO_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_PROFESSION_INFO_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_PROFESSION_INFO_compfuncFunction`.
-typedef sk_PROFESSION_INFO_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<PROFESSION_INFO>> a,
-  ffi.Pointer<ffi.Pointer<PROFESSION_INFO>> b,
-);
+typedef sk_PROFESSION_INFO_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<PROFESSION_INFO>> a,
+      ffi.Pointer<ffi.Pointer<PROFESSION_INFO>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_PROFESSION_INFO_compfuncFunction`.
-typedef Dartsk_PROFESSION_INFO_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<PROFESSION_INFO>> a,
-  ffi.Pointer<ffi.Pointer<PROFESSION_INFO>> b,
-);
+typedef Dartsk_PROFESSION_INFO_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<PROFESSION_INFO>> a,
+      ffi.Pointer<ffi.Pointer<PROFESSION_INFO>> b,
+    );
 
 /// OpenSSL typedef `sk_PROFESSION_INFO_copyfunc`.
 typedef sk_PROFESSION_INFO_copyfunc =
@@ -105309,30 +105316,30 @@ typedef sk_PROFESSION_INFO_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_PROFESSION_INFO_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_PROFESSION_INFO_freefuncFunction`.
-typedef sk_PROFESSION_INFO_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<PROFESSION_INFO> a,
-);
+typedef sk_PROFESSION_INFO_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<PROFESSION_INFO> a);
 
 /// OpenSSL typedef `Dartsk_PROFESSION_INFO_freefuncFunction`.
-typedef Dartsk_PROFESSION_INFO_freefuncFunction = void Function(
-  ffi.Pointer<PROFESSION_INFO> a,
-);
+typedef Dartsk_PROFESSION_INFO_freefuncFunction =
+    void Function(ffi.Pointer<PROFESSION_INFO> a);
 
 /// OpenSSL typedef `sk_SCT_compfunc`.
 typedef sk_SCT_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_SCT_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_SCT_compfuncFunction`.
-typedef sk_SCT_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<SCT>> a,
-  ffi.Pointer<ffi.Pointer<SCT>> b,
-);
+typedef sk_SCT_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<SCT>> a,
+      ffi.Pointer<ffi.Pointer<SCT>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_SCT_compfuncFunction`.
-typedef Dartsk_SCT_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<SCT>> a,
-  ffi.Pointer<ffi.Pointer<SCT>> b,
-);
+typedef Dartsk_SCT_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<SCT>> a,
+      ffi.Pointer<ffi.Pointer<SCT>> b,
+    );
 
 /// OpenSSL typedef `sk_SCT_copyfunc`.
 typedef sk_SCT_copyfunc =
@@ -105356,64 +105363,64 @@ typedef sk_SRP_gN_cache_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_SRP_gN_cache_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_SRP_gN_cache_compfuncFunction`.
-typedef sk_SRP_gN_cache_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<SRP_gN_cache>> a,
-  ffi.Pointer<ffi.Pointer<SRP_gN_cache>> b,
-);
+typedef sk_SRP_gN_cache_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<SRP_gN_cache>> a,
+      ffi.Pointer<ffi.Pointer<SRP_gN_cache>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_SRP_gN_cache_compfuncFunction`.
-typedef Dartsk_SRP_gN_cache_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<SRP_gN_cache>> a,
-  ffi.Pointer<ffi.Pointer<SRP_gN_cache>> b,
-);
+typedef Dartsk_SRP_gN_cache_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<SRP_gN_cache>> a,
+      ffi.Pointer<ffi.Pointer<SRP_gN_cache>> b,
+    );
 
 /// OpenSSL typedef `sk_SRP_gN_cache_copyfunc`.
 typedef sk_SRP_gN_cache_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_SRP_gN_cache_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_SRP_gN_cache_copyfuncFunction`.
-typedef sk_SRP_gN_cache_copyfuncFunction = ffi.Pointer<SRP_gN_cache> Function(
-  ffi.Pointer<SRP_gN_cache> a,
-);
+typedef sk_SRP_gN_cache_copyfuncFunction =
+    ffi.Pointer<SRP_gN_cache> Function(ffi.Pointer<SRP_gN_cache> a);
 
 /// OpenSSL typedef `sk_SRP_gN_cache_freefunc`.
 typedef sk_SRP_gN_cache_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_SRP_gN_cache_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_SRP_gN_cache_freefuncFunction`.
-typedef sk_SRP_gN_cache_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<SRP_gN_cache> a,
-);
+typedef sk_SRP_gN_cache_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<SRP_gN_cache> a);
 
 /// OpenSSL typedef `Dartsk_SRP_gN_cache_freefuncFunction`.
-typedef Dartsk_SRP_gN_cache_freefuncFunction = void Function(
-  ffi.Pointer<SRP_gN_cache> a,
-);
+typedef Dartsk_SRP_gN_cache_freefuncFunction =
+    void Function(ffi.Pointer<SRP_gN_cache> a);
 
 /// OpenSSL typedef `sk_SRP_gN_compfunc`.
 typedef sk_SRP_gN_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_SRP_gN_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_SRP_gN_compfuncFunction`.
-typedef sk_SRP_gN_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<SRP_gN>> a,
-  ffi.Pointer<ffi.Pointer<SRP_gN>> b,
-);
+typedef sk_SRP_gN_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<SRP_gN>> a,
+      ffi.Pointer<ffi.Pointer<SRP_gN>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_SRP_gN_compfuncFunction`.
-typedef Dartsk_SRP_gN_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<SRP_gN>> a,
-  ffi.Pointer<ffi.Pointer<SRP_gN>> b,
-);
+typedef Dartsk_SRP_gN_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<SRP_gN>> a,
+      ffi.Pointer<ffi.Pointer<SRP_gN>> b,
+    );
 
 /// OpenSSL typedef `sk_SRP_gN_copyfunc`.
 typedef sk_SRP_gN_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_SRP_gN_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_SRP_gN_copyfuncFunction`.
-typedef sk_SRP_gN_copyfuncFunction = ffi.Pointer<SRP_gN> Function(
-  ffi.Pointer<SRP_gN> a,
-);
+typedef sk_SRP_gN_copyfuncFunction =
+    ffi.Pointer<SRP_gN> Function(ffi.Pointer<SRP_gN> a);
 
 /// OpenSSL typedef `sk_SRP_gN_freefunc`.
 typedef sk_SRP_gN_freefunc =
@@ -105430,103 +105437,102 @@ typedef sk_SRP_user_pwd_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_SRP_user_pwd_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_SRP_user_pwd_compfuncFunction`.
-typedef sk_SRP_user_pwd_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<SRP_user_pwd>> a,
-  ffi.Pointer<ffi.Pointer<SRP_user_pwd>> b,
-);
+typedef sk_SRP_user_pwd_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<SRP_user_pwd>> a,
+      ffi.Pointer<ffi.Pointer<SRP_user_pwd>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_SRP_user_pwd_compfuncFunction`.
-typedef Dartsk_SRP_user_pwd_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<SRP_user_pwd>> a,
-  ffi.Pointer<ffi.Pointer<SRP_user_pwd>> b,
-);
+typedef Dartsk_SRP_user_pwd_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<SRP_user_pwd>> a,
+      ffi.Pointer<ffi.Pointer<SRP_user_pwd>> b,
+    );
 
 /// OpenSSL typedef `sk_SRP_user_pwd_copyfunc`.
 typedef sk_SRP_user_pwd_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_SRP_user_pwd_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_SRP_user_pwd_copyfuncFunction`.
-typedef sk_SRP_user_pwd_copyfuncFunction = ffi.Pointer<SRP_user_pwd> Function(
-  ffi.Pointer<SRP_user_pwd> a,
-);
+typedef sk_SRP_user_pwd_copyfuncFunction =
+    ffi.Pointer<SRP_user_pwd> Function(ffi.Pointer<SRP_user_pwd> a);
 
 /// OpenSSL typedef `sk_SRP_user_pwd_freefunc`.
 typedef sk_SRP_user_pwd_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_SRP_user_pwd_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_SRP_user_pwd_freefuncFunction`.
-typedef sk_SRP_user_pwd_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<SRP_user_pwd> a,
-);
+typedef sk_SRP_user_pwd_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<SRP_user_pwd> a);
 
 /// OpenSSL typedef `Dartsk_SRP_user_pwd_freefuncFunction`.
-typedef Dartsk_SRP_user_pwd_freefuncFunction = void Function(
-  ffi.Pointer<SRP_user_pwd> a,
-);
+typedef Dartsk_SRP_user_pwd_freefuncFunction =
+    void Function(ffi.Pointer<SRP_user_pwd> a);
 
 /// OpenSSL typedef `sk_SSL_COMP_compfunc`.
 typedef sk_SSL_COMP_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_SSL_COMP_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_SSL_COMP_compfuncFunction`.
-typedef sk_SSL_COMP_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<SSL_COMP>> a,
-  ffi.Pointer<ffi.Pointer<SSL_COMP>> b,
-);
+typedef sk_SSL_COMP_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<SSL_COMP>> a,
+      ffi.Pointer<ffi.Pointer<SSL_COMP>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_SSL_COMP_compfuncFunction`.
-typedef Dartsk_SSL_COMP_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<SSL_COMP>> a,
-  ffi.Pointer<ffi.Pointer<SSL_COMP>> b,
-);
+typedef Dartsk_SSL_COMP_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<SSL_COMP>> a,
+      ffi.Pointer<ffi.Pointer<SSL_COMP>> b,
+    );
 
 /// OpenSSL typedef `sk_SSL_COMP_copyfunc`.
 typedef sk_SSL_COMP_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_SSL_COMP_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_SSL_COMP_copyfuncFunction`.
-typedef sk_SSL_COMP_copyfuncFunction = ffi.Pointer<SSL_COMP> Function(
-  ffi.Pointer<SSL_COMP> a,
-);
+typedef sk_SSL_COMP_copyfuncFunction =
+    ffi.Pointer<SSL_COMP> Function(ffi.Pointer<SSL_COMP> a);
 
 /// OpenSSL typedef `sk_SSL_COMP_freefunc`.
 typedef sk_SSL_COMP_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_SSL_COMP_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_SSL_COMP_freefuncFunction`.
-typedef sk_SSL_COMP_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<SSL_COMP> a,
-);
+typedef sk_SSL_COMP_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<SSL_COMP> a);
 
 /// OpenSSL typedef `Dartsk_SSL_COMP_freefuncFunction`.
-typedef Dartsk_SSL_COMP_freefuncFunction = void Function(
-  ffi.Pointer<SSL_COMP> a,
-);
+typedef Dartsk_SSL_COMP_freefuncFunction =
+    void Function(ffi.Pointer<SSL_COMP> a);
 
 /// OpenSSL typedef `sk_SXNETID_compfunc`.
 typedef sk_SXNETID_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_SXNETID_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_SXNETID_compfuncFunction`.
-typedef sk_SXNETID_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<SXNETID>> a,
-  ffi.Pointer<ffi.Pointer<SXNETID>> b,
-);
+typedef sk_SXNETID_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<SXNETID>> a,
+      ffi.Pointer<ffi.Pointer<SXNETID>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_SXNETID_compfuncFunction`.
-typedef Dartsk_SXNETID_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<SXNETID>> a,
-  ffi.Pointer<ffi.Pointer<SXNETID>> b,
-);
+typedef Dartsk_SXNETID_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<SXNETID>> a,
+      ffi.Pointer<ffi.Pointer<SXNETID>> b,
+    );
 
 /// OpenSSL typedef `sk_SXNETID_copyfunc`.
 typedef sk_SXNETID_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_SXNETID_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_SXNETID_copyfuncFunction`.
-typedef sk_SXNETID_copyfuncFunction = ffi.Pointer<SXNETID> Function(
-  ffi.Pointer<SXNETID> a,
-);
+typedef sk_SXNETID_copyfuncFunction =
+    ffi.Pointer<SXNETID> Function(ffi.Pointer<SXNETID> a);
 
 /// OpenSSL typedef `sk_SXNETID_freefunc`.
 typedef sk_SXNETID_freefunc =
@@ -105543,94 +105549,94 @@ typedef sk_UI_STRING_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_UI_STRING_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_UI_STRING_compfuncFunction`.
-typedef sk_UI_STRING_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<UI_STRING>> a,
-  ffi.Pointer<ffi.Pointer<UI_STRING>> b,
-);
+typedef sk_UI_STRING_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<UI_STRING>> a,
+      ffi.Pointer<ffi.Pointer<UI_STRING>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_UI_STRING_compfuncFunction`.
-typedef Dartsk_UI_STRING_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<UI_STRING>> a,
-  ffi.Pointer<ffi.Pointer<UI_STRING>> b,
-);
+typedef Dartsk_UI_STRING_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<UI_STRING>> a,
+      ffi.Pointer<ffi.Pointer<UI_STRING>> b,
+    );
 
 /// OpenSSL typedef `sk_UI_STRING_copyfunc`.
 typedef sk_UI_STRING_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_UI_STRING_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_UI_STRING_copyfuncFunction`.
-typedef sk_UI_STRING_copyfuncFunction = ffi.Pointer<UI_STRING> Function(
-  ffi.Pointer<UI_STRING> a,
-);
+typedef sk_UI_STRING_copyfuncFunction =
+    ffi.Pointer<UI_STRING> Function(ffi.Pointer<UI_STRING> a);
 
 /// OpenSSL typedef `sk_UI_STRING_freefunc`.
 typedef sk_UI_STRING_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_UI_STRING_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_UI_STRING_freefuncFunction`.
-typedef sk_UI_STRING_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<UI_STRING> a,
-);
+typedef sk_UI_STRING_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<UI_STRING> a);
 
 /// OpenSSL typedef `Dartsk_UI_STRING_freefuncFunction`.
-typedef Dartsk_UI_STRING_freefuncFunction = void Function(
-  ffi.Pointer<UI_STRING> a,
-);
+typedef Dartsk_UI_STRING_freefuncFunction =
+    void Function(ffi.Pointer<UI_STRING> a);
 
 /// OpenSSL typedef `sk_USERNOTICE_compfunc`.
 typedef sk_USERNOTICE_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_USERNOTICE_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_USERNOTICE_compfuncFunction`.
-typedef sk_USERNOTICE_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<USERNOTICE>> a,
-  ffi.Pointer<ffi.Pointer<USERNOTICE>> b,
-);
+typedef sk_USERNOTICE_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<USERNOTICE>> a,
+      ffi.Pointer<ffi.Pointer<USERNOTICE>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_USERNOTICE_compfuncFunction`.
-typedef Dartsk_USERNOTICE_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<USERNOTICE>> a,
-  ffi.Pointer<ffi.Pointer<USERNOTICE>> b,
-);
+typedef Dartsk_USERNOTICE_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<USERNOTICE>> a,
+      ffi.Pointer<ffi.Pointer<USERNOTICE>> b,
+    );
 
 /// OpenSSL typedef `sk_USERNOTICE_copyfunc`.
 typedef sk_USERNOTICE_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_USERNOTICE_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_USERNOTICE_copyfuncFunction`.
-typedef sk_USERNOTICE_copyfuncFunction = ffi.Pointer<USERNOTICE> Function(
-  ffi.Pointer<USERNOTICE> a,
-);
+typedef sk_USERNOTICE_copyfuncFunction =
+    ffi.Pointer<USERNOTICE> Function(ffi.Pointer<USERNOTICE> a);
 
 /// OpenSSL typedef `sk_USERNOTICE_freefunc`.
 typedef sk_USERNOTICE_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_USERNOTICE_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_USERNOTICE_freefuncFunction`.
-typedef sk_USERNOTICE_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<USERNOTICE> a,
-);
+typedef sk_USERNOTICE_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<USERNOTICE> a);
 
 /// OpenSSL typedef `Dartsk_USERNOTICE_freefuncFunction`.
-typedef Dartsk_USERNOTICE_freefuncFunction = void Function(
-  ffi.Pointer<USERNOTICE> a,
-);
+typedef Dartsk_USERNOTICE_freefuncFunction =
+    void Function(ffi.Pointer<USERNOTICE> a);
 
 /// OpenSSL typedef `sk_X509V3_EXT_METHOD_compfunc`.
 typedef sk_X509V3_EXT_METHOD_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509V3_EXT_METHOD_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509V3_EXT_METHOD_compfuncFunction`.
-typedef sk_X509V3_EXT_METHOD_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509V3_EXT_METHOD>> a,
-  ffi.Pointer<ffi.Pointer<X509V3_EXT_METHOD>> b,
-);
+typedef sk_X509V3_EXT_METHOD_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509V3_EXT_METHOD>> a,
+      ffi.Pointer<ffi.Pointer<X509V3_EXT_METHOD>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509V3_EXT_METHOD_compfuncFunction`.
-typedef Dartsk_X509V3_EXT_METHOD_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509V3_EXT_METHOD>> a,
-  ffi.Pointer<ffi.Pointer<X509V3_EXT_METHOD>> b,
-);
+typedef Dartsk_X509V3_EXT_METHOD_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509V3_EXT_METHOD>> a,
+      ffi.Pointer<ffi.Pointer<X509V3_EXT_METHOD>> b,
+    );
 
 /// OpenSSL typedef `sk_X509V3_EXT_METHOD_copyfunc`.
 typedef sk_X509V3_EXT_METHOD_copyfunc =
@@ -105645,69 +105651,68 @@ typedef sk_X509V3_EXT_METHOD_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509V3_EXT_METHOD_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_X509V3_EXT_METHOD_freefuncFunction`.
-typedef sk_X509V3_EXT_METHOD_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<X509V3_EXT_METHOD> a,
-);
+typedef sk_X509V3_EXT_METHOD_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<X509V3_EXT_METHOD> a);
 
 /// OpenSSL typedef `Dartsk_X509V3_EXT_METHOD_freefuncFunction`.
-typedef Dartsk_X509V3_EXT_METHOD_freefuncFunction = void Function(
-  ffi.Pointer<X509V3_EXT_METHOD> a,
-);
+typedef Dartsk_X509V3_EXT_METHOD_freefuncFunction =
+    void Function(ffi.Pointer<X509V3_EXT_METHOD> a);
 
 /// OpenSSL typedef `sk_X509_ALGOR_compfunc`.
 typedef sk_X509_ALGOR_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_ALGOR_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_ALGOR_compfuncFunction`.
-typedef sk_X509_ALGOR_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509_ALGOR>> a,
-  ffi.Pointer<ffi.Pointer<X509_ALGOR>> b,
-);
+typedef sk_X509_ALGOR_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509_ALGOR>> a,
+      ffi.Pointer<ffi.Pointer<X509_ALGOR>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509_ALGOR_compfuncFunction`.
-typedef Dartsk_X509_ALGOR_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509_ALGOR>> a,
-  ffi.Pointer<ffi.Pointer<X509_ALGOR>> b,
-);
+typedef Dartsk_X509_ALGOR_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509_ALGOR>> a,
+      ffi.Pointer<ffi.Pointer<X509_ALGOR>> b,
+    );
 
 /// OpenSSL typedef `sk_X509_ALGOR_copyfunc`.
 typedef sk_X509_ALGOR_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_ALGOR_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_ALGOR_copyfuncFunction`.
-typedef sk_X509_ALGOR_copyfuncFunction = ffi.Pointer<X509_ALGOR> Function(
-  ffi.Pointer<X509_ALGOR> a,
-);
+typedef sk_X509_ALGOR_copyfuncFunction =
+    ffi.Pointer<X509_ALGOR> Function(ffi.Pointer<X509_ALGOR> a);
 
 /// OpenSSL typedef `sk_X509_ALGOR_freefunc`.
 typedef sk_X509_ALGOR_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_ALGOR_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_ALGOR_freefuncFunction`.
-typedef sk_X509_ALGOR_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<X509_ALGOR> a,
-);
+typedef sk_X509_ALGOR_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<X509_ALGOR> a);
 
 /// OpenSSL typedef `Dartsk_X509_ALGOR_freefuncFunction`.
-typedef Dartsk_X509_ALGOR_freefuncFunction = void Function(
-  ffi.Pointer<X509_ALGOR> a,
-);
+typedef Dartsk_X509_ALGOR_freefuncFunction =
+    void Function(ffi.Pointer<X509_ALGOR> a);
 
 /// OpenSSL typedef `sk_X509_ATTRIBUTE_compfunc`.
 typedef sk_X509_ATTRIBUTE_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_ATTRIBUTE_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_ATTRIBUTE_compfuncFunction`.
-typedef sk_X509_ATTRIBUTE_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509_ATTRIBUTE>> a,
-  ffi.Pointer<ffi.Pointer<X509_ATTRIBUTE>> b,
-);
+typedef sk_X509_ATTRIBUTE_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509_ATTRIBUTE>> a,
+      ffi.Pointer<ffi.Pointer<X509_ATTRIBUTE>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509_ATTRIBUTE_compfuncFunction`.
-typedef Dartsk_X509_ATTRIBUTE_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509_ATTRIBUTE>> a,
-  ffi.Pointer<ffi.Pointer<X509_ATTRIBUTE>> b,
-);
+typedef Dartsk_X509_ATTRIBUTE_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509_ATTRIBUTE>> a,
+      ffi.Pointer<ffi.Pointer<X509_ATTRIBUTE>> b,
+    );
 
 /// OpenSSL typedef `sk_X509_ATTRIBUTE_copyfunc`.
 typedef sk_X509_ATTRIBUTE_copyfunc =
@@ -105722,69 +105727,68 @@ typedef sk_X509_ATTRIBUTE_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_ATTRIBUTE_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_ATTRIBUTE_freefuncFunction`.
-typedef sk_X509_ATTRIBUTE_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<X509_ATTRIBUTE> a,
-);
+typedef sk_X509_ATTRIBUTE_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<X509_ATTRIBUTE> a);
 
 /// OpenSSL typedef `Dartsk_X509_ATTRIBUTE_freefuncFunction`.
-typedef Dartsk_X509_ATTRIBUTE_freefuncFunction = void Function(
-  ffi.Pointer<X509_ATTRIBUTE> a,
-);
+typedef Dartsk_X509_ATTRIBUTE_freefuncFunction =
+    void Function(ffi.Pointer<X509_ATTRIBUTE> a);
 
 /// OpenSSL typedef `sk_X509_CRL_compfunc`.
 typedef sk_X509_CRL_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_CRL_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_CRL_compfuncFunction`.
-typedef sk_X509_CRL_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509_CRL>> a,
-  ffi.Pointer<ffi.Pointer<X509_CRL>> b,
-);
+typedef sk_X509_CRL_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509_CRL>> a,
+      ffi.Pointer<ffi.Pointer<X509_CRL>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509_CRL_compfuncFunction`.
-typedef Dartsk_X509_CRL_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509_CRL>> a,
-  ffi.Pointer<ffi.Pointer<X509_CRL>> b,
-);
+typedef Dartsk_X509_CRL_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509_CRL>> a,
+      ffi.Pointer<ffi.Pointer<X509_CRL>> b,
+    );
 
 /// OpenSSL typedef `sk_X509_CRL_copyfunc`.
 typedef sk_X509_CRL_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_CRL_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_CRL_copyfuncFunction`.
-typedef sk_X509_CRL_copyfuncFunction = ffi.Pointer<X509_CRL> Function(
-  ffi.Pointer<X509_CRL> a,
-);
+typedef sk_X509_CRL_copyfuncFunction =
+    ffi.Pointer<X509_CRL> Function(ffi.Pointer<X509_CRL> a);
 
 /// OpenSSL typedef `sk_X509_CRL_freefunc`.
 typedef sk_X509_CRL_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_CRL_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_CRL_freefuncFunction`.
-typedef sk_X509_CRL_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<X509_CRL> a,
-);
+typedef sk_X509_CRL_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<X509_CRL> a);
 
 /// OpenSSL typedef `Dartsk_X509_CRL_freefuncFunction`.
-typedef Dartsk_X509_CRL_freefuncFunction = void Function(
-  ffi.Pointer<X509_CRL> a,
-);
+typedef Dartsk_X509_CRL_freefuncFunction =
+    void Function(ffi.Pointer<X509_CRL> a);
 
 /// OpenSSL typedef `sk_X509_EXTENSION_compfunc`.
 typedef sk_X509_EXTENSION_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_EXTENSION_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_EXTENSION_compfuncFunction`.
-typedef sk_X509_EXTENSION_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509_EXTENSION>> a,
-  ffi.Pointer<ffi.Pointer<X509_EXTENSION>> b,
-);
+typedef sk_X509_EXTENSION_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509_EXTENSION>> a,
+      ffi.Pointer<ffi.Pointer<X509_EXTENSION>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509_EXTENSION_compfuncFunction`.
-typedef Dartsk_X509_EXTENSION_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509_EXTENSION>> a,
-  ffi.Pointer<ffi.Pointer<X509_EXTENSION>> b,
-);
+typedef Dartsk_X509_EXTENSION_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509_EXTENSION>> a,
+      ffi.Pointer<ffi.Pointer<X509_EXTENSION>> b,
+    );
 
 /// OpenSSL typedef `sk_X509_EXTENSION_copyfunc`.
 typedef sk_X509_EXTENSION_copyfunc =
@@ -105799,108 +105803,106 @@ typedef sk_X509_EXTENSION_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_EXTENSION_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_EXTENSION_freefuncFunction`.
-typedef sk_X509_EXTENSION_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<X509_EXTENSION> a,
-);
+typedef sk_X509_EXTENSION_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<X509_EXTENSION> a);
 
 /// OpenSSL typedef `Dartsk_X509_EXTENSION_freefuncFunction`.
-typedef Dartsk_X509_EXTENSION_freefuncFunction = void Function(
-  ffi.Pointer<X509_EXTENSION> a,
-);
+typedef Dartsk_X509_EXTENSION_freefuncFunction =
+    void Function(ffi.Pointer<X509_EXTENSION> a);
 
 /// OpenSSL typedef `sk_X509_INFO_compfunc`.
 typedef sk_X509_INFO_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_INFO_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_INFO_compfuncFunction`.
-typedef sk_X509_INFO_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509_INFO>> a,
-  ffi.Pointer<ffi.Pointer<X509_INFO>> b,
-);
+typedef sk_X509_INFO_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509_INFO>> a,
+      ffi.Pointer<ffi.Pointer<X509_INFO>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509_INFO_compfuncFunction`.
-typedef Dartsk_X509_INFO_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509_INFO>> a,
-  ffi.Pointer<ffi.Pointer<X509_INFO>> b,
-);
+typedef Dartsk_X509_INFO_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509_INFO>> a,
+      ffi.Pointer<ffi.Pointer<X509_INFO>> b,
+    );
 
 /// OpenSSL typedef `sk_X509_INFO_copyfunc`.
 typedef sk_X509_INFO_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_INFO_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_INFO_copyfuncFunction`.
-typedef sk_X509_INFO_copyfuncFunction = ffi.Pointer<X509_INFO> Function(
-  ffi.Pointer<X509_INFO> a,
-);
+typedef sk_X509_INFO_copyfuncFunction =
+    ffi.Pointer<X509_INFO> Function(ffi.Pointer<X509_INFO> a);
 
 /// OpenSSL typedef `sk_X509_INFO_freefunc`.
 typedef sk_X509_INFO_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_INFO_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_INFO_freefuncFunction`.
-typedef sk_X509_INFO_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<X509_INFO> a,
-);
+typedef sk_X509_INFO_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<X509_INFO> a);
 
 /// OpenSSL typedef `Dartsk_X509_INFO_freefuncFunction`.
-typedef Dartsk_X509_INFO_freefuncFunction = void Function(
-  ffi.Pointer<X509_INFO> a,
-);
+typedef Dartsk_X509_INFO_freefuncFunction =
+    void Function(ffi.Pointer<X509_INFO> a);
 
 /// OpenSSL typedef `sk_X509_LOOKUP_compfunc`.
 typedef sk_X509_LOOKUP_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_LOOKUP_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_LOOKUP_compfuncFunction`.
-typedef sk_X509_LOOKUP_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509_LOOKUP>> a,
-  ffi.Pointer<ffi.Pointer<X509_LOOKUP>> b,
-);
+typedef sk_X509_LOOKUP_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509_LOOKUP>> a,
+      ffi.Pointer<ffi.Pointer<X509_LOOKUP>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509_LOOKUP_compfuncFunction`.
-typedef Dartsk_X509_LOOKUP_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509_LOOKUP>> a,
-  ffi.Pointer<ffi.Pointer<X509_LOOKUP>> b,
-);
+typedef Dartsk_X509_LOOKUP_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509_LOOKUP>> a,
+      ffi.Pointer<ffi.Pointer<X509_LOOKUP>> b,
+    );
 
 /// OpenSSL typedef `sk_X509_LOOKUP_copyfunc`.
 typedef sk_X509_LOOKUP_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_LOOKUP_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_LOOKUP_copyfuncFunction`.
-typedef sk_X509_LOOKUP_copyfuncFunction = ffi.Pointer<X509_LOOKUP> Function(
-  ffi.Pointer<X509_LOOKUP> a,
-);
+typedef sk_X509_LOOKUP_copyfuncFunction =
+    ffi.Pointer<X509_LOOKUP> Function(ffi.Pointer<X509_LOOKUP> a);
 
 /// OpenSSL typedef `sk_X509_LOOKUP_freefunc`.
 typedef sk_X509_LOOKUP_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_LOOKUP_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_LOOKUP_freefuncFunction`.
-typedef sk_X509_LOOKUP_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<X509_LOOKUP> a,
-);
+typedef sk_X509_LOOKUP_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<X509_LOOKUP> a);
 
 /// OpenSSL typedef `Dartsk_X509_LOOKUP_freefuncFunction`.
-typedef Dartsk_X509_LOOKUP_freefuncFunction = void Function(
-  ffi.Pointer<X509_LOOKUP> a,
-);
+typedef Dartsk_X509_LOOKUP_freefuncFunction =
+    void Function(ffi.Pointer<X509_LOOKUP> a);
 
 /// OpenSSL typedef `sk_X509_NAME_ENTRY_compfunc`.
 typedef sk_X509_NAME_ENTRY_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_NAME_ENTRY_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_NAME_ENTRY_compfuncFunction`.
-typedef sk_X509_NAME_ENTRY_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509_NAME_ENTRY>> a,
-  ffi.Pointer<ffi.Pointer<X509_NAME_ENTRY>> b,
-);
+typedef sk_X509_NAME_ENTRY_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509_NAME_ENTRY>> a,
+      ffi.Pointer<ffi.Pointer<X509_NAME_ENTRY>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509_NAME_ENTRY_compfuncFunction`.
-typedef Dartsk_X509_NAME_ENTRY_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509_NAME_ENTRY>> a,
-  ffi.Pointer<ffi.Pointer<X509_NAME_ENTRY>> b,
-);
+typedef Dartsk_X509_NAME_ENTRY_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509_NAME_ENTRY>> a,
+      ffi.Pointer<ffi.Pointer<X509_NAME_ENTRY>> b,
+    );
 
 /// OpenSSL typedef `sk_X509_NAME_ENTRY_copyfunc`.
 typedef sk_X509_NAME_ENTRY_copyfunc =
@@ -105915,108 +105917,106 @@ typedef sk_X509_NAME_ENTRY_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_NAME_ENTRY_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_NAME_ENTRY_freefuncFunction`.
-typedef sk_X509_NAME_ENTRY_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<X509_NAME_ENTRY> a,
-);
+typedef sk_X509_NAME_ENTRY_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<X509_NAME_ENTRY> a);
 
 /// OpenSSL typedef `Dartsk_X509_NAME_ENTRY_freefuncFunction`.
-typedef Dartsk_X509_NAME_ENTRY_freefuncFunction = void Function(
-  ffi.Pointer<X509_NAME_ENTRY> a,
-);
+typedef Dartsk_X509_NAME_ENTRY_freefuncFunction =
+    void Function(ffi.Pointer<X509_NAME_ENTRY> a);
 
 /// OpenSSL typedef `sk_X509_NAME_compfunc`.
 typedef sk_X509_NAME_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_NAME_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_NAME_compfuncFunction`.
-typedef sk_X509_NAME_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509_NAME>> a,
-  ffi.Pointer<ffi.Pointer<X509_NAME>> b,
-);
+typedef sk_X509_NAME_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509_NAME>> a,
+      ffi.Pointer<ffi.Pointer<X509_NAME>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509_NAME_compfuncFunction`.
-typedef Dartsk_X509_NAME_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509_NAME>> a,
-  ffi.Pointer<ffi.Pointer<X509_NAME>> b,
-);
+typedef Dartsk_X509_NAME_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509_NAME>> a,
+      ffi.Pointer<ffi.Pointer<X509_NAME>> b,
+    );
 
 /// OpenSSL typedef `sk_X509_NAME_copyfunc`.
 typedef sk_X509_NAME_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_NAME_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_NAME_copyfuncFunction`.
-typedef sk_X509_NAME_copyfuncFunction = ffi.Pointer<X509_NAME> Function(
-  ffi.Pointer<X509_NAME> a,
-);
+typedef sk_X509_NAME_copyfuncFunction =
+    ffi.Pointer<X509_NAME> Function(ffi.Pointer<X509_NAME> a);
 
 /// OpenSSL typedef `sk_X509_NAME_freefunc`.
 typedef sk_X509_NAME_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_NAME_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_NAME_freefuncFunction`.
-typedef sk_X509_NAME_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<X509_NAME> a,
-);
+typedef sk_X509_NAME_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<X509_NAME> a);
 
 /// OpenSSL typedef `Dartsk_X509_NAME_freefuncFunction`.
-typedef Dartsk_X509_NAME_freefuncFunction = void Function(
-  ffi.Pointer<X509_NAME> a,
-);
+typedef Dartsk_X509_NAME_freefuncFunction =
+    void Function(ffi.Pointer<X509_NAME> a);
 
 /// OpenSSL typedef `sk_X509_OBJECT_compfunc`.
 typedef sk_X509_OBJECT_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_OBJECT_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_OBJECT_compfuncFunction`.
-typedef sk_X509_OBJECT_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509_OBJECT>> a,
-  ffi.Pointer<ffi.Pointer<X509_OBJECT>> b,
-);
+typedef sk_X509_OBJECT_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509_OBJECT>> a,
+      ffi.Pointer<ffi.Pointer<X509_OBJECT>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509_OBJECT_compfuncFunction`.
-typedef Dartsk_X509_OBJECT_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509_OBJECT>> a,
-  ffi.Pointer<ffi.Pointer<X509_OBJECT>> b,
-);
+typedef Dartsk_X509_OBJECT_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509_OBJECT>> a,
+      ffi.Pointer<ffi.Pointer<X509_OBJECT>> b,
+    );
 
 /// OpenSSL typedef `sk_X509_OBJECT_copyfunc`.
 typedef sk_X509_OBJECT_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_OBJECT_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_OBJECT_copyfuncFunction`.
-typedef sk_X509_OBJECT_copyfuncFunction = ffi.Pointer<X509_OBJECT> Function(
-  ffi.Pointer<X509_OBJECT> a,
-);
+typedef sk_X509_OBJECT_copyfuncFunction =
+    ffi.Pointer<X509_OBJECT> Function(ffi.Pointer<X509_OBJECT> a);
 
 /// OpenSSL typedef `sk_X509_OBJECT_freefunc`.
 typedef sk_X509_OBJECT_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_OBJECT_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_OBJECT_freefuncFunction`.
-typedef sk_X509_OBJECT_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<X509_OBJECT> a,
-);
+typedef sk_X509_OBJECT_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<X509_OBJECT> a);
 
 /// OpenSSL typedef `Dartsk_X509_OBJECT_freefuncFunction`.
-typedef Dartsk_X509_OBJECT_freefuncFunction = void Function(
-  ffi.Pointer<X509_OBJECT> a,
-);
+typedef Dartsk_X509_OBJECT_freefuncFunction =
+    void Function(ffi.Pointer<X509_OBJECT> a);
 
 /// OpenSSL typedef `sk_X509_POLICY_NODE_compfunc`.
 typedef sk_X509_POLICY_NODE_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_POLICY_NODE_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_POLICY_NODE_compfuncFunction`.
-typedef sk_X509_POLICY_NODE_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509_POLICY_NODE>> a,
-  ffi.Pointer<ffi.Pointer<X509_POLICY_NODE>> b,
-);
+typedef sk_X509_POLICY_NODE_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509_POLICY_NODE>> a,
+      ffi.Pointer<ffi.Pointer<X509_POLICY_NODE>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509_POLICY_NODE_compfuncFunction`.
-typedef Dartsk_X509_POLICY_NODE_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509_POLICY_NODE>> a,
-  ffi.Pointer<ffi.Pointer<X509_POLICY_NODE>> b,
-);
+typedef Dartsk_X509_POLICY_NODE_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509_POLICY_NODE>> a,
+      ffi.Pointer<ffi.Pointer<X509_POLICY_NODE>> b,
+    );
 
 /// OpenSSL typedef `sk_X509_POLICY_NODE_copyfunc`.
 typedef sk_X509_POLICY_NODE_copyfunc =
@@ -106031,147 +106031,144 @@ typedef sk_X509_POLICY_NODE_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_POLICY_NODE_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_POLICY_NODE_freefuncFunction`.
-typedef sk_X509_POLICY_NODE_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<X509_POLICY_NODE> a,
-);
+typedef sk_X509_POLICY_NODE_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<X509_POLICY_NODE> a);
 
 /// OpenSSL typedef `Dartsk_X509_POLICY_NODE_freefuncFunction`.
-typedef Dartsk_X509_POLICY_NODE_freefuncFunction = void Function(
-  ffi.Pointer<X509_POLICY_NODE> a,
-);
+typedef Dartsk_X509_POLICY_NODE_freefuncFunction =
+    void Function(ffi.Pointer<X509_POLICY_NODE> a);
 
 /// OpenSSL typedef `sk_X509_PURPOSE_compfunc`.
 typedef sk_X509_PURPOSE_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_PURPOSE_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_PURPOSE_compfuncFunction`.
-typedef sk_X509_PURPOSE_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509_PURPOSE>> a,
-  ffi.Pointer<ffi.Pointer<X509_PURPOSE>> b,
-);
+typedef sk_X509_PURPOSE_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509_PURPOSE>> a,
+      ffi.Pointer<ffi.Pointer<X509_PURPOSE>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509_PURPOSE_compfuncFunction`.
-typedef Dartsk_X509_PURPOSE_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509_PURPOSE>> a,
-  ffi.Pointer<ffi.Pointer<X509_PURPOSE>> b,
-);
+typedef Dartsk_X509_PURPOSE_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509_PURPOSE>> a,
+      ffi.Pointer<ffi.Pointer<X509_PURPOSE>> b,
+    );
 
 /// OpenSSL typedef `sk_X509_PURPOSE_copyfunc`.
 typedef sk_X509_PURPOSE_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_PURPOSE_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_PURPOSE_copyfuncFunction`.
-typedef sk_X509_PURPOSE_copyfuncFunction = ffi.Pointer<X509_PURPOSE> Function(
-  ffi.Pointer<X509_PURPOSE> a,
-);
+typedef sk_X509_PURPOSE_copyfuncFunction =
+    ffi.Pointer<X509_PURPOSE> Function(ffi.Pointer<X509_PURPOSE> a);
 
 /// OpenSSL typedef `sk_X509_PURPOSE_freefunc`.
 typedef sk_X509_PURPOSE_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_PURPOSE_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_PURPOSE_freefuncFunction`.
-typedef sk_X509_PURPOSE_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<X509_PURPOSE> a,
-);
+typedef sk_X509_PURPOSE_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<X509_PURPOSE> a);
 
 /// OpenSSL typedef `Dartsk_X509_PURPOSE_freefuncFunction`.
-typedef Dartsk_X509_PURPOSE_freefuncFunction = void Function(
-  ffi.Pointer<X509_PURPOSE> a,
-);
+typedef Dartsk_X509_PURPOSE_freefuncFunction =
+    void Function(ffi.Pointer<X509_PURPOSE> a);
 
 /// OpenSSL typedef `sk_X509_REVOKED_compfunc`.
 typedef sk_X509_REVOKED_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_REVOKED_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_REVOKED_compfuncFunction`.
-typedef sk_X509_REVOKED_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509_REVOKED>> a,
-  ffi.Pointer<ffi.Pointer<X509_REVOKED>> b,
-);
+typedef sk_X509_REVOKED_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509_REVOKED>> a,
+      ffi.Pointer<ffi.Pointer<X509_REVOKED>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509_REVOKED_compfuncFunction`.
-typedef Dartsk_X509_REVOKED_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509_REVOKED>> a,
-  ffi.Pointer<ffi.Pointer<X509_REVOKED>> b,
-);
+typedef Dartsk_X509_REVOKED_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509_REVOKED>> a,
+      ffi.Pointer<ffi.Pointer<X509_REVOKED>> b,
+    );
 
 /// OpenSSL typedef `sk_X509_REVOKED_copyfunc`.
 typedef sk_X509_REVOKED_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_REVOKED_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_REVOKED_copyfuncFunction`.
-typedef sk_X509_REVOKED_copyfuncFunction = ffi.Pointer<X509_REVOKED> Function(
-  ffi.Pointer<X509_REVOKED> a,
-);
+typedef sk_X509_REVOKED_copyfuncFunction =
+    ffi.Pointer<X509_REVOKED> Function(ffi.Pointer<X509_REVOKED> a);
 
 /// OpenSSL typedef `sk_X509_REVOKED_freefunc`.
 typedef sk_X509_REVOKED_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_REVOKED_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_REVOKED_freefuncFunction`.
-typedef sk_X509_REVOKED_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<X509_REVOKED> a,
-);
+typedef sk_X509_REVOKED_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<X509_REVOKED> a);
 
 /// OpenSSL typedef `Dartsk_X509_REVOKED_freefuncFunction`.
-typedef Dartsk_X509_REVOKED_freefuncFunction = void Function(
-  ffi.Pointer<X509_REVOKED> a,
-);
+typedef Dartsk_X509_REVOKED_freefuncFunction =
+    void Function(ffi.Pointer<X509_REVOKED> a);
 
 /// OpenSSL typedef `sk_X509_TRUST_compfunc`.
 typedef sk_X509_TRUST_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_TRUST_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_TRUST_compfuncFunction`.
-typedef sk_X509_TRUST_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509_TRUST>> a,
-  ffi.Pointer<ffi.Pointer<X509_TRUST>> b,
-);
+typedef sk_X509_TRUST_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509_TRUST>> a,
+      ffi.Pointer<ffi.Pointer<X509_TRUST>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509_TRUST_compfuncFunction`.
-typedef Dartsk_X509_TRUST_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509_TRUST>> a,
-  ffi.Pointer<ffi.Pointer<X509_TRUST>> b,
-);
+typedef Dartsk_X509_TRUST_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509_TRUST>> a,
+      ffi.Pointer<ffi.Pointer<X509_TRUST>> b,
+    );
 
 /// OpenSSL typedef `sk_X509_TRUST_copyfunc`.
 typedef sk_X509_TRUST_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_TRUST_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_TRUST_copyfuncFunction`.
-typedef sk_X509_TRUST_copyfuncFunction = ffi.Pointer<X509_TRUST> Function(
-  ffi.Pointer<X509_TRUST> a,
-);
+typedef sk_X509_TRUST_copyfuncFunction =
+    ffi.Pointer<X509_TRUST> Function(ffi.Pointer<X509_TRUST> a);
 
 /// OpenSSL typedef `sk_X509_TRUST_freefunc`.
 typedef sk_X509_TRUST_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_TRUST_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_TRUST_freefuncFunction`.
-typedef sk_X509_TRUST_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<X509_TRUST> a,
-);
+typedef sk_X509_TRUST_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<X509_TRUST> a);
 
 /// OpenSSL typedef `Dartsk_X509_TRUST_freefuncFunction`.
-typedef Dartsk_X509_TRUST_freefuncFunction = void Function(
-  ffi.Pointer<X509_TRUST> a,
-);
+typedef Dartsk_X509_TRUST_freefuncFunction =
+    void Function(ffi.Pointer<X509_TRUST> a);
 
 /// OpenSSL typedef `sk_X509_VERIFY_PARAM_compfunc`.
 typedef sk_X509_VERIFY_PARAM_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_VERIFY_PARAM_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_VERIFY_PARAM_compfuncFunction`.
-typedef sk_X509_VERIFY_PARAM_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509_VERIFY_PARAM>> a,
-  ffi.Pointer<ffi.Pointer<X509_VERIFY_PARAM>> b,
-);
+typedef sk_X509_VERIFY_PARAM_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509_VERIFY_PARAM>> a,
+      ffi.Pointer<ffi.Pointer<X509_VERIFY_PARAM>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509_VERIFY_PARAM_compfuncFunction`.
-typedef Dartsk_X509_VERIFY_PARAM_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509_VERIFY_PARAM>> a,
-  ffi.Pointer<ffi.Pointer<X509_VERIFY_PARAM>> b,
-);
+typedef Dartsk_X509_VERIFY_PARAM_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509_VERIFY_PARAM>> a,
+      ffi.Pointer<ffi.Pointer<X509_VERIFY_PARAM>> b,
+    );
 
 /// OpenSSL typedef `sk_X509_VERIFY_PARAM_copyfunc`.
 typedef sk_X509_VERIFY_PARAM_copyfunc =
@@ -106186,39 +106183,38 @@ typedef sk_X509_VERIFY_PARAM_freefunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_VERIFY_PARAM_freefuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_VERIFY_PARAM_freefuncFunction`.
-typedef sk_X509_VERIFY_PARAM_freefuncFunction = ffi.Void Function(
-  ffi.Pointer<X509_VERIFY_PARAM> a,
-);
+typedef sk_X509_VERIFY_PARAM_freefuncFunction =
+    ffi.Void Function(ffi.Pointer<X509_VERIFY_PARAM> a);
 
 /// OpenSSL typedef `Dartsk_X509_VERIFY_PARAM_freefuncFunction`.
-typedef Dartsk_X509_VERIFY_PARAM_freefuncFunction = void Function(
-  ffi.Pointer<X509_VERIFY_PARAM> a,
-);
+typedef Dartsk_X509_VERIFY_PARAM_freefuncFunction =
+    void Function(ffi.Pointer<X509_VERIFY_PARAM> a);
 
 /// OpenSSL typedef `sk_X509_compfunc`.
 typedef sk_X509_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_compfuncFunction`.
-typedef sk_X509_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<X509>> a,
-  ffi.Pointer<ffi.Pointer<X509>> b,
-);
+typedef sk_X509_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<X509>> a,
+      ffi.Pointer<ffi.Pointer<X509>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_X509_compfuncFunction`.
-typedef Dartsk_X509_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<X509>> a,
-  ffi.Pointer<ffi.Pointer<X509>> b,
-);
+typedef Dartsk_X509_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<X509>> a,
+      ffi.Pointer<ffi.Pointer<X509>> b,
+    );
 
 /// OpenSSL typedef `sk_X509_copyfunc`.
 typedef sk_X509_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_X509_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_X509_copyfuncFunction`.
-typedef sk_X509_copyfuncFunction = ffi.Pointer<X509> Function(
-  ffi.Pointer<X509> a,
-);
+typedef sk_X509_copyfuncFunction =
+    ffi.Pointer<X509> Function(ffi.Pointer<X509> a);
 
 /// OpenSSL typedef `sk_X509_freefunc`.
 typedef sk_X509_freefunc =
@@ -106235,25 +106231,26 @@ typedef sk_void_compfunc =
     ffi.Pointer<ffi.NativeFunction<sk_void_compfuncFunction>>;
 
 /// OpenSSL typedef `sk_void_compfuncFunction`.
-typedef sk_void_compfuncFunction = ffi.Int Function(
-  ffi.Pointer<ffi.Pointer<ffi.Void>> a,
-  ffi.Pointer<ffi.Pointer<ffi.Void>> b,
-);
+typedef sk_void_compfuncFunction =
+    ffi.Int Function(
+      ffi.Pointer<ffi.Pointer<ffi.Void>> a,
+      ffi.Pointer<ffi.Pointer<ffi.Void>> b,
+    );
 
 /// OpenSSL typedef `Dartsk_void_compfuncFunction`.
-typedef Dartsk_void_compfuncFunction = int Function(
-  ffi.Pointer<ffi.Pointer<ffi.Void>> a,
-  ffi.Pointer<ffi.Pointer<ffi.Void>> b,
-);
+typedef Dartsk_void_compfuncFunction =
+    int Function(
+      ffi.Pointer<ffi.Pointer<ffi.Void>> a,
+      ffi.Pointer<ffi.Pointer<ffi.Void>> b,
+    );
 
 /// OpenSSL typedef `sk_void_copyfunc`.
 typedef sk_void_copyfunc =
     ffi.Pointer<ffi.NativeFunction<sk_void_copyfuncFunction>>;
 
 /// OpenSSL typedef `sk_void_copyfuncFunction`.
-typedef sk_void_copyfuncFunction = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<ffi.Void> a,
-);
+typedef sk_void_copyfuncFunction =
+    ffi.Pointer<ffi.Void> Function(ffi.Pointer<ffi.Void> a);
 
 /// OpenSSL typedef `sk_void_freefunc`.
 typedef sk_void_freefunc =
