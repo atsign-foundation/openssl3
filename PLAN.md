@@ -338,8 +338,10 @@ This is also what `package:sqlite3` does for Linux (apt cross-gcc), minus musl, 
 most-travelled path for both the library and the hooks ecosystem. GitHub's free arm64 runners let
 us build Linux arm64 (glibc and musl) natively instead of cross-compiling.
 
-Accepted trade-off: **no glibc floor pin**. The glibc minimum is whatever the runner image ships
-(2.39 on Ubuntu 24.04). Per the maintainer, only current distributions need to be supported; the
+glibc floor: first CI runs showed the Ubuntu 24.04-built library needs `GLIBC_2.38` and fails to
+load on Debian 12 (2.36), so the x64/arm64 glibc builds run inside `debian:bullseye` containers
+(the same host-driven container mechanism as musl), giving a floor of **glibc 2.31**; riscv64 is
+cross-built on the runner image (2.39). Per the maintainer, only current distributions need to be supported; the
 README states the floor and the release manifest records it (`glibc_min`), and `local_build` /
 `url_pattern` remain for anyone who needs older. Zig stays documented here as the fallback if a
 glibc-floor requirement ever appears.

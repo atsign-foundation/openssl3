@@ -103,7 +103,7 @@ PR; see CONTRIBUTING.md.
 
 | OS | Architectures | Notes |
 |---|---|---|
-| Linux (glibc) | x64, arm64, riscv64 | built on Ubuntu 24.04 → needs glibc ≥ 2.39 |
+| Linux (glibc) | x64, arm64, riscv64 | x64/arm64 built in Debian 11 → glibc ≥ 2.31 (Debian 11, Ubuntu 20.04, RHEL 9); riscv64 cross-built on Ubuntu 24.04 → glibc ≥ 2.39 |
 | Linux (musl) | x64, arm64 | for Alpine / scratch images; auto-detected on a musl host, or `linux_libc: musl` |
 | macOS | arm64, x64 | 10.15+, thin dylibs (Flutter builds the framework) |
 | iOS | arm64 device; arm64, x64 simulator | 13.0+ |
@@ -152,8 +152,9 @@ exclusive. Set what you need and nothing else.
 
 ### Docker and Alpine
 
-Images built on Debian/Ubuntu get the glibc library (built on Ubuntu 24.04,
-glibc 2.39; older bases need `local_build`). On Alpine the hook detects musl
+Images built on Debian/Ubuntu get the glibc library (built in Debian 11, so it
+loads on glibc ≥ 2.31: Debian 11+, Ubuntu 20.04+, RHEL 9+; older bases need
+`local_build`). On Alpine the hook detects musl
 (`/etc/alpine-release` or `ld-musl-*`) and uses the musl build; when
 cross-building for Alpine from a glibc host, set `linux_libc: musl`. The
 resulting `dart build cli` bundle has no dependency on the image's OpenSSL.

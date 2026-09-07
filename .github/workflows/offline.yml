@@ -81,7 +81,7 @@ jobs:
         run: |
           # Mirror down: the build must still succeed from the warm cache.
           pkill -f "http.server 8765" || true
-          rm -rf build ../../.dart_tool/hooks_runner
+          rm -rf build   # keep .dart_tool/hooks_runner: that is where the shared cache lives
           dart build cli
           bin=$(find build -type f -path '*/bundle/bin/*' -name 'openssl3_example_cli*' | head -1); "$bin"
       - name: A tampered mirror fails closed

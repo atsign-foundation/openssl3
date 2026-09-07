@@ -9,10 +9,11 @@ one toolchain), or the gcc-based setup the OpenSSL project uses in its own CI
 `windows.yml`: MSVC + NASM). `package:sqlite3` also uses apt cross-gcc.
 
 ## Decision
-Use what OpenSSL uses: native gcc on `ubuntu-24.04` and `ubuntu-24.04-arm`,
-`gcc-riscv64-linux-gnu` with `--cross-compile-prefix`, `alpine:3.20` containers for musl, MSVC
-with NASM on Windows. No glibc floor pin: the runner image's glibc is the minimum, recorded in
-the release manifest. Maintainer decision: only current distributions need support.
+Use what OpenSSL uses: gcc, with the x64/arm64 glibc builds running inside `debian:bullseye`
+containers (glibc 2.31 floor; the first Ubuntu 24.04-built library needed GLIBC_2.38 and did
+not load on Debian 12), `gcc-riscv64-linux-gnu` with `--cross-compile-prefix`, `alpine:3.20`
+containers for musl, MSVC with NASM on Windows. Containers are driven from the host by the Dart
+tooling (`--docker`), since the Dart SDK is glibc-only and would not run in Alpine anyway.
 
 ## Consequences
 - Most-travelled path for OpenSSL itself; fewer surprises with assembly and Configure.
