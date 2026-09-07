@@ -171,9 +171,11 @@ jobs:
           sdk: ${{ env.DART_SDK }}
       - run: dart pub get
       - name: Build all Android ABIs
-        env:
-          ANDROID_NDK_ROOT: ${{ env.ANDROID_NDK_LATEST_HOME }}
         run: |
+          # ANDROID_NDK_LATEST_HOME is a runner environment variable (not a
+          # workflow env), so read it in the shell.
+          export ANDROID_NDK_ROOT="${ANDROID_NDK_ROOT:-$ANDROID_NDK_LATEST_HOME}"
+          echo "NDK: $ANDROID_NDK_ROOT"
           "$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/bin/clang" --version | head -1
           for t in android-arm64 android-arm android-x64; do
             dart run tool/bin/build_openssl.dart "$t" --out out
