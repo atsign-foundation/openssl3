@@ -3,9 +3,9 @@
 Versions follow the bundled OpenSSL: `<openssl version>+<package build>`
 (ADR-0010). Pre-releases are `<openssl version>-dev.<n>`.
 
-## 3.5.8-dev.1
+## 3.5.8+1
 
-Initial development release. Bundles OpenSSL 3.5.8 (LTS) `libcrypto`.
+Initial release. Bundles OpenSSL 3.5.8 (LTS) `libcrypto`.
 
 - Build hook downloads a sha256-pinned `libopenssl3_crypto` for
   Linux (glibc x64/arm64/riscv64, musl x64/arm64), macOS (arm64/x64),

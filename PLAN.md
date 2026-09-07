@@ -698,7 +698,7 @@ Dependabot cannot do this: its `gitsubmodule` ecosystem tracks branch heads, not
 
 **Decisions taken during implementation (all reversible before first publish)**
 - Package/pub name `openssl3`; library `libopenssl3_crypto`; user-defines key `openssl3`.
-- Version = bundled OpenSSL version + build (`3.5.8+N`), ADR-0010; currently `3.5.8-dev.1`.
+- Version = bundled OpenSSL version + build (`3.5.8+N`), ADR-0010; first release `3.5.8+1`.
 - Full libcrypto ABI exported and bound (ADR-0008); `native_toolchain_c` not a dependency.
 - `hooks '>=2.0.0 <3.0.0'` so Flutter 3.41/3.44 stable can resolve the package.
 - Release tags spell the build with a dash (`v3.5.8-1`) because git refs cannot contain `+`.
