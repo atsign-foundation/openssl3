@@ -127,7 +127,10 @@ Future<void> main(List<String> args) async {
     final rawOutput = File(p.join(scratch.path, 'openssl.raw.g.dart'));
     _runFfigen(include, rawOutput);
     final manual = _manualIndex(Directory(p.join(source.path, 'doc', 'man3')));
-    final decorated = _decorate(rawOutput.readAsStringSync(), manual);
+    final decorated = await _formatted(
+      _decorate(rawOutput.readAsStringSync(), manual),
+      scratch,
+    );
 
     final unbound = _unboundReport(decorated);
     final output = File(opts.option('output')!);
@@ -513,4 +516,16 @@ String _unboundReport(String generated) {
   }
   b.writeln('};');
   return b.toString();
+}
+
+/// Runs `dart format` on [source] so the committed file is byte-identical to
+/// what `--check` regenerates, regardless of who formats what afterwards.
+Future<String> _formatted(String source, Directory scratch) async {
+  final f = File(p.join(scratch.path, 'formatted.dart'))
+    ..writeAsStringSync(source);
+  final r = await Process.run('dart', ['format', f.path]);
+  if (r.exitCode != 0) {
+    throw ProcessException('dart', ['format'], '${r.stderr}', r.exitCode);
+  }
+  return f.readAsStringSync();
 }
