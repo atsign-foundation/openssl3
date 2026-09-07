@@ -85,6 +85,12 @@ void main() {
       );
       expect(
         resolveTarget(
+          makeInput(temp: temp, os: OS.linux, arch: Architecture.arm),
+        ).id,
+        'linux-arm',
+      );
+      expect(
+        resolveTarget(
           makeInput(temp: temp, os: OS.windows, arch: Architecture.arm64),
         ).id,
         'windows-arm64',

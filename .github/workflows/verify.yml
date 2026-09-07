@@ -123,6 +123,53 @@ jobs:
           echo "$out" | grep -qi "does not support build hooks" || { echo "::warning::dart compile exe behaviour changed; update README"; }
           echo "::notice::dart compile exe exit=$code (expected non-zero: hooks unsupported, use dart build cli)"
 
+  # 32-bit ARM has no GitHub runner: run Dart's linux-arm SDK inside an
+  # arm32v7 Debian container under qemu-user (docker/setup-qemu-action). Slow,
+  # but it is the real consumer path for Raspberry Pi class devices.
+  dart-cli-arm32:
+    name: dart build cli (linux-arm, qemu)
+    needs: fetch
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: openssl3-prebuilt
+          path: out/
+          run-id: ${{ needs.fetch.outputs.run_id }}
+          github-token: ${{ github.token }}
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm
+      - name: Dart SDK version to mirror (stable)
+        id: dart
+        run: |
+          v=$(curl -sSfL https://storage.googleapis.com/dart-archive/channels/stable/release/latest/VERSION | python3 -c 'import sys,json; print(json.load(sys.stdin)["version"])')
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          curl -sSfL -o dartsdk.zip "https://storage.googleapis.com/dart-archive/channels/stable/release/$v/sdk/dartsdk-linux-arm-release.zip"
+          unzip -q dartsdk.zip && rm dartsdk.zip
+          file dart-sdk/bin/dart | grep -q "ARM, EABI5" && echo "linux-arm SDK $v"
+      - name: dart build cli + run bundle (arm32v7/debian:bookworm under qemu)
+        run: |
+          docker run --rm --platform linux/arm/v7 -v "$PWD:$PWD" -w "$PWD" -e PUB_CACHE="$PWD/.pub-cache" arm32v7/debian:bookworm-slim bash -ec '
+            uname -m
+            for t in cc gcc clang; do command -v $t && { echo "$t present in the clean image"; exit 1; }; done
+            export PATH="$PWD/dart-sdk/bin:$PATH"
+            dart --version
+            dart pub get
+            cd example/cli
+            dart build cli
+            bin=$(find build -type f -path "*/bundle/bin/*" -name "openssl3_example_cli*" | head -1)
+            ls -la "$(dirname "$bin")/../lib"
+            ldd "$(dirname "$bin")"/../lib/libopenssl3_crypto.so | tee ldd.txt
+            ! grep -qE "libcrypto|libssl" ldd.txt || { echo "bundle depends on a system OpenSSL"; exit 1; }
+            "$bin" --json | tee result.json
+            grep -q "\"failures\":0" result.json
+          '
+
   flutter-desktop:
     name: flutter build ${{ matrix.platform }}
     needs: fetch

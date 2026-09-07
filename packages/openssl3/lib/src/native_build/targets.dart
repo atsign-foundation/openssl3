@@ -104,7 +104,8 @@ final class BuildTarget {
 
   static final List<BuildTarget> all = [
     // Linux glibc: native gcc (x64; arm64 on arm runners), Debian cross-gcc
-    // for riscv64, exactly as OpenSSL's own cross-compiles.yml (ADR-0004).
+    // for arm and riscv64, exactly as OpenSSL's own cross-compiles.yml
+    // (ADR-0004).
     BuildTarget(
       SupportedTarget.byId('linux-x64'),
       configureTarget: 'linux-x86_64',
@@ -113,6 +114,15 @@ final class BuildTarget {
     BuildTarget(
       SupportedTarget.byId('linux-arm64'),
       configureTarget: 'linux-aarch64',
+      libs: ['pthread', 'dl'],
+    ),
+    // 32-bit ARM (armv7-a hard-float, what Dart's linux-arm SDK runs on):
+    // Debian/Ubuntu cross-gcc, OpenSSL's generic ARM target with runtime
+    // NEON detection. No musl flavour: Dart has no musl arm32 runtime.
+    BuildTarget(
+      SupportedTarget.byId('linux-arm'),
+      configureTarget: 'linux-armv4',
+      crossCompilePrefix: 'arm-linux-gnueabihf-',
       libs: ['pthread', 'dl'],
     ),
     BuildTarget(

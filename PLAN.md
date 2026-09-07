@@ -306,6 +306,7 @@ Requested in review ("as OpenSSL exposes more surfaces we should expose them all
 |---|---|---|---|---|---|
 | Linux glibc | x64 | `linux-x86_64` | `ubuntu-24.04` | native gcc (as OpenSSL CI) | glibc floor = runner (2.39); "new builds only" accepted |
 | Linux glibc | arm64 | `linux-aarch64` | `ubuntu-24.04-arm` | native gcc | native arm runner, no cross toolchain; smoke test same job |
+| Linux glibc | arm (armv7-a hf) | `linux-armv4` | `ubuntu-24.04` in `container: ubuntu:22.04` | `gcc-arm-linux-gnueabihf` + `--cross-compile-prefix=arm-linux-gnueabihf-` | glibc floor 2.35; smoke test under `qemu-arm`; added in 3.5.8+2 for Dart's linux-arm SDK (NoPorts on 32-bit Pis). No musl flavour: no Dart runtime exists for musl arm32 |
 | Linux glibc | riscv64 | `linux64-riscv64` | `ubuntu-24.04` | `gcc-riscv64-linux-gnu` + `--cross-compile-prefix=riscv64-linux-gnu-` (OpenSSL `cross-compiles.yml`) | smoke test under `qemu-user`, `QEMU_CPU=rv64,v=true,vext_spec=v1.0` as OpenSSL does |
 | Linux musl | x64 | `linux-x86_64` | `ubuntu-24.04` in `container: alpine:3.20` | apk `build-base perl linux-headers` (OpenSSL `os-zoo.yml`) | smoke test in the same container |
 | Linux musl | arm64 | `linux-aarch64` | `ubuntu-24.04-arm` in `container: alpine:3.20` | apk gcc | smoke test in the same container |
@@ -319,8 +320,9 @@ Requested in review ("as OpenSSL exposes more surfaces we should expose them all
 
 Every `(os, arch)` **not** in this table makes the hook throw `UnsupportedError` with the exact pair
 and a pointer to `local_build`/`system`/`local_path` (sqlite3's `checkSupported()` message style).
-Notably unsupported on purpose: Linux/Android ia32 and arm32-linux (Dart dropped or never had
-them), Android x86.
+Notably unsupported on purpose: Linux/Android ia32 (Dart dropped them), Android x86, musl arm32
+(no Dart runtime). Linux arm32 (glibc) was wrongly listed here at first; Dart still ships a
+`linux-arm` SDK and NoPorts ships `linux-arm` binaries, so it was added in 3.5.8+2.
 
 ### 3.1 Toolchain decision: what the OpenSSL project itself uses (ADR-0004)
 

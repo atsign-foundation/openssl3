@@ -98,7 +98,7 @@ Hashes never enter the repository by hand.
    `3.5.8+1`, and CHANGELOG is updated. Commit to `trunk`.
 2. Tag it. Git refs cannot contain `+`, so the tag spells the build with a
    dash: `git tag v3.5.8-1 && git push origin v3.5.8-1`.
-3. `release.yml` builds all 15 libraries (with provenance attestations),
+3. `release.yml` builds all 16 libraries (with provenance attestations),
    creates a **draft** GitHub release with the binaries and `manifest.json`,
    regenerates `lib/src/manifest.dart` from the uploaded bytes and opens the
    PR `chore(release): pin v3.5.8-1 asset hashes` (label `release-hashes`).

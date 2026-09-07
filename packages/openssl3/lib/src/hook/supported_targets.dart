@@ -106,6 +106,12 @@ final class SupportedTarget {
       libc: Libc.glibc,
     ),
     SupportedTarget(
+      id: 'linux-arm',
+      os: OS.linux,
+      arch: Architecture.arm,
+      libc: Libc.glibc,
+    ),
+    SupportedTarget(
       id: 'linux-riscv64',
       os: OS.linux,
       arch: Architecture.riscv64,

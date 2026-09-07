@@ -23,7 +23,7 @@ Prebuilt OpenSSL 3.5 LTS `libcrypto` for Dart and Flutter, delivered as a
 
 ## How a release works
 
-1. CI builds `libopenssl3_crypto` for 15 targets from the pinned OpenSSL tag,
+1. CI builds `libopenssl3_crypto` for 16 targets from the pinned OpenSSL tag,
    verifies each binary (exported ABI, SONAME, dependencies, Android page
    alignment) and attaches them plus `manifest.json` to a GitHub release.
 2. The sha256 of every asset is compiled into the package

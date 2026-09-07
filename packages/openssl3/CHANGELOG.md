@@ -3,6 +3,13 @@
 Versions follow the bundled OpenSSL: `<openssl version>+<package build>`
 (ADR-0010). Pre-releases are `<openssl version>-dev.<n>`.
 
+## 3.5.8+2
+
+- New prebuilt target `linux-arm` (32-bit ARMv7 hard-float glibc, glibc ≥ 2.35):
+  Dart's `linux-arm` SDK on Raspberry Pi class devices. 16 targets now.
+- Release workflow fixes found during the first release (duplicate asset upload,
+  PR base branch, release-notes quoting). No library or API changes.
+
 ## 3.5.8+1
 
 Initial release. Bundles OpenSSL 3.5.8 (LTS) `libcrypto`.

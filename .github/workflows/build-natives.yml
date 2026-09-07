@@ -119,6 +119,46 @@ jobs:
           if-no-files-found: error
           retention-days: 3
 
+  linux-arm:
+    name: linux-arm
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ env.DART_SDK }}
+      - run: dart pub get
+      # Cross-compile inside an ubuntu:22.04 container so the glibc floor is
+      # 2.35 (Debian 12 "bookworm", Raspberry Pi OS bookworm, Ubuntu 22.04 and
+      # newer) instead of the runner's 2.39. Same Debian cross-gcc family as
+      # OpenSSL's cross-compiles.yml; armv7-a hard-float is what Dart's
+      # linux-arm SDK targets.
+      - name: Start ubuntu:22.04 cross build container
+        run: |
+          docker run -d --name buildbox -v "$PWD:$PWD" -w "$PWD" ubuntu:22.04 sleep infinity
+          docker exec buildbox sh -c 'apt-get update -q && DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends gcc-arm-linux-gnueabihf libc6-dev-armhf-cross binutils make perl qemu-user ca-certificates >/dev/null'
+          docker exec buildbox sh -c 'arm-linux-gnueabihf-gcc --version | head -1; dpkg -s libc6-armhf-cross | grep ^Version; perl --version | grep -o "v5[0-9.]*"'
+      - name: Build
+        run: dart run tool/bin/build_openssl.dart linux-arm --out out --docker buildbox
+      - name: glibc floor is 2.35 or lower
+        run: |
+          docker exec -w "$PWD" buildbox sh -c 'objdump -T out/libopenssl3_crypto.arm.linux.so | grep -oE "GLIBC_[0-9.]+" | sort -uV | tail -3'
+          max=$(docker exec -w "$PWD" buildbox sh -c 'objdump -T out/libopenssl3_crypto.arm.linux.so | grep -oE "GLIBC_[0-9]+\.[0-9]+" | sort -uV | tail -1')
+          echo "highest glibc symbol version: $max"
+          test "$(printf '%s\n' "$max" GLIBC_2.35 | sort -V | tail -1)" = GLIBC_2.35
+      - name: Smoke test (qemu-user, inside the build container)
+        run: |
+          docker exec -w "$PWD" buildbox sh -c 'arm-linux-gnueabihf-gcc -O2 -o /tmp/smoke tool/native/smoke_dlopen.c -ldl && qemu-arm -L /usr/arm-linux-gnueabihf /tmp/smoke out/libopenssl3_crypto.arm.linux.so'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-linux-arm
+          path: out/
+          if-no-files-found: error
+          retention-days: 3
+
   linux-musl:
     name: ${{ matrix.target }}
     strategy:
@@ -257,7 +297,7 @@ jobs:
 
   merge:
     name: Merge + manifest
-    needs: [linux-glibc, linux-riscv64, linux-musl, apple, android, windows]
+    needs: [linux-glibc, linux-arm, linux-riscv64, linux-musl, apple, android, windows]
     runs-on: ubuntu-24.04
     outputs:
       artifact_id: ${{ steps.upload.outputs.artifact-id }}

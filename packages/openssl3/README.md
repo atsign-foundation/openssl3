@@ -112,7 +112,7 @@ PR; see CONTRIBUTING.md.
 
 | OS | Architectures | Notes |
 |---|---|---|
-| Linux (glibc) | x64, arm64, riscv64 | x64/arm64 built in manylinux_2_28 → glibc ≥ 2.28 (RHEL 8, Debian 10, Ubuntu 20.04 and newer); riscv64 cross-built on Ubuntu 24.04 → glibc ≥ 2.39 |
+| Linux (glibc) | x64, arm64, arm (armv7 hard-float), riscv64 | x64/arm64 built in manylinux_2_28 → glibc ≥ 2.28 (RHEL 8, Debian 10, Ubuntu 20.04 and newer); arm cross-built on Ubuntu 22.04 → glibc ≥ 2.35 (Debian 12, Raspberry Pi OS bookworm and newer); riscv64 cross-built on Ubuntu 24.04 → glibc ≥ 2.39 |
 | Linux (musl) | x64, arm64 | for Alpine / scratch images; auto-detected on a musl host, or `linux_libc: musl` |
 | macOS | arm64, x64 | 10.15+, thin dylibs (Flutter builds the framework) |
 | iOS | arm64 device; arm64, x64 simulator | 13.0+ |
@@ -162,7 +162,8 @@ exclusive. Set what you need and nothing else.
 ### Docker and Alpine
 
 Images built on Debian/Ubuntu get the glibc library (built in a manylinux_2_28
-image, so it loads on glibc ≥ 2.28: RHEL 8+, Debian 10+, Ubuntu 20.04+; older
+image, so it loads on glibc ≥ 2.28: RHEL 8+, Debian 10+, Ubuntu 20.04+; the
+32-bit ARM build needs glibc ≥ 2.35, i.e. Debian 12 / Raspberry Pi OS bookworm; older
 bases need `local_build`). On Alpine the hook detects musl
 (`/etc/alpine-release` or `ld-musl-*`) and uses the musl build; when
 cross-building for Alpine from a glibc host, set `linux_libc: musl`. The
