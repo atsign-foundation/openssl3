@@ -49,6 +49,7 @@ void main(List<String> args) async {
       ),
       SystemLibrary() => throw StateError('handled above'),
     };
+    if (file == null) return; // test_directory without a build yet
     stdout.writeln(
       'openssl3: bundling ${target.releaseFileName} for ${target.id} '
       'as ${target.installedFileName}',

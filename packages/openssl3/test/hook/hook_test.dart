@@ -287,7 +287,7 @@ void main() {
           PrecompiledFromDirectory(dir),
           target,
         );
-        expect(p.basename(file.path), target.installedFileName);
+        expect(p.basename(file!.path), target.installedFileName);
         expect(file.readAsBytesSync(), payload);
         expect(
           p.isWithin(input.outputDirectoryShared.toFilePath(), file.path),
@@ -300,10 +300,24 @@ void main() {
           PrecompiledFromDirectory(dir),
           target,
         );
-        expect(again.path, file.path);
+        expect(again!.path, file.path);
         expect(again.statSync().modified, first, reason: 'cache hit');
       },
     );
+
+    test('test_directory: missing file yields null (bootstrap mode)', () async {
+      final empty = Directory(p.join(temp.path, 'empty'))..createSync();
+      final input = makeInput(temp: temp);
+      expect(
+        await obtainBundledLibrary(
+          input,
+          BuildOutputBuilder(),
+          PrecompiledFromDirectory(empty),
+          target,
+        ),
+        isNull,
+      );
+    });
 
     test('test_directory: wrong sidecar hash fails closed', () async {
       final dir = _fakeReleaseDir(temp, target, payload, sha256: 'ff' * 32);
@@ -471,7 +485,7 @@ void main() {
           LocalPath(src, verify: true, manifest: manifest),
           target,
         );
-        expect(verified.readAsBytesSync(), payload);
+        expect(verified!.readAsBytesSync(), payload);
 
         // A changed file with a cold cache is rejected. (With a warm cache the
         // previously verified copy is reused: the cache is keyed by digest.)
@@ -492,7 +506,7 @@ void main() {
           LocalPath(src, verify: false, manifest: manifest),
           target,
         );
-        expect(unverified.readAsBytesSync(), [1, 2, 3]);
+        expect(unverified!.readAsBytesSync(), [1, 2, 3]);
         expect(p.basename(unverified.path), target.installedFileName);
       },
     );

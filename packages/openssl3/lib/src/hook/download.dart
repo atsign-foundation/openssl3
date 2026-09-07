@@ -87,7 +87,12 @@ final class CouldNotDownloadException implements Exception {
 
 /// Obtains the bundled library for [target] from [source] and returns the
 /// verified file inside `outputDirectoryShared`.
-Future<File> obtainBundledLibrary(
+/// Returns `null` only for [PrecompiledFromDirectory] (the CI/test mode) when
+/// the directory does not hold the file yet: inside this repository the tool
+/// that *produces* the file is itself a Dart program depending on this
+/// package, so its hook must be able to run before the first build exists.
+/// Every other source fails closed.
+Future<File?> obtainBundledLibrary(
   BuildInput input,
   BuildOutputBuilder output,
   BundledSource source,
@@ -114,15 +119,17 @@ Future<File> obtainBundledLibrary(
     case PrecompiledFromDirectory():
       final file = File(p.join(source.directory.path, target.releaseFileName));
       final sidecar = File('${file.path}.json');
-      if (!file.existsSync() || !sidecar.existsSync()) {
-        throw FileSystemException(
-          'openssl3: test_directory needs both the library and its '
-          '.json sidecar (from tool/bin/build_openssl.dart)',
-          file.path,
-        );
-      }
       output.dependencies.add(file.uri);
       output.dependencies.add(sidecar.uri);
+      if (!file.existsSync() || !sidecar.existsSync()) {
+        stderr.writeln(
+          'openssl3: WARNING: test_directory ${source.directory.path} has no '
+          '${target.releaseFileName} (+ .json sidecar) yet; emitting no code '
+          'asset. Build it with `dart run tool/bin/build_openssl.dart '
+          '${target.id}`. Any @Native call will fail until then.',
+        );
+        return null;
+      }
       final expected =
           (jsonDecode(sidecar.readAsStringSync())
                   as Map<String, Object?>)['sha256']
