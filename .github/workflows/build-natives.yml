@@ -67,6 +67,8 @@ jobs:
         run: |
           arch=$(uname -m)   # x86_64 or aarch64
           docker run -d --name buildbox -v "$PWD:$PWD" -w "$PWD" "quay.io/pypa/manylinux_2_28_${arch}" sleep infinity
+          # The image's perl is minimal; OpenSSL's Configure needs the core modules.
+          docker exec buildbox sh -c 'dnf -y -q install perl-core >/dev/null'
           docker exec buildbox sh -c 'gcc --version | head -1; ldd --version | head -1; perl --version | grep -o "v5[0-9.]*"'
       - name: Build
         run: dart run tool/bin/build_openssl.dart ${{ matrix.target }} --out out --docker buildbox
