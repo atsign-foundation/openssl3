@@ -157,6 +157,7 @@ jobs:
           git config user.email github-actions@github.com
           git tag -f "$TAG" "${{ github.event.pull_request.merge_commit_sha }}"
           git push -f origin "refs/tags/$TAG"
-          gh release edit "$TAG" --draft=false --latest \
-            --notes "Prebuilt OpenSSL $(grep -oE 'opensslVersion: .[0-9.]+' packages/openssl3/lib/src/manifest.dart | tr -d \"'\" | awk '{print $2}') libcrypto for package:openssl3. Install: \`dart pub add openssl3\`. Hashes pinned in lib/src/manifest.dart."
+          ver=$(grep -oE "opensslVersion: '[0-9.]+'" packages/openssl3/lib/src/manifest.dart | grep -oE '[0-9.]+')
+          notes="Prebuilt OpenSSL $ver libcrypto for package:openssl3. Install: \`dart pub add openssl3\`. Hashes pinned in lib/src/manifest.dart."
+          gh release edit "$TAG" --draft=false --latest --notes "$notes"
           echo "::notice::Release $TAG published. Now run: git checkout $TAG && cd packages/openssl3 && dart pub publish"
