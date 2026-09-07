@@ -170,7 +170,11 @@ String _renderDart(Manifest m) {
     ..writeln()
     ..writeln("import 'hook/manifest_model.dart';")
     ..writeln()
-    ..writeln('const String? releaseTag = ${_lit(m.releaseTag)};')
+    // Typed String? only while null, so the lint stays quiet either way.
+    ..writeln(
+      'const String${m.releaseTag == null ? '?' : ''} releaseTag = '
+      '${_lit(m.releaseTag)};',
+    )
     ..writeln()
     ..writeln('const Manifest compiledInManifest = Manifest(')
     ..writeln('  releaseTag: releaseTag,')

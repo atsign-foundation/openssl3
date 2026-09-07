@@ -11,6 +11,7 @@ import 'package:openssl3/src/hook/binary_source.dart';
 import 'package:openssl3/src/hook/download.dart';
 import 'package:openssl3/src/hook/manifest_model.dart';
 import 'package:openssl3/src/hook/supported_targets.dart';
+import 'package:openssl3/src/manifest.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
@@ -156,8 +157,9 @@ void main() {
       expect(release.urlPattern, defaultUrlPattern);
       expect(
         release.downloadUri('x.dylib').toString(),
-        'https://github.com/cconstab/openssl3/releases/download/null/x.dylib',
-        reason: 'no release tag compiled in yet',
+        'https://github.com/cconstab/openssl3/releases/download/'
+        '${compiledInManifest.releaseTag}/x.dylib',
+        reason: 'the URL names whichever release tag is compiled in',
       );
     });
 
