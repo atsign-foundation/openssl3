@@ -92,7 +92,9 @@ jobs:
           (cd ../../mirror && python3 -m http.server 8765 >/tmp/mirror.log 2>&1 &)
           sleep 1
           f=$(ls ../../mirror/vtest/libopenssl3_crypto.*.$EXT | head -1)
-          printf '\x00' | dd of="$f" bs=1 seek=100 count=1 conv=notrunc
+          # Flip a byte deep in the file (offset 100 is already zero in an ELF header).
+          python3 -c 'import sys; p=sys.argv[1]; b=bytearray(open(p,"rb").read()); b[65536]^=0xff; open(p,"wb").write(b)' "$f"
+          shasum -a 256 "$f" ../../out/$(basename "$f")
           # Drop the warm cache so the hook must fetch again.
           find ../.. -type d -name 'download-*' -path '*shared*' -prune -exec rm -rf {} + 2>/dev/null || true
           rm -rf build ../../.dart_tool/hooks_runner
