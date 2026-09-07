@@ -79,6 +79,8 @@ jobs:
       - name: Open the release-hashes PR
         uses: peter-evans/create-pull-request@v7
         with:
+          # The checkout is on a tag, so the action cannot infer the base.
+          base: trunk
           branch: release/${{ github.ref_name }}-hashes
           delete-branch: true
           add-paths: packages/openssl3/lib/src/manifest.dart
