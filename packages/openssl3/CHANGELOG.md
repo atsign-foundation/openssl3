@@ -20,4 +20,5 @@ Initial development release. Bundles OpenSSL 3.5.8 (LTS) `libcrypto`.
   AES-GCM / AES-CTR / ChaCha20-Poly1305 probes, provider list),
   `initNoConfig()`, `OpenSSLException`.
 - `package:openssl3/evp.dart`: `Aead` (AES-256/128-GCM, ChaCha20-Poly1305),
-  `Cipher.aesCtr` with streaming, `X25519`, `MlKem768`, `MlDsa65`, `Random`.
+  `Cipher.aesCtr` with streaming, `X25519`, `MlKem768`, `MlDsa65`, `Random`,
+  `Digest` (SHA-2/SHA-3, streaming), `Hmac`, `Hkdf`.

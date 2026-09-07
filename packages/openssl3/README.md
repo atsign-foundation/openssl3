@@ -79,7 +79,16 @@ final ss = MlKem768.decaps(kem.seed!, enc.ciphertext);
 final dsa = MlDsa65.keyPair();
 final sig = MlDsa65.sign(dsa.privateKey, message);
 MlDsa65.verify(dsa.publicKey, message, sig);     // true
+
+final digest = Digest.sha256.hash(data);         // or .start()/update()/finish()
+final tag = Hmac.sha256(macKey).compute(data);   // .verify() is constant-time
+final okm = Hkdf.derive(ikm: ss, salt: salt, info: info, length: 64);
 ```
+
+An end-to-end example that uses all of this over a TCP socket (hybrid
+X25519 + ML-KEM-768 handshake signed with ML-DSA-65, then AES-GCM or AES-CTR +
+HMAC frames, with iperf3-style throughput output) lives in
+[example/e2e](https://github.com/cconstab/openssl3/tree/trunk/example/e2e).
 
 Errors from libcrypto surface as `OpenSSLException` with the drained error
 queue. Everything else in libcrypto (SHA-3, HKDF, RSA, X.509, PEM, BIO, …) is

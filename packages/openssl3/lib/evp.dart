@@ -7,6 +7,9 @@
 /// - [MlKem768]: key pairs (optionally from a 64-byte seed), encaps, decaps.
 /// - [MlDsa65]: key pairs (optionally from a 32-byte seed), sign, verify.
 /// - [Random]: `RAND_bytes` / `RAND_priv_bytes`.
+/// - [Digest]: SHA-2 / SHA-3, one-shot and streaming.
+/// - [Hmac]: HMAC over SHA-2 with constant-time verification.
+/// - [Hkdf]: HKDF (RFC 5869) key derivation.
 ///
 /// Keys are plain byte strings in OpenSSL's raw encodings, so they round-trip
 /// with at_chops and with any other OpenSSL-based implementation. Errors from
@@ -20,6 +23,9 @@ library;
 export 'src/errors.dart' show OpenSSLException;
 export 'src/evp/aead.dart';
 export 'src/evp/cipher.dart';
+export 'src/evp/digest.dart';
+export 'src/evp/kdf.dart';
+export 'src/evp/mac.dart';
 export 'src/evp/ml_dsa.dart';
 export 'src/evp/ml_kem.dart';
 export 'src/evp/random.dart';
