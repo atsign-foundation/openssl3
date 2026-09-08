@@ -510,6 +510,12 @@ Windows, Linux, iOS simulator (`xcrun simctl`), Android emulator (`reactivecircu
 x86_64). Also runs `dart compile exe example/cli/bin/main.dart` and **records** the observed
 behaviour in the job summary; README documents `dart build cli` as the supported path (§0 facts).
 
+### `upstream-tests.yml` (weekly, submodule bumps, build-definition changes)
+OpenSSL's own `make test` against our feature set (Configure flags from
+`build_openssl.dart --print-configure`, minus `no-tests`/`no-apps`), on linux-x64 and linux-arm64.
+Upstream tests default options only; this covers our combination of `no-*` flags. Added after
+3.5.8+2.
+
 ### `offline.yml`
 Ubuntu + macOS + Windows: pre-download assets, then `sudo ip link set eth0 down` /
 `networksetup -setnetworkserviceenabled` / `netsh interface set interface … disable` (or, more

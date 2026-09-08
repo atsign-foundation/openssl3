@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:openssl3/src/native_build/abi.dart';
+import 'package:openssl3/src/native_build/build.dart';
 import 'package:openssl3/src/native_build/required_symbols.dart';
 import 'package:openssl3/src/native_build/targets.dart';
 import 'package:test/test.dart';
@@ -164,6 +165,23 @@ EXPORTS
       expect(
         BuildTarget.byId('ios-arm64').installName,
         '@rpath/libopenssl3_crypto.dylib',
+      );
+    });
+
+    test('configureArgsFor: target first, common flags, per-target extras', () {
+      final args = configureArgsFor(BuildTarget.byId('linux-arm'));
+      expect(args.first, 'linux-armv4');
+      expect(args[1], '--cross-compile-prefix=arm-linux-gnueabihf-');
+      expect(args, containsAll(commonConfigureArgs));
+      expect(args, contains('no-tests'), reason: 'shipped builds skip tests');
+      expect(args, contains('no-apps'), reason: 'shipped builds skip apps');
+      expect(
+        configureArgsFor(BuildTarget.byId('windows-arm64')),
+        contains('no-asm'),
+      );
+      expect(
+        configureArgsFor(BuildTarget.byId('linux-x64'), noAsm: true),
+        contains('no-asm'),
       );
     });
 

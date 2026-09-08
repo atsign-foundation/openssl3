@@ -1,0 +1,85 @@
+name: OpenSSL upstream tests
+
+# Runs OpenSSL's own test suite (`make test`) against the exact feature set
+# this package ships: the Configure arguments come from
+# `build_openssl.dart --print-configure`, minus `no-tests` and minus `no-apps`
+# (`no-apps` cascades to `no-tests` in OpenSSL's Configure; the `openssl`
+# command-line tool is only a test dependency here and is not shipped).
+# Upstream tests every release tag with default options; this is the one
+# thing they do not test for us: our combination of no-engine, no-legacy,
+# no-comp, no-dso, no-module and friends.
+#
+# Triggers: the submodule bump PR from openssl-update.yml, changes to the
+# build definitions, a weekly run, and manual dispatch.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 4 * * 1'   # Mondays 04:30 UTC
+  pull_request:
+    paths:
+      - 'third_party/openssl'
+      - 'packages/openssl3/lib/src/native_build/**'
+      - '.github/workflows/upstream-tests.yml'
+  push:
+    branches: [trunk]
+    paths:
+      - 'third_party/openssl'
+      - 'packages/openssl3/lib/src/native_build/**'
+      - '.github/workflows/upstream-tests.yml'
+
+permissions:
+  contents: read
+
+env:
+  DART_SDK: stable
+
+jobs:
+  make-test:
+    name: make test (${{ matrix.target }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: linux-x64
+            runner: ubuntu-24.04
+          - target: linux-arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ env.DART_SDK }}
+      - run: dart pub get
+      - name: Configure arguments (shipped set minus no-tests/no-apps)
+        id: cfg
+        run: |
+          dart run tool/bin/build_openssl.dart --print-configure ${{ matrix.target }} \
+            | grep -vx -e no-tests -e no-apps | tee configure.args
+          echo "args=$(tr '\n' ' ' < configure.args)" >> "$GITHUB_OUTPUT"
+      - name: Configure (out of tree)
+        run: |
+          mkdir build-test && cd build-test
+          perl ../third_party/openssl/Configure ${{ steps.cfg.outputs.args }}
+          perl configdata.pm -d | grep -E '^\s*(apps|tests|engine|legacy|comp|dso|module|shared) '  || true
+          # Same feature set as the shipped library except apps/tests.
+          perl configdata.pm -d | grep -qE '^\s*tests\s' && { echo "tests still disabled"; exit 1; } || true
+      - name: Build
+        working-directory: build-test
+        run: make -j"$(nproc)" -s
+      - name: make test
+        working-directory: build-test
+        run: make test HARNESS_JOBS="$(nproc)"
+      - name: Upload test logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: openssl-test-logs-${{ matrix.target }}
+          path: build-test/test-runs/
+          if-no-files-found: ignore
+          retention-days: 7

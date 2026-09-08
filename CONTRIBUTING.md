@@ -148,3 +148,8 @@ generator fails loudly rather than emitting wrong widths.
 - `example/e2e` is the end-to-end test (`dart test`, then `dart run bin/openssl3_e2e.dart selftest`); CI also runs it as two processes from a `dart build cli` bundle
 - `example/cli` and `example/flutter_app` are the consumer-side smoke tests
   used by `verify.yml`.
+- `upstream-tests.yml` runs OpenSSL's own `make test` (linux x64 and arm64)
+  with this package's Configure flags minus `no-tests`/`no-apps`, weekly and
+  on submodule bumps. Locally: `dart run tool/bin/build_openssl.dart
+  --print-configure linux-x64 | grep -vx -e no-tests -e no-apps`, then
+  `perl ../third_party/openssl/Configure <args> && make && make test` out of tree.

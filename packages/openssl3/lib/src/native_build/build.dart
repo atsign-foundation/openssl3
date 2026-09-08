@@ -56,6 +56,19 @@ final class BuildOptions {
   });
 }
 
+/// The exact `Configure` arguments used to build [t], in order. Also what
+/// `build_openssl.dart --print-configure` prints, so CI jobs that need the
+/// same feature set (e.g. OpenSSL's own test suite) never restate the flags.
+List<String> configureArgsFor(BuildTarget t, {bool noAsm = false}) => [
+  t.configureTarget,
+  if (t.crossCompilePrefix != null)
+    '--cross-compile-prefix=${t.crossCompilePrefix}',
+  ...commonConfigureArgs,
+  ...t.extraConfigureArgs,
+  if (noAsm) 'no-asm',
+  ...t.cflags,
+];
+
 final class BuildResult {
   final File library;
   final Map<String, Object?> buildInfo;
@@ -91,15 +104,7 @@ Future<BuildResult> buildTarget(BuildOptions options) async {
   o.outDir.createSync(recursive: true);
 
   // 1. Configure (out of tree).
-  final configureArgs = <String>[
-    t.configureTarget,
-    if (t.crossCompilePrefix != null)
-      '--cross-compile-prefix=${t.crossCompilePrefix}',
-    ...commonConfigureArgs,
-    ...t.extraConfigureArgs,
-    if (o.noAsm) 'no-asm',
-    ...t.cflags,
-  ];
+  final configureArgs = configureArgsFor(t, noAsm: o.noAsm);
   final configureScript = p.join(o.source.absolute.path, 'Configure');
   await run(
     'perl',

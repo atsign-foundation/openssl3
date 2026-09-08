@@ -6,7 +6,9 @@
 ///         [--source third_party/openssl] [--build-dir .dart_tool/openssl_build]
 ///         [--no-asm] [--reuse-build-dir] [--skip-verify] [--jobs N]
 ///
-/// Run with `--list` to print the known target ids.
+/// Run with `--list` to print the known target ids, or
+/// `--print-configure <target-id>` to print that target's `Configure`
+/// arguments one per line (used by `upstream-tests.yml`).
 library;
 
 import 'dart:io';
@@ -35,6 +37,11 @@ Future<void> main(List<String> args) async {
           'for the musl targets.',
     )
     ..addFlag('list', negatable: false, help: 'List target ids and exit')
+    ..addFlag(
+      'print-configure',
+      negatable: false,
+      help: 'Print the Configure arguments for the target, one per line',
+    )
     ..addFlag('help', abbr: 'h', negatable: false);
   final opts = parser.parse(args);
   if (opts.flag('help') || (opts.rest.isEmpty && !opts.flag('list'))) {
@@ -54,6 +61,13 @@ Future<void> main(List<String> args) async {
 
   dockerContainer = opts.option('docker');
   final target = BuildTarget.byId(opts.rest.single);
+  if (opts.flag('print-configure')) {
+    configureArgsFor(
+      target,
+      noAsm: opts.flag('no-asm'),
+    ).forEach(stdout.writeln);
+    return;
+  }
   final source = Directory(opts.option('source')!);
   if (!File(p.join(source.path, 'Configure')).existsSync()) {
     stderr.writeln(
