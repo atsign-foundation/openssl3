@@ -3,6 +3,16 @@
 Versions follow the bundled OpenSSL: `<openssl version>+<package build>`
 (ADR-0010). Pre-releases are `<openssl version>-dev.<n>`.
 
+## 3.5.8+4
+
+- Republish of 3.5.8+3 with the matching binaries. The 3.5.8+3 archive on
+  pub.dev was published from the commit before the release hashes landed, so
+  its manifest still names the `v3.5.8-2` release: the new hook and `evp.dart`
+  code paired with the unhardened +2 libraries. 3.5.8+4 is the same code with
+  the `v3.5.8-3`/`v3.5.8-4` libraries (stack protector, FORTIFY, Control Flow
+  Guard). 3.5.8+3 is retracted on pub.dev; it works, but does not deliver the
+  hardening its changelog describes. No code changes.
+
 ## 3.5.8+3
 
 Security review follow-ups. Same OpenSSL 3.5.8.
