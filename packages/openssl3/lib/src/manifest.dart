@@ -9,7 +9,7 @@
 
 import 'hook/manifest_model.dart';
 
-const String releaseTag = 'v3.5.8-3';
+const String releaseTag = 'v3.5.8-4';
 
 const Manifest compiledInManifest = Manifest(
   releaseTag: releaseTag,
@@ -19,97 +19,97 @@ const Manifest compiledInManifest = Manifest(
   assets: {
     'libopenssl3_crypto.arm.android.so': AssetInfo(
       file: 'libopenssl3_crypto.arm.android.so',
-      sha256: '6c28bee24d0697d91df8999a5934e3a18084ce555ec9cbaecca4c76272e89c9a',
+      sha256: '55bf950cc3c199537e15cfdd909a71ea0a828d2692000827c1b1e5af1baa01ba',
       size: 4797708,
       target: 'android-arm',
     ),
     'libopenssl3_crypto.arm.linux.so': AssetInfo(
       file: 'libopenssl3_crypto.arm.linux.so',
-      sha256: 'f7855939e1e9bf24dd86def3a36d255d80cea00f100bb32bd404bf18ef688ab7',
+      sha256: 'b9c7a21d0bfa13c211a2da987a6f4d3d3198ae494bfebea502808527dff8212e',
       size: 4051832,
       target: 'linux-arm',
     ),
     'libopenssl3_crypto.arm64.android.so': AssetInfo(
       file: 'libopenssl3_crypto.arm64.android.so',
-      sha256: 'bc428d9aef1625510b474e8e36d49ce09d1b3a1be62778c5a7f4e4009540e4f9',
+      sha256: 'fbe1d076f89cef48dcf003bd439a1793e1c1c6faf131a3fda56cf0119013f36a',
       size: 6494976,
       target: 'android-arm64',
     ),
     'libopenssl3_crypto.arm64.ios.dylib': AssetInfo(
       file: 'libopenssl3_crypto.arm64.ios.dylib',
-      sha256: '1ef1b9c77bb48257e2b9f6d51760516656055b624e129bd2ac66cf2f13a644fc',
+      sha256: 'f90579b03007c8407997567d221ba0fd912679e03acd919abb3b92318f7d0269',
       size: 4858768,
       target: 'ios-arm64',
     ),
     'libopenssl3_crypto.arm64.ios_sim.dylib': AssetInfo(
       file: 'libopenssl3_crypto.arm64.ios_sim.dylib',
-      sha256: 'd2d1a657fa091569085b758adb99003ed2b57baf9f5077f2bf8613059fe59c5f',
+      sha256: '2a29ac84ed510d67d0952040cc89e981dfb2d419f67975a272657c400b48d785',
       size: 4858656,
       target: 'ios_sim-arm64',
     ),
     'libopenssl3_crypto.arm64.linux.so': AssetInfo(
       file: 'libopenssl3_crypto.arm64.linux.so',
-      sha256: 'f3f591240b311b354548203e84bf337a807689d282903a761dae912070d0fdf7',
+      sha256: 'cccba51c19e7fd086899d5492fad230cf25534146fdbb0920304cbb86a029881',
       size: 6872784,
       target: 'linux-arm64',
     ),
     'libopenssl3_crypto.arm64.linux_musl.so': AssetInfo(
       file: 'libopenssl3_crypto.arm64.linux_musl.so',
-      sha256: '128b88b02a0b4d2253bb55ac64b65fa9fe43358279447edba5561d3b121e1e47',
+      sha256: 'de25b03c6892283c29abc39fd144258992a5aff93cde7860084eb2a88945361c',
       size: 6804776,
       target: 'linux_musl-arm64',
     ),
     'libopenssl3_crypto.arm64.macos.dylib': AssetInfo(
       file: 'libopenssl3_crypto.arm64.macos.dylib',
-      sha256: 'aa227710f54ac62c82c7b197514f352fc055229aab95f56c7fa568e0cf98de74',
+      sha256: '5e7bdd7916b5c10bc964cd3aad5ed0d0c6b89cbdc244e496b3c0ce272ccdec2d',
       size: 4859376,
       target: 'macos-arm64',
     ),
     'libopenssl3_crypto.riscv64.linux.so': AssetInfo(
       file: 'libopenssl3_crypto.riscv64.linux.so',
-      sha256: '48729e693a22cb75d8b43b6c8471a8fd0cf3421491bcdf8b8bf97d9ac8a6b78d',
+      sha256: '1327c420714aadbbec61f728d87f5b798654404b059be66ce4d58a48ddc3d4d9',
       size: 5480680,
       target: 'linux-riscv64',
     ),
     'libopenssl3_crypto.x64.android.so': AssetInfo(
       file: 'libopenssl3_crypto.x64.android.so',
-      sha256: 'adfd0485a2432cdf56ee7a1804f1a4c04c87c36ecbbe65efb54247247d14a283',
+      sha256: 'eb1fd40a9349db57b2415f18214b255d4ad76bfa6e434e9ab58ff35bfa759ccf',
       size: 6753696,
       target: 'android-x64',
     ),
     'libopenssl3_crypto.x64.ios_sim.dylib': AssetInfo(
       file: 'libopenssl3_crypto.x64.ios_sim.dylib',
-      sha256: 'c5fd70c20da1c176105c1988f55c8b9ff14c1e1fc2c583f51fb588997dd746fa',
+      sha256: '6a26f0c16e57215243a4fffd3cac013601dccadbd4c3b6a8d48416f2bd2c46e5',
       size: 5375872,
       target: 'ios_sim-x64',
     ),
     'libopenssl3_crypto.x64.linux.so': AssetInfo(
       file: 'libopenssl3_crypto.x64.linux.so',
-      sha256: '748a24f5f7567862c4176fbb29bfbcdbe26e43d90cfadbf9187830f77b395a9c',
+      sha256: 'b99328b408f8b3fc7336703046e90de84ad48673cca24c7b0070a4f9a2017585',
       size: 7208552,
       target: 'linux-x64',
     ),
     'libopenssl3_crypto.x64.linux_musl.so': AssetInfo(
       file: 'libopenssl3_crypto.x64.linux_musl.so',
-      sha256: '586be67fe8908bb1cb1b8ad85cf4eebf8aa1abfc5a58530197f317bdbb7903fd',
+      sha256: 'e7ad4d0752dd174fed803d4644b863a584bf7c32d0458dd24795b723ca9b194e',
       size: 7252392,
       target: 'linux_musl-x64',
     ),
     'libopenssl3_crypto.x64.macos.dylib': AssetInfo(
       file: 'libopenssl3_crypto.x64.macos.dylib',
-      sha256: '90efe01beadccc8e9b1d735a77f91965819d201fd231c29dc02497c09fa56889',
+      sha256: 'd0d17ef58765656a521dfc056b273ad36a9908717729adea24ed6fd5c5a620e1',
       size: 5368592,
       target: 'macos-x64',
     ),
     'openssl3_crypto.arm64.windows.dll': AssetInfo(
       file: 'openssl3_crypto.arm64.windows.dll',
-      sha256: '9e7eb7ffc16220c4db4c1b16406f6f2aa73bb4a012d08d6c5dc556e4a1377cca',
+      sha256: '07a4e64036daf7042b79104c99ed3350e81d909fd88d4cc2bd2a7013bec48bef',
       size: 4092416,
       target: 'windows-arm64',
     ),
     'openssl3_crypto.x64.windows.dll': AssetInfo(
       file: 'openssl3_crypto.x64.windows.dll',
-      sha256: 'daa2cb84d2a6bf628636daabbfc4fdb6af1f64f747a26ad8fce74f0af8ffa6eb',
+      sha256: '833095580b1f06c6f49a2870b2b30d21ede000c8c56d588148037a0e11af81ec',
       size: 5488128,
       target: 'windows-x64',
     ),
