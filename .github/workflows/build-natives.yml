@@ -81,7 +81,7 @@ jobs:
       - name: Smoke test (inside the build container)
         run: |
           docker exec -w "$PWD" buildbox sh -c 'gcc -O2 -o /tmp/smoke tool/native/smoke_dlopen.c -ldl && /tmp/smoke out/libopenssl3_crypto.*.linux.so'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: native-${{ matrix.target }}
           path: out/
@@ -112,7 +112,7 @@ jobs:
         run: |
           riscv64-linux-gnu-gcc -O2 -o smoke tool/native/smoke_dlopen.c -ldl
           qemu-riscv64 -L /usr/riscv64-linux-gnu ./smoke out/libopenssl3_crypto.riscv64.linux.so
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: native-linux-riscv64
           path: out/
@@ -152,7 +152,7 @@ jobs:
       - name: Smoke test (qemu-user, inside the build container)
         run: |
           docker exec -w "$PWD" buildbox sh -c 'arm-linux-gnueabihf-gcc -O2 -o /tmp/smoke tool/native/smoke_dlopen.c -ldl && qemu-arm -L /usr/arm-linux-gnueabihf /tmp/smoke out/libopenssl3_crypto.arm.linux.so'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: native-linux-arm
           path: out/
@@ -192,7 +192,7 @@ jobs:
         run: |
           docker exec -w "$PWD" buildbox gcc -O2 -o smoke tool/native/smoke_dlopen.c -ldl
           docker exec -w "$PWD" buildbox ./smoke out/libopenssl3_crypto.*.linux_musl.so
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: native-${{ matrix.target }}
           path: out/
@@ -222,7 +222,7 @@ jobs:
           ./smoke out/libopenssl3_crypto.arm64.macos.dylib
       - name: xcframework (convenience artifact)
         run: tool/ci/make_xcframework.sh out
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: native-apple
           path: out/
@@ -251,7 +251,7 @@ jobs:
           for t in android-arm64 android-arm android-x64; do
             dart run tool/bin/build_openssl.dart "$t" --out out
           done
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: native-android
           path: out/
@@ -288,7 +288,7 @@ jobs:
       - run: dart pub get
       - name: Build
         run: dart run tool/bin/build_openssl.dart ${{ matrix.target }} --out out
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: native-${{ matrix.target }}
           path: out/
@@ -346,7 +346,7 @@ jobs:
             out/*.zip
             out/manifest.json
             out/*.sha256
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         id: upload
         with:
           name: openssl3-prebuilt
