@@ -92,6 +92,26 @@ void main() {
     );
   });
 
+  test('named ciphers refuse AEAD modes (no tag would be produced)', () {
+    for (final aead in ['AES-256-GCM', 'ChaCha20-Poly1305', 'AES-128-CCM']) {
+      expect(
+        () => Cipher.named(aead, List.filled(32, 1)),
+        throwsA(
+          isA<ArgumentError>().having(
+            (e) => e.message.toString(),
+            'message',
+            contains('Aead'),
+          ),
+        ),
+        reason: aead,
+      );
+    }
+    expect(
+      () => Cipher.named('NO-SUCH-CIPHER', List.filled(32, 1)),
+      throwsA(isA<OpenSSLException>()),
+    );
+  });
+
   test('named ciphers: AES-256-CBC pads to a block', () {
     final cipher = Cipher.named('AES-256-CBC', List.filled(32, 1));
     expect(cipher.blockSize, 16);

@@ -1,6 +1,7 @@
 @Tags(['hook'])
 library;
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -185,6 +186,39 @@ void main() {
         source.downloadUri('f.so').toString(),
         'https://m.example/v9.9.9/f.so',
       );
+    });
+
+    test('manifest_override needs a mirror or a local source', () {
+      final override = _writeManifest(temp, {}, 'v9.9.9');
+      expect(
+        () => BinarySource.forInput(
+          makeInput(temp: temp, defines: {'manifest_override': override}),
+        ),
+        throwsA(
+          isA<ArgumentError>().having(
+            (e) => e.message.toString(),
+            'message',
+            contains('url_pattern'),
+          ),
+        ),
+        reason: 'with the default GitHub URL the compiled-in hashes apply',
+      );
+      final allowed = <Map<String, Object?>, Type>{
+        {'url_pattern': r'https://m.example/$RELEASE_TAG/$FILENAME'}:
+            PrecompiledFromRelease,
+        {'local_path': 'mine.dylib'}: LocalPath,
+        {'test_directory': 'out'}: PrecompiledFromDirectory,
+        {'local_build': true}: LocalBuild,
+      };
+      for (final MapEntry(key: defines, value: type) in allowed.entries) {
+        final source = BinarySource.forInput(
+          makeInput(
+            temp: temp,
+            defines: {...defines, 'manifest_override': override},
+          ),
+        );
+        expect(source.runtimeType, type, reason: '$defines');
+      }
     });
 
     test('system picks OS-specific default names', () {
@@ -439,6 +473,127 @@ void main() {
       },
     );
 
+    test(
+      'release download: more bytes than the manifest records fail closed',
+      () async {
+        final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+        server.listen((req) {
+          // Twice the asset: the hook must stop reading at the recorded size.
+          req.response
+            ..statusCode = 200
+            ..add(payload)
+            ..add(payload);
+          req.response.close();
+        });
+        addTearDown(() => server.close(force: true));
+        final input = makeInput(temp: temp);
+        await expectLater(
+          obtainBundledLibrary(
+            input,
+            BuildOutputBuilder(),
+            PrecompiledFromRelease(
+              urlPattern:
+                  'http://127.0.0.1:${server.port}/\$RELEASE_TAG/\$FILENAME',
+              manifest: _manifestFor(
+                target,
+                sha256Hex(payload),
+                payload.length,
+              ),
+            ),
+            target,
+          ),
+          throwsA(
+            isA<SizeMismatchException>()
+                .having((e) => e.expected, 'expected', payload.length)
+                .having((e) => e.actual, 'actual', greaterThan(payload.length)),
+          ),
+        );
+        final leftovers = Directory.fromUri(
+          input.outputDirectoryShared,
+        ).listSync(recursive: true).whereType<File>();
+        expect(leftovers, isEmpty, reason: 'no partial files are kept');
+      },
+    );
+
+    test('a stalled server times out instead of hanging the build', () async {
+      final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+      server.listen((req) async {
+        req.response
+          ..statusCode = 200
+          ..headers.contentLength = payload.length
+          ..add(payload.sublist(0, 100));
+        await req.response.flush();
+        // ...and never send the rest.
+      });
+      addTearDown(() => server.close(force: true));
+      final uri = Uri.parse('http://127.0.0.1:${server.port}/stall');
+      await expectLater(
+        downloadStream(
+          uri,
+          'v1',
+          idleTimeout: const Duration(milliseconds: 300),
+        ).toList(),
+        throwsA(
+          isA<CouldNotDownloadException>().having(
+            (e) => e.cause,
+            'cause',
+            isA<TimeoutException>(),
+          ),
+        ),
+      );
+    });
+
+    test('https is never followed to http', () {
+      final https = Uri.parse('https://mirror.example/v1/f.so');
+      expect(insecureRedirect(https, []), isNull);
+      expect(
+        insecureRedirect(https, [
+          _Hop('https://cdn.example/f.so'),
+          _Hop('/relative/f.so'),
+        ]),
+        isNull,
+      );
+      expect(
+        insecureRedirect(https, [
+          _Hop('https://cdn.example/f.so'),
+          _Hop('http://cdn.example/f.so'),
+        ]).toString(),
+        'http://cdn.example/f.so',
+      );
+      expect(
+        insecureRedirect(Uri.parse('http://127.0.0.1/f'), [_Hop('http://x/f')]),
+        isNull,
+        reason: 'a plain-http mirror is the consumer\'s explicit choice',
+      );
+    });
+
+    test('concurrent fetches of one asset leave one verified file', () async {
+      final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+      server.listen((req) {
+        req.response
+          ..statusCode = 200
+          ..add(payload);
+        req.response.close();
+      });
+      addTearDown(() => server.close(force: true));
+      final input = makeInput(temp: temp);
+      final source = PrecompiledFromRelease(
+        urlPattern: 'http://127.0.0.1:${server.port}/\$RELEASE_TAG/\$FILENAME',
+        manifest: _manifestFor(target, sha256Hex(payload), payload.length),
+      );
+      final files = await Future.wait([
+        for (var i = 0; i < 4; i++)
+          obtainBundledLibrary(input, BuildOutputBuilder(), source, target),
+      ]);
+      for (final f in files) {
+        expect(f!.readAsBytesSync(), payload);
+      }
+      final dir = Directory(p.dirname(files.first!.path));
+      expect(dir.listSync().map((e) => p.basename(e.path)).toList(), [
+        target.installedFileName,
+      ], reason: 'temporary files are renamed or deleted, never left behind');
+    });
+
     test('release download without a release tag explains itself', () async {
       final input = makeInput(temp: temp);
       await expectLater(
@@ -497,7 +652,8 @@ void main() {
 
         // A changed file with a cold cache is rejected. (With a warm cache the
         // previously verified copy is reused: the cache is keyed by digest.)
-        src.writeAsBytesSync([1, 2, 3]);
+        // Same length, different bytes: the digest catches it.
+        src.writeAsBytesSync([for (final b in payload) b ^ 0x55]);
         final coldInput = makeInput(temp: temp, shared: 'shared2');
         await expectLater(
           obtainBundledLibrary(
@@ -507,6 +663,17 @@ void main() {
             target,
           ),
           throwsA(isA<DigestMismatchException>()),
+        );
+        // Wrong length: refused on size before hashing gets a say.
+        src.writeAsBytesSync([1, 2, 3]);
+        await expectLater(
+          obtainBundledLibrary(
+            coldInput,
+            BuildOutputBuilder(),
+            LocalPath(src, verify: true, manifest: manifest),
+            target,
+          ),
+          throwsA(isA<SizeMismatchException>()),
         );
         final unverified = await obtainBundledLibrary(
           coldInput,
@@ -625,6 +792,34 @@ Directory _fakeReleaseDir(
     }),
   );
   return dir;
+}
+
+/// A manifest naming exactly one asset: [target]'s release file.
+Manifest _manifestFor(SupportedTarget target, String sha256, int size) =>
+    Manifest(
+      releaseTag: 'v0.0.1',
+      opensslVersion: '3.5.8',
+      opensslCommit: null,
+      sourceTarballSha256: null,
+      assets: {
+        target.releaseFileName: AssetInfo(
+          file: target.releaseFileName,
+          sha256: sha256,
+          size: size,
+          target: target.id,
+        ),
+      },
+    );
+
+/// A redirect hop as `HttpClientResponse.redirects` reports it.
+final class _Hop implements RedirectInfo {
+  @override
+  final Uri location;
+  _Hop(String to) : location = Uri.parse(to);
+  @override
+  int get statusCode => 302;
+  @override
+  String get method => 'GET';
 }
 
 String _writeManifest(

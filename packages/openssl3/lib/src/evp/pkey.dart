@@ -69,7 +69,7 @@ Pointer<ssl.EVP_PKEY> rawPrivateKey(
       nullptr,
       cString(arena, algorithm),
       nullptr,
-      toNative(arena, bytes),
+      secretToNative(arena, bytes),
       bytes.length,
     ),
     'EVP_PKEY_new_raw_private_key_ex($algorithm)',
@@ -79,7 +79,8 @@ Pointer<ssl.EVP_PKEY> rawPrivateKey(
 }
 
 /// Builds a key of [algorithm] from an OSSL_PARAM octet string such as the
-/// ML-KEM/ML-DSA `seed`, via `EVP_PKEY_fromdata`.
+/// ML-KEM/ML-DSA `seed`, via `EVP_PKEY_fromdata`. [value] is treated as
+/// secret (it is a seed for every current caller) and wiped on release.
 Pointer<ssl.EVP_PKEY> keyFromOctetParam(
   Arena arena,
   String algorithm,
@@ -94,7 +95,7 @@ Pointer<ssl.EVP_PKEY> keyFromOctetParam(
     ssl.OSSL_PARAM_BLD_push_octet_string(
       bld,
       cString(arena, paramName),
-      toNative(arena, value).cast(),
+      secretToNative(arena, value).cast(),
       value.length,
     ),
     'OSSL_PARAM_BLD_push_octet_string($paramName)',
@@ -141,7 +142,7 @@ Uint8List rawPrivateBytes(Arena arena, Pointer<ssl.EVP_PKEY> pkey) {
     ssl.EVP_PKEY_get_raw_private_key(pkey, nullptr, len),
     'EVP_PKEY_get_raw_private_key(len)',
   );
-  final buf = arena<UnsignedChar>(len.value);
+  final buf = secretBuffer(arena, len.value);
   checkOne(
     ssl.EVP_PKEY_get_raw_private_key(pkey, buf, len),
     'EVP_PKEY_get_raw_private_key',
@@ -149,10 +150,11 @@ Uint8List rawPrivateBytes(Arena arena, Pointer<ssl.EVP_PKEY> pkey) {
   return fromNative(buf, len.value);
 }
 
-/// An octet-string key parameter such as `seed`, or `null` if absent.
+/// An octet-string key parameter such as `seed`, or `null` if absent. The
+/// buffer is wiped on release (a seed determines the whole private key).
 Uint8List? octetParam(Arena arena, Pointer<ssl.EVP_PKEY> pkey, String name) {
   final len = arena<Size>();
-  final buf = arena<UnsignedChar>(256);
+  final buf = secretBuffer(arena, 256);
   final ok = ssl.EVP_PKEY_get_octet_string_param(
     pkey,
     cString(arena, name),

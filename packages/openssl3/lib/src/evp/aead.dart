@@ -61,11 +61,21 @@ final class Aead {
   /// Tag length in bytes (16).
   final int tagLength;
 
+  /// Shortest nonce [seal] and [open] accept, in bytes. 96 bits is what GCM
+  /// (NIST SP 800-38D) and ChaCha20-Poly1305 (RFC 8439) are specified for;
+  /// GCM technically takes shorter nonces, but they shrink the space a random
+  /// nonce is drawn from and are a classic mistake, so they are refused.
+  /// Longer GCM nonces are hashed down to 96 bits by OpenSSL and accepted.
+  static const int minNonceLength = 12;
+
+  /// The key is copied here for the object's lifetime; every native copy is
+  /// wiped after use, but this Dart copy lives until garbage collected.
   Aead._(this.algorithm, Uint8List key, this.tagLength)
     : _key = Uint8List.fromList(key);
 
-  /// AES-256-GCM with a 32-byte [key]. Nonce: 12 bytes recommended (other
-  /// lengths are accepted by GCM and passed through `EVP_CTRL_AEAD_SET_IVLEN`).
+  /// AES-256-GCM with a 32-byte [key]. Nonce: 12 bytes recommended; longer
+  /// nonces are accepted (via `EVP_CTRL_AEAD_SET_IVLEN`), shorter ones are
+  /// rejected, see [minNonceLength].
   factory Aead.aes256Gcm(List<int> key) {
     if (key.length != 32) {
       throw ArgumentError.value(key.length, 'key', 'AES-256 needs 32 bytes');
@@ -120,7 +130,7 @@ final class Aead {
               ctx,
               out,
               outl,
-              toNative(arena, plaintext),
+              secretToNative(arena, plaintext),
               plaintext.length,
             ),
             'EVP_EncryptUpdate',
@@ -172,7 +182,9 @@ final class Aead {
             'EVP_DecryptUpdate(aad)',
           );
         }
-        final out = arena<UnsignedChar>(box.ciphertext.length + 16);
+        // Holds unauthenticated plaintext until the tag verifies; wiped on
+        // release whether or not it did.
+        final out = secretBuffer(arena, box.ciphertext.length + 16);
         var produced = 0;
         if (box.ciphertext.isNotEmpty) {
           checkOne(
@@ -232,8 +244,12 @@ final class Aead {
     List<int> nonce, {
     required bool encrypt,
   }) {
-    if (nonce.isEmpty) {
-      throw ArgumentError.value(nonce.length, 'nonce', 'must not be empty');
+    if (nonce.length < minNonceLength) {
+      throw ArgumentError.value(
+        nonce.length,
+        'nonce',
+        'must be at least $minNonceLength bytes (12 recommended)',
+      );
     }
     final cipher = checkNotNull(
       ssl.EVP_CIPHER_fetch(nullptr, cString(arena, algorithm), nullptr),
@@ -259,7 +275,7 @@ final class Aead {
         init(
           ctx,
           nullptr,
-          toNative(arena, _key),
+          secretToNative(arena, _key),
           toNative(arena, nonce),
           nullptr,
         ),

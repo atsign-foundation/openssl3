@@ -15,3 +15,4 @@ Statuses: Proposed, Accepted, Superseded.
 | [0008](0008-full-libcrypto-abi.md) | Expose the full libcrypto public ABI | Accepted |
 | [0009](0009-libcrypto-only.md) | libcrypto only, no libssl | Accepted |
 | [0010](0010-version-tracks-openssl.md) | Package version tracks the bundled OpenSSL version | Accepted |
+| [0011](0011-supply-chain-pins-and-release-verification.md) | Supply-chain pins and release verification | Accepted |

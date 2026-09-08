@@ -56,7 +56,7 @@ final class Hmac {
       _ArenaFree.add(arena, () => ssl.OSSL_PARAM_free(params));
 
       checkOne(
-        ssl.EVP_MAC_init(ctx, toNative(arena, _key), _key.length, params),
+        ssl.EVP_MAC_init(ctx, secretToNative(arena, _key), _key.length, params),
         'EVP_MAC_init',
       );
       checkOne(

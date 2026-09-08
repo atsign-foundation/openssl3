@@ -74,6 +74,20 @@ Future<void> verifyLibrary(
         problems.add('SONAME is not ${target.installName}:\n$dyn');
       }
       _checkDeps(dyn, problems);
+      if (target.cflags.contains('-fstack-protector-strong')) {
+        // libcrypto has plenty of stack arrays; with the protector on, the
+        // library must import the canary failure hook.
+        final undefined = await capture(
+          (await _firstAvailable(['nm', 'llvm-nm']))!,
+          ['-D', '--undefined-only', library.path],
+        );
+        if (!RegExp(r'\b__stack_chk_fail\b').hasMatch(undefined)) {
+          problems.add(
+            'no __stack_chk_fail import: -fstack-protector-strong did not '
+            'take effect',
+          );
+        }
+      }
       if (target.os == OS.android) {
         final ph = await capture(readelf, ['-lW', library.path]);
         for (final line in ph.split('\n')) {
@@ -91,6 +105,17 @@ Future<void> verifyLibrary(
         problems.add('dumpbin not found; cannot verify DLL dependents');
       } else {
         _checkDeps(deps, problems);
+      }
+      if (target.cflags.contains('/guard:cf')) {
+        final headers = await tryCapture('dumpbin', ['/HEADERS', library.path]);
+        if (headers == null) {
+          problems.add('dumpbin not found; cannot verify Control Flow Guard');
+        } else if (!headers.contains('Control Flow Guard')) {
+          problems.add(
+            'DLL characteristics lack Control Flow Guard: /guard:cf did not '
+            'take effect',
+          );
+        }
       }
   }
 

@@ -22,6 +22,11 @@ import 'download.dart';
 const _upstreamTarball =
     r'https://github.com/openssl/openssl/releases/download/openssl-$VERSION/openssl-$VERSION.tar.gz';
 
+/// The manifest records no size for the source tarball (3.5.x is ~55 MB), so
+/// bound the download generously instead: enough for any OpenSSL release,
+/// small enough that a misbehaving server cannot fill the disk.
+const _maxTarballBytes = 256 * 1024 * 1024;
+
 Future<File> buildLocally(
   BuildInput input,
   BuildOutputBuilder output,
@@ -103,26 +108,28 @@ Future<Directory> _fetchSourceTarball(
           expectedSha256) {
     final uri = Uri.parse(_upstreamTarball.replaceAll(r'$VERSION', version));
     stdout.writeln('openssl3: downloading $uri');
-    final tmp = File('${tarball.path}.tmp');
-    final sink = tmp.openWrite();
+    // Unique temporary name, renamed into place only once verified; a failed
+    // or oversized download never leaves bytes under the tarball's name.
+    final tmp = File('${tarball.path}.$pid.tmp');
     try {
-      await for (final chunk in downloadStream(uri, releaseTag)) {
-        sink.add(chunk);
-      }
-    } finally {
-      await sink.close();
-    }
-    final actual = (await sha256.bind(tmp.openRead()).first).toString();
-    if (actual != expectedSha256) {
-      tmp.deleteSync();
-      throw DigestMismatchException(
-        fileName: p.basename(tarball.path),
-        expected: expectedSha256,
-        actual: actual,
-        source: uri,
+      final written = await writeVerified(
+        downloadStream(uri, releaseTag),
+        tmp,
+        limit: _maxTarballBytes,
       );
+      if (written.sha256 != expectedSha256) {
+        throw DigestMismatchException(
+          fileName: p.basename(tarball.path),
+          expected: expectedSha256,
+          actual: written.sha256,
+          source: uri,
+        );
+      }
+      tmp.renameSync(tarball.path);
+    } catch (_) {
+      if (tmp.existsSync()) tmp.deleteSync();
+      rethrow;
     }
-    tmp.renameSync(tarball.path);
   }
 
   if (tree.existsSync()) tree.deleteSync(recursive: true);

@@ -24,7 +24,7 @@ abstract final class Random {
     initNoConfig();
     if (length == 0) return Uint8List(0);
     return using((arena) {
-      final buf = toNative(arena, Uint8List(length));
+      final buf = secretBuffer(arena, length);
       checkOne(
         private
             ? ssl.RAND_priv_bytes(buf, length)

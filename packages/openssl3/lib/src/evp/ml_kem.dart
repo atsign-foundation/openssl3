@@ -81,7 +81,7 @@ abstract final class MlKem768 {
     final ctLen = arena<Size>()..value = ciphertextLength;
     final ssLen = arena<Size>()..value = sharedSecretLength;
     final ct = arena<UnsignedChar>(ciphertextLength);
-    final ss = arena<UnsignedChar>(sharedSecretLength);
+    final ss = secretBuffer(arena, sharedSecretLength);
     checkOne(
       ssl.EVP_PKEY_encapsulate(ctx, ct, ctLen, ss, ssLen),
       'EVP_PKEY_encapsulate',
@@ -109,7 +109,7 @@ abstract final class MlKem768 {
           'EVP_PKEY_decapsulate_init',
         );
         final ssLen = arena<Size>()..value = sharedSecretLength;
-        final ss = arena<UnsignedChar>(sharedSecretLength);
+        final ss = secretBuffer(arena, sharedSecretLength);
         checkOne(
           ssl.EVP_PKEY_decapsulate(
             ctx,

@@ -50,11 +50,11 @@ jobs:
             runner: ubuntu-24.04-arm
     runs-on: ${{ matrix.runner }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: true
           persist-credentials: false
-      - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
         with:
           sdk: ${{ env.DART_SDK }}
       - run: dart pub get
@@ -63,10 +63,18 @@ jobs:
       # images are what the Python ecosystem uses for portable Linux binaries;
       # they ship gcc, perl and binutils. The Dart tooling stays on the host and
       # drives the container (same mechanism as the musl builds, ADR-0004).
+      # Images are pinned by digest (ADR-0011): the image defines the compiler
+      # that produces the shipped binary. Refresh with
+      # `docker buildx imagetools inspect quay.io/pypa/manylinux_2_28_<arch>:latest`.
       - name: Start manylinux_2_28 build container
         run: |
           arch=$(uname -m)   # x86_64 or aarch64
-          docker run -d --name buildbox -v "$PWD:$PWD" -w "$PWD" "quay.io/pypa/manylinux_2_28_${arch}" sleep infinity
+          case "$arch" in
+            x86_64)  digest=sha256:53390351aeb4688114b02c36a23b3e6ce1166ee9b7afc5df1a4f776354fc764c ;;
+            aarch64) digest=sha256:ad74e53b713f3b07d8c889c526dc0c6500da9827b45e38739570875fef52e28f ;;
+            *) echo "no pinned manylinux image for $arch"; exit 1 ;;
+          esac
+          docker run -d --name buildbox -v "$PWD:$PWD" -w "$PWD" "quay.io/pypa/manylinux_2_28_${arch}@${digest}" sleep infinity
           # The image's perl is minimal; OpenSSL's Configure needs the core modules.
           docker exec buildbox sh -c 'dnf -y -q install perl-core >/dev/null'
           docker exec buildbox sh -c 'gcc --version | head -1; ldd --version | head -1; perl --version | grep -o "v5[0-9.]*"'
@@ -81,7 +89,7 @@ jobs:
       - name: Smoke test (inside the build container)
         run: |
           docker exec -w "$PWD" buildbox sh -c 'gcc -O2 -o /tmp/smoke tool/native/smoke_dlopen.c -ldl && /tmp/smoke out/libopenssl3_crypto.*.linux.so'
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: native-${{ matrix.target }}
           path: out/
@@ -92,11 +100,11 @@ jobs:
     name: linux-riscv64
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: true
           persist-credentials: false
-      - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
         with:
           sdk: ${{ env.DART_SDK }}
       - name: Install cross toolchain and qemu
@@ -112,7 +120,7 @@ jobs:
         run: |
           riscv64-linux-gnu-gcc -O2 -o smoke tool/native/smoke_dlopen.c -ldl
           qemu-riscv64 -L /usr/riscv64-linux-gnu ./smoke out/libopenssl3_crypto.riscv64.linux.so
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: native-linux-riscv64
           path: out/
@@ -123,11 +131,11 @@ jobs:
     name: linux-arm
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: true
           persist-credentials: false
-      - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
         with:
           sdk: ${{ env.DART_SDK }}
       - run: dart pub get
@@ -138,7 +146,7 @@ jobs:
       # linux-arm SDK targets.
       - name: Start ubuntu:22.04 cross build container
         run: |
-          docker run -d --name buildbox -v "$PWD:$PWD" -w "$PWD" ubuntu:22.04 sleep infinity
+          docker run -d --name buildbox -v "$PWD:$PWD" -w "$PWD" ubuntu:22.04@sha256:2edbbc5dc405e9612ba3584ce95480277e3eb374407b5505fe26f17df77c7dbc sleep infinity
           docker exec buildbox sh -c 'apt-get update -q && DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends gcc-arm-linux-gnueabihf libc6-dev-armhf-cross binutils make perl qemu-user ca-certificates >/dev/null'
           docker exec buildbox sh -c 'arm-linux-gnueabihf-gcc --version | head -1; dpkg -s libc6-armhf-cross | grep ^Version; perl --version | grep -o "v5[0-9.]*"'
       - name: Build
@@ -152,7 +160,7 @@ jobs:
       - name: Smoke test (qemu-user, inside the build container)
         run: |
           docker exec -w "$PWD" buildbox sh -c 'arm-linux-gnueabihf-gcc -O2 -o /tmp/smoke tool/native/smoke_dlopen.c -ldl && qemu-arm -L /usr/arm-linux-gnueabihf /tmp/smoke out/libopenssl3_crypto.arm.linux.so'
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: native-linux-arm
           path: out/
@@ -171,11 +179,11 @@ jobs:
             runner: ubuntu-24.04-arm
     runs-on: ${{ matrix.runner }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: true
           persist-credentials: false
-      - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
         with:
           sdk: ${{ env.DART_SDK }}
       - run: dart pub get
@@ -184,7 +192,7 @@ jobs:
       # (os-zoo.yml style, ADR-0004).
       - name: Start alpine build container
         run: |
-          docker run -d --name buildbox -v "$PWD:$PWD" -w "$PWD" alpine:3.20 sleep infinity
+          docker run -d --name buildbox -v "$PWD:$PWD" -w "$PWD" alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc sleep infinity
           docker exec buildbox apk add --no-cache build-base perl linux-headers binutils
       - name: Build
         run: dart run tool/bin/build_openssl.dart ${{ matrix.target }} --out out --docker buildbox
@@ -192,7 +200,7 @@ jobs:
         run: |
           docker exec -w "$PWD" buildbox gcc -O2 -o smoke tool/native/smoke_dlopen.c -ldl
           docker exec -w "$PWD" buildbox ./smoke out/libopenssl3_crypto.*.linux_musl.so
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: native-${{ matrix.target }}
           path: out/
@@ -203,11 +211,11 @@ jobs:
     name: macOS + iOS
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: true
           persist-credentials: false
-      - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
         with:
           sdk: ${{ env.DART_SDK }}
       - run: dart pub get
@@ -222,7 +230,7 @@ jobs:
           ./smoke out/libopenssl3_crypto.arm64.macos.dylib
       - name: xcframework (convenience artifact)
         run: tool/ci/make_xcframework.sh out
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: native-apple
           path: out/
@@ -233,11 +241,11 @@ jobs:
     name: Android
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: true
           persist-credentials: false
-      - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
         with:
           sdk: ${{ env.DART_SDK }}
       - run: dart pub get
@@ -251,7 +259,7 @@ jobs:
           for t in android-arm64 android-arm android-x64; do
             dart run tool/bin/build_openssl.dart "$t" --out out
           done
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: native-android
           path: out/
@@ -270,17 +278,17 @@ jobs:
             msvc_arch: amd64_arm64
     runs-on: windows-2022
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: true
           persist-credentials: false
-      - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
         with:
           sdk: ${{ env.DART_SDK }}
-      - uses: ilammy/msvc-dev-cmd@v1
+      - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
         with:
           arch: ${{ matrix.msvc_arch }}
-      - uses: ilammy/setup-nasm@v1
+      - uses: ilammy/setup-nasm@72793074d3c8cdda771dba85f6deafe00623038b # v1.5.2
       - name: Perl
         run: |
           perl --version | Select-String -Pattern "This is perl"
@@ -288,7 +296,7 @@ jobs:
       - run: dart pub get
       - name: Build
         run: dart run tool/bin/build_openssl.dart ${{ matrix.target }} --out out
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: native-${{ matrix.target }}
           path: out/
@@ -306,26 +314,68 @@ jobs:
       attestations: write
       contents: read
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
         with:
           sdk: ${{ env.DART_SDK }}
       - run: dart pub get
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           pattern: native-*
           path: out/
           merge-multiple: true
-      - name: Record the upstream source tarball sha256 (for local_build)
+      # The tarball hash recorded here is what `local_build` consumers trust,
+      # so it must be shown to be the release OpenSSL signed AND the code the
+      # prebuilt binaries came from (ADR-0011). Three independent checks:
+      #  1. the checksum published next to it (catches truncation only);
+      #  2. the detached PGP signature, from a key whose fingerprint the pinned
+      #     source tree itself lists in doc/fingerprints.txt (keys fetched from
+      #     openssl-library.org, a different origin from the tarball);
+      #  3. byte-for-byte equality with `git archive` of the pinned submodule
+      #     commit, which is exactly how upstream's util/mktar.sh builds it.
+      - name: Fetch and verify the upstream source tarball (for local_build)
         run: |
+          set -euo pipefail
           ver=$(python3 -c "import json,glob; print(json.load(open(glob.glob('out/*.json')[0]))['openssl_version'])")
-          curl -sSfL -o "openssl-$ver.tar.gz" "https://github.com/openssl/openssl/releases/download/openssl-$ver/openssl-$ver.tar.gz"
-          curl -sSfL -o upstream.sha256 "https://github.com/openssl/openssl/releases/download/openssl-$ver/openssl-$ver.tar.gz.sha256"
+          base="https://github.com/openssl/openssl/releases/download/openssl-$ver"
+          curl -sSfL -o "openssl-$ver.tar.gz" "$base/openssl-$ver.tar.gz"
+          curl -sSfL -o upstream.sha256 "$base/openssl-$ver.tar.gz.sha256"
+          curl -sSfL -o "openssl-$ver.tar.gz.asc" "$base/openssl-$ver.tar.gz.asc"
+
+          echo "::group::1. published checksum"
           echo "upstream says: $(cat upstream.sha256)"
           sha256sum "openssl-$ver.tar.gz" | tee "out/openssl-$ver.tar.gz.sha256"
           test "$(awk '{print $1}' upstream.sha256)" = "$(awk '{print $1}' out/openssl-$ver.tar.gz.sha256)"
+          echo "::endgroup::"
+
+          echo "::group::2. PGP signature from an authorised release signer"
+          export GNUPGHOME
+          GNUPGHOME=$(mktemp -d)
+          fprs=$(grep -E '^([0-9A-F]{4} ){9}[0-9A-F]{4}$' third_party/openssl/doc/fingerprints.txt | tr -d ' ')
+          if curl -sSfL -o pubkeys.asc https://openssl-library.org/source/pubkeys.asc; then
+            gpg --batch --import pubkeys.asc
+          else
+            echo "::warning::openssl-library.org unreachable; fetching the listed fingerprints from keyserver.ubuntu.com"
+            # shellcheck disable=SC2086
+            gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys $fprs
+          fi
+          status=$(gpg --batch --status-fd 1 --verify "openssl-$ver.tar.gz.asc" "openssl-$ver.tar.gz" 2>/dev/null || true)
+          echo "$status"
+          echo "$status" | grep -q '^\[GNUPG:\] GOODSIG ' || { echo "::error::openssl-$ver.tar.gz.asc is not a good signature"; exit 1; }
+          primary=$(echo "$status" | awk '/^\[GNUPG:\] VALIDSIG/ {print $NF}')
+          echo "$fprs" | grep -qix "$primary" || { echo "::error::signer $primary is not listed in third_party/openssl/doc/fingerprints.txt"; exit 1; }
+          echo "signed by $primary, listed in the pinned tree's doc/fingerprints.txt"
+          echo "::endgroup::"
+
+          echo "::group::3. tarball == git archive of the pinned submodule"
+          mkdir -p /tmp/tarball /tmp/submodule
+          tar -xzf "openssl-$ver.tar.gz" -C /tmp/tarball
+          git -C third_party/openssl archive --worktree-attributes --prefix="openssl-$ver/" HEAD | tar -x -C /tmp/submodule
+          diff -r "/tmp/tarball/openssl-$ver" "/tmp/submodule/openssl-$ver"
+          echo "identical to submodule commit $(git -C third_party/openssl rev-parse HEAD) ($(find /tmp/submodule -type f | wc -l) files)"
+          echo "::endgroup::"
       - name: Write manifest.json (all targets required)
         env:
           TAG: ${{ inputs.tag }}
@@ -337,16 +387,18 @@ jobs:
           cat out/manifest.json
       - name: Attest build provenance
         if: inputs.attest
-        uses: actions/attest-build-provenance@v4
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
         with:
+          # Every file that reaches the release, sidecars included, so the
+          # release gate can verify the whole download (release.yml).
           subject-path: |
             out/*.so
             out/*.dylib
             out/*.dll
             out/*.zip
-            out/manifest.json
+            out/*.json
             out/*.sha256
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         id: upload
         with:
           name: openssl3-prebuilt

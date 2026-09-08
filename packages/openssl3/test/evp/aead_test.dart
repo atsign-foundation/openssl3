@@ -87,12 +87,17 @@ void main() {
       expect(aead.open(iv, box), isEmpty);
     });
 
-    test('non-default nonce lengths work (8 and 16 bytes)', () {
+    test('longer nonces work (16 bytes), shorter ones are refused', () {
       final aead = Aead.aes256Gcm(key);
-      for (final len in [8, 16]) {
-        final nonce = List<int>.generate(len, (i) => i);
-        final box = aead.seal(nonce, plaintext);
-        expect(toHex(aead.open(nonce, box)), toHex(plaintext));
+      final nonce16 = List<int>.generate(16, (i) => i);
+      final box = aead.seal(nonce16, plaintext);
+      expect(toHex(aead.open(nonce16, box)), toHex(plaintext));
+
+      expect(Aead.minNonceLength, 12);
+      for (final len in [0, 1, 8, 11]) {
+        final short = List<int>.generate(len, (i) => i);
+        expect(() => aead.seal(short, plaintext), throwsArgumentError);
+        expect(() => aead.open(short, box), throwsArgumentError);
       }
     });
 
