@@ -52,24 +52,47 @@ build lands (tracked in PLAN.md).
 
 ## From `package:openssl` (LucazzP/openssl_dart)
 
-That package compiles OpenSSL from source inside its build hook on every
-consumer machine (Perl, a C toolchain, several minutes; downloads Strawberry
-Perl and jom on Windows). `openssl3` downloads a prebuilt, sha256-pinned
-library instead.
+Both packages are ffigen `@Native` bindings over OpenSSL's public headers,
+driven by a Dart build hook, so most call sites compile unchanged. The
+difference is how the library reaches your machine.
+
+`package:openssl` 1.0.1 compiles OpenSSL 3.5.4 from source inside its build
+hook on every consumer machine: it `curl`s the tarball, runs `Configure` and
+`make` (Perl and a C toolchain required, about a minute or more), and on
+Windows also downloads Strawberry Perl and jom and assumes a Visual Studio 2022
+Community install path. None of those downloads is hash-checked. `openssl3`
+downloads a prebuilt library that CI built from the pinned tag and verifies it
+against a sha256 compiled into the package (ADR-0001, ADR-0007).
+
+| | `package:openssl` 1.0.1 | `openssl3` |
+|---|---|---|
+| OpenSSL | 3.5.4, hardcoded in the hook | 3.5.8 LTS; the package version *is* the OpenSSL version (ADR-0010) |
+| Toolchain on the build machine | Perl, make/jom, C compiler | none |
+| Integrity | none | sha256 per asset, fails closed; mirror and `local_path` for air-gapped builds |
+| Assembly | `no-asm`: no AES-NI, SHA extensions or ARMv8 crypto | enabled on every target except Windows arm64 |
+| Library name | `libcrypto.so` / `libcrypto.dylib` / `libcrypto-3-*.dll` | `libopenssl3_crypto`, cannot collide with a system `libcrypto.so.3` |
+| Config and providers | stock: reads `openssl.cnf`, can `dlopen` modules | `no-module no-dso no-engine no-legacy`, `initNoConfig()` (ADR-0005) |
+| Legacy algorithms (MD4, RC4, DES, Blowfish, …) | compiled in | not compiled in (ADR-0005) |
+| libssl | `SSL_*` bindings are declared but the hook builds with `no-ssl` and copies only libcrypto, so they do not resolve | not declared, not bundled (ADR-0009) |
+| Dart-side API | raw C API only, by design | raw C API plus `evp.dart`, `OpenSSLCapabilities`, `OpenSSLException` |
+| `BN_ULONG` | `UnsignedLong` (32-bit on Windows x64, wrong) | `UintPtr` (pointer-sized, what OpenSSL means) |
+
+Mechanical changes:
 
 - Imports: `package:openssl/openssl.dart` → `package:openssl3/openssl3.dart`.
-  Both are ffigen `@Native` bindings over the public headers with C names, so
-  most call sites compile unchanged.
 - Asset id: `package:openssl/src/third_party/openssl.g.dart` →
   `package:openssl3/src/third_party/openssl.g.dart` (only matters if you wrote
   your own `@Native` externals).
-- libssl: not included in `openssl3`. If you need TLS, stay on `package:openssl`
-  or open an issue (ADR-0009).
-- Legacy algorithms (MD4, RC4, DES, Blowfish, …): not compiled in (ADR-0005).
-- `BN_ULONG` is `UintPtr` here (pointer-sized on every target, which is what
-  OpenSSL means); `package:openssl` emits `UnsignedLong`, which is wrong on
-  Windows x64.
-- Versions: `openssl3` versions are the bundled OpenSSL version (`3.5.8+1`).
+- Call `initNoConfig()` once at startup; the bundled library never reads
+  `openssl.cnf` or `OPENSSL_CONF` anyway, so this only makes it explicit.
+- Code that used MD4, RC4, DES or other legacy-provider algorithms has no
+  replacement here; that is deliberate.
+- TLS: neither package gives you a working libssl today. If you need one, open
+  an issue against `openssl3` (ADR-0009 leaves room for a second
+  `libopenssl3_ssl` code asset) rather than expecting `package:openssl` to
+  provide it.
+- If you stored `BN_ULONG` values through the old bindings on Windows x64,
+  re-check them; the old width was wrong.
 
 ## From `dart compile exe`
 
