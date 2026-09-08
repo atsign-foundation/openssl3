@@ -93,6 +93,13 @@ final tag = Hmac.sha256(macKey).compute(data);   // .verify() is constant-time
 final okm = Hkdf.derive(ikm: ss, salt: salt, info: info, length: 64);
 ```
 
+Keys, seeds, IKM, shared secrets and plaintext are copied into native memory
+per call and wiped with `OPENSSL_cleanse` afterwards; the Dart `List<int>`s you
+pass in and the `Uint8List`s you get back live until the garbage collector
+reclaims them, so keep their scope short. `Aead` refuses nonces shorter than
+12 bytes, `Cipher.named` refuses AEAD modes (use `Aead`), and `Hmac.verify`
+compares with `CRYPTO_memcmp`.
+
 An end-to-end example that uses all of this over a TCP socket (hybrid
 X25519 + ML-KEM-768 handshake signed with ML-DSA-65, then AES-GCM or AES-CTR +
 HMAC frames, with iperf3-style throughput output) lives in
@@ -154,6 +161,13 @@ hooks:
 `system`, `local_path`, `local_build` and `test_directory` are mutually
 exclusive. Set what you need and nothing else.
 
+`manifest_override: path/to/manifest.json` swaps the hashes compiled into the
+package for the ones in that file. It exists so this repository's CI can test
+unreleased builds through a mirror or `local_path`; it is refused together
+with the default download URL, and whenever it is in effect the hook prints a
+warning naming the file. Do not use it to make a hash mismatch go away: the
+mismatch is the point.
+
 ### Offline and air-gapped builds
 
 1. Download `libopenssl3_crypto.<arch>.<os>.<ext>` for your targets from the
@@ -162,6 +176,9 @@ exclusive. Set what you need and nothing else.
 2. Either serve them from an internal mirror and set `url_pattern`, or point
    `local_path` at the file. Both are sha256-verified against the hashes
    compiled into the package, so a stale or tampered mirror fails the build.
+   Downloads are also bounded by the size the manifest records, time out
+   instead of hanging (30 s to connect, 60 s idle), and an `https` mirror is
+   never followed to a plain `http` redirect.
 3. The hook's cache lives under the SDK's shared output directory; once warm,
    no network access happens at all.
 

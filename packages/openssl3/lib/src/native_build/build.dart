@@ -10,6 +10,7 @@ import 'dart:io';
 
 import 'package:code_assets/code_assets.dart';
 import 'package:crypto/crypto.dart';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 import 'abi.dart';
@@ -191,7 +192,7 @@ Future<BuildResult> buildTarget(BuildOptions options) async {
   final infoC = File(p.join(o.buildDir.path, 'openssl3_build_info.c'));
   infoC.writeAsStringSync(
     'const char openssl3_build_info_json[] = '
-    '${_cStringLiteral(jsonEncode(buildInfo))};\n',
+    '${cStringLiteral(jsonEncode(buildInfo))};\n',
   );
   final shimC = File(
     p.join(o.packageRoot.path, 'src', 'native', 'openssl3_shim.c'),
@@ -215,6 +216,7 @@ Future<BuildResult> buildTarget(BuildOptions options) async {
           '/MT',
           '/O2',
           '/W3',
+          ...t.cflags,
           '/I',
           p.join(o.buildDir.path, 'include'),
           '/I',
@@ -240,6 +242,7 @@ Future<BuildResult> buildTarget(BuildOptions options) async {
         '/IMPLIB:$implib',
         '/OPT:REF',
         '/OPT:ICF',
+        if (t.cflags.contains('/guard:cf')) '/GUARD:CF',
         '/DEFAULTLIB:libcmt.lib',
         p.join(o.buildDir.path, staticLib),
         shimObj,
@@ -258,6 +261,9 @@ Future<BuildResult> buildTarget(BuildOptions options) async {
         [
           ...cc.skip(1),
           ...archFlags,
+          // The target's own cflags (hardening, minimum OS version) so the
+          // shim objects match what Configure compiled libcrypto with.
+          ...t.cflags,
           '-c',
           '-O2',
           '-fPIC',
@@ -364,21 +370,31 @@ String _readVersion(Directory source) {
   return '${get('MAJOR')}.${get('MINOR')}.${get('PATCH')}';
 }
 
-String _cStringLiteral(String s) {
+/// Renders [s] as a C string literal holding its UTF-8 encoding.
+///
+/// Anything outside printable ASCII becomes a three-digit octal escape. Octal
+/// escapes stop after three digits, unlike `\x` escapes, which a C compiler
+/// extends over every following hex digit (`"\xc3\xa9a"` is *not* "éa"), so
+/// the literal round-trips byte for byte whatever follows.
+@visibleForTesting
+String cStringLiteral(String s) {
   final b = StringBuffer('"');
-  for (final r in s.runes) {
-    switch (r) {
+  for (final byte in utf8.encode(s)) {
+    switch (byte) {
       case 0x22:
         b.write(r'\"');
       case 0x5c:
         b.write(r'\\');
       case 0x0a:
         b.write(r'\n');
+      case 0x3f:
+        // `??` starts a trigraph in older C dialects; escaping is free.
+        b.write(r'\?');
       default:
-        if (r < 0x20 || r > 0x7e) {
-          b.write('\\x${r.toRadixString(16).padLeft(2, '0')}');
+        if (byte < 0x20 || byte > 0x7e) {
+          b.write('\\${byte.toRadixString(8).padLeft(3, '0')}');
         } else {
-          b.writeCharCode(r);
+          b.writeCharCode(byte);
         }
     }
   }

@@ -8,6 +8,7 @@ import 'package:ffi/ffi.dart';
 
 import '../errors.dart';
 import '../third_party/openssl.g.dart' as ssl;
+import 'bytes.dart';
 import 'pkey.dart';
 
 /// A raw X25519 key pair: 32-byte public and private keys.
@@ -58,8 +59,8 @@ abstract final class X25519 {
           'EVP_PKEY_derive_set_peer',
         );
         final len = arena<Size>()..value = keyLength;
-        final out = arena<UnsignedChar>(keyLength);
+        final out = secretBuffer(arena, keyLength);
         checkOne(ssl.EVP_PKEY_derive(ctx, out, len), 'EVP_PKEY_derive');
-        return Uint8List.fromList(out.cast<Uint8>().asTypedList(len.value));
+        return fromNative(out, len.value);
       });
 }

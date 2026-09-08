@@ -96,6 +96,23 @@ final class BuildTarget {
 
   static BuildTarget forSupported(SupportedTarget base) => byId(base.id);
 
+  /// Compiler hardening for the glibc and musl builds. Android NDK clang,
+  /// Apple clang and MSVC (`/GS`) enable stack protection by default; GNU gcc
+  /// does not unless the distribution patched it in, and the manylinux and
+  /// Debian cross toolchains have not. `_FORTIFY_SOURCE` is a no-op on musl
+  /// (no `__*_chk` functions) and harmless there. `verify.dart` asserts the
+  /// resulting `__stack_chk_fail` reference is present.
+  static const linuxHardening = [
+    '-fstack-protector-strong',
+    '-D_FORTIFY_SOURCE=2',
+  ];
+
+  /// Control Flow Guard for the MSVC builds; `link.exe` sets the DLL
+  /// characteristic once objects carry CFG metadata, and `verify.dart`
+  /// checks the header for it. ASLR/high-entropy VA/NX are already link.exe
+  /// defaults for 64-bit DLLs.
+  static const windowsHardening = ['/guard:cf'];
+
   static const _apple10_15 = ['-mmacosx-version-min=10.15'];
   static const _ios13 = ['-miphoneos-version-min=13.0'];
   static const _iosSim13 = ['-mios-simulator-version-min=13.0'];
@@ -109,11 +126,13 @@ final class BuildTarget {
     BuildTarget(
       SupportedTarget.byId('linux-x64'),
       configureTarget: 'linux-x86_64',
+      cflags: linuxHardening,
       libs: ['pthread', 'dl'],
     ),
     BuildTarget(
       SupportedTarget.byId('linux-arm64'),
       configureTarget: 'linux-aarch64',
+      cflags: linuxHardening,
       libs: ['pthread', 'dl'],
     ),
     // 32-bit ARM (armv7-a hard-float, what Dart's linux-arm SDK runs on):
@@ -123,12 +142,14 @@ final class BuildTarget {
       SupportedTarget.byId('linux-arm'),
       configureTarget: 'linux-armv4',
       crossCompilePrefix: 'arm-linux-gnueabihf-',
+      cflags: linuxHardening,
       libs: ['pthread', 'dl'],
     ),
     BuildTarget(
       SupportedTarget.byId('linux-riscv64'),
       configureTarget: 'linux64-riscv64',
       crossCompilePrefix: 'riscv64-linux-gnu-',
+      cflags: linuxHardening,
       libs: ['pthread', 'dl', 'atomic'],
     ),
     // Linux musl: built inside an alpine container (os-zoo.yml style).
@@ -136,12 +157,14 @@ final class BuildTarget {
       SupportedTarget.byId('linux_musl-x64'),
       configureTarget: 'linux-x86_64',
       extraConfigureArgs: ['no-async'],
+      cflags: linuxHardening,
       libs: ['pthread'],
     ),
     BuildTarget(
       SupportedTarget.byId('linux_musl-arm64'),
       configureTarget: 'linux-aarch64',
       extraConfigureArgs: ['no-async'],
+      cflags: linuxHardening,
       libs: ['pthread'],
     ),
     // macOS: thin per-arch dylibs (ADR-0003).
@@ -197,12 +220,14 @@ final class BuildTarget {
     BuildTarget(
       SupportedTarget.byId('windows-x64'),
       configureTarget: 'VC-WIN64A',
+      cflags: windowsHardening,
       libs: ['ws2_32', 'gdi32', 'advapi32', 'crypt32', 'user32'],
     ),
     BuildTarget(
       SupportedTarget.byId('windows-arm64'),
       configureTarget: 'VC-WIN64-ARM',
       extraConfigureArgs: ['no-asm'],
+      cflags: windowsHardening,
       libs: ['ws2_32', 'gdi32', 'advapi32', 'crypt32', 'user32'],
     ),
   ];

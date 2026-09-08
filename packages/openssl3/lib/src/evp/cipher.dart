@@ -38,9 +38,26 @@ final class Cipher {
     return Cipher._('AES-$bits-CTR', Uint8List.fromList(key));
   }
 
-  /// Any cipher `EVP_CIPHER_fetch` knows, e.g. `AES-256-CBC`, `ChaCha20`.
-  factory Cipher.named(String algorithm, List<int> key) =>
-      Cipher._(algorithm, Uint8List.fromList(key));
+  /// Any *unauthenticated* cipher `EVP_CIPHER_fetch` knows, e.g.
+  /// `AES-256-CBC`, `ChaCha20`.
+  ///
+  /// Throws [ArgumentError] for AEAD modes (`AES-256-GCM`,
+  /// `ChaCha20-Poly1305`, CCM, OCB, SIV): this class never produces or checks
+  /// a tag, so it would silently emit unauthenticated output. Use [Aead] for
+  /// those. Throws [OpenSSLException] for a name the provider does not know.
+  factory Cipher.named(String algorithm, List<int> key) {
+    final cipher = Cipher._(algorithm, Uint8List.fromList(key));
+    final flags = cipher._withCipher((c) => ssl.EVP_CIPHER_get_flags(c));
+    if (flags & ssl.EVP_CIPH_FLAG_AEAD_CIPHER != 0) {
+      throw ArgumentError.value(
+        algorithm,
+        'algorithm',
+        'is an AEAD cipher; Cipher never handles authentication tags, '
+            'use Aead instead',
+      );
+    }
+    return cipher;
+  }
 
   /// Block size in bytes (1 for stream-like modes such as CTR).
   int get blockSize => _withCipher((c) => ssl.EVP_CIPHER_get_block_size(c));
@@ -141,7 +158,7 @@ final class CipherStream implements Finalizable {
             init(
               _ctx,
               c,
-              toNative(arena, cipher._key),
+              secretToNative(arena, cipher._key),
               toNative(arena, iv),
               nullptr,
             ),
@@ -169,8 +186,9 @@ final class CipherStream implements Finalizable {
     _checkOpen();
     if (input.isEmpty) return Uint8List(0);
     return using((arena) {
-      final inp = toNative(arena, input);
-      final out = arena<UnsignedChar>(input.length + cipher.blockSize);
+      // One side of every update is plaintext; wipe both.
+      final inp = secretToNative(arena, input);
+      final out = secretBuffer(arena, input.length + cipher.blockSize);
       final outl = arena<Int>();
       final fn = _encrypt ? ssl.EVP_EncryptUpdate : ssl.EVP_DecryptUpdate;
       checkOne(

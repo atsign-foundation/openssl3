@@ -43,14 +43,14 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
         with:
           sdk: stable
       - run: dart pub get
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: openssl3-prebuilt
           path: out/
@@ -77,7 +77,7 @@ jobs:
             --notes "Draft: prebuilt OpenSSL libcrypto for package:openssl3 $TAG. Published once the release-hashes PR merges." \
             out/*.so out/*.dylib out/*.dll out/*.zip out/*.json out/*.sha256
       - name: Open the release-hashes PR
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676 # v7.0.11
         with:
           # The checkout is on a tag, so the action cannot infer the base.
           base: trunk
@@ -114,12 +114,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha }}
           fetch-depth: 0
           persist-credentials: true
-      - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
         with:
           sdk: stable
       - run: dart pub get
@@ -135,6 +135,24 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.tag.outputs.tag }}
         run: gh release download "$TAG" --dir out
+      # Each asset must carry a Sigstore provenance attestation signed by THIS
+      # repository's build-natives.yml running for THIS tag (ADR-0011). A byte
+      # swapped on the draft release, or a file built anywhere else, fails
+      # here, before any hash is trusted or the tag is moved.
+      - name: Verify build provenance of every downloaded asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          set -euo pipefail
+          n=0
+          for f in out/*; do
+            gh attestation verify "$f" --repo "$GITHUB_REPOSITORY" \
+              --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/build-natives.yml" \
+              --source-ref "refs/tags/$TAG"
+            n=$((n + 1))
+          done
+          echo "::notice::$n release assets carry provenance from build-natives.yml@refs/tags/$TAG"
       - name: Assert manifest.dart matches the release bytes
         env:
           TAG: ${{ steps.tag.outputs.tag }}

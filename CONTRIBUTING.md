@@ -108,13 +108,18 @@ Hashes never enter the repository by hand.
 2. Tag it. Git refs cannot contain `+`, so the tag spells the build with a
    dash: `git tag v3.5.8-1 && git push origin v3.5.8-1`.
 3. `release.yml` builds all 16 libraries (with provenance attestations),
-   creates a **draft** GitHub release with the binaries and `manifest.json`,
+   verifies the upstream source tarball three ways (published checksum, PGP
+   signature from a key listed in the pinned tree's `doc/fingerprints.txt`,
+   byte-for-byte equality with `git archive` of the submodule), creates a
+   **draft** GitHub release with the binaries and `manifest.json`,
    regenerates `lib/src/manifest.dart` from the uploaded bytes and opens the
    PR `chore(release): pin v3.5.8-1 asset hashes` (label `release-hashes`).
 4. Review and merge that PR. `release-check` then re-downloads the release
-   assets, asserts `manifest.dart` matches them byte for byte, runs the hook
-   tests against the real release URL, `dart pub publish --dry-run` and pana,
-   moves the tag to the merge commit and publishes the release.
+   assets, verifies every one's provenance attestation (`gh attestation
+   verify`, signer `build-natives.yml` at that tag), asserts `manifest.dart`
+   matches them byte for byte, runs the hook tests against the real release
+   URL, `dart pub publish --dry-run` and pana, moves the tag to the merge
+   commit and publishes the release.
 5. Publish to pub.dev **by hand** from that commit:
 
    ```sh
@@ -125,6 +130,22 @@ Hashes never enter the repository by hand.
 If anything fails in step 4 the release stays a draft and nothing is
 published. To retry, delete the draft release and the tag and start again from
 step 2.
+
+## Pinned actions and build images (ADR-0011)
+
+Every third-party action is pinned to a commit SHA with the version as a
+trailing comment (`uses: actions/checkout@<sha> # v4.4.0`); Dependabot's
+`github-actions` ecosystem bumps SHA and comment together. The Docker images
+that produce shipped Linux binaries (`manylinux_2_28`, `ubuntu:22.04`,
+`alpine:3.20` in `build-natives.yml`) are pinned by digest. To refresh one:
+
+```sh
+docker buildx imagetools inspect alpine:3.20 | grep Digest
+```
+
+and paste the new digest into the `docker run ... image@sha256:...` line.
+Images used only to *consume* the package in `verify.yml` deliberately float,
+so that job keeps proving the current distro works.
 
 ## Regenerating bindings
 

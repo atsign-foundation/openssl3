@@ -73,10 +73,33 @@ sealed class BinarySource {
       );
     }
 
-    final manifest = switch (d.path('manifest_override')) {
-      null => compiled.compiledInManifest,
-      final uri => Manifest.parse(File.fromUri(uri).readAsStringSync()),
-    };
+    // `manifest_override` swaps the compiled-in hashes for a file's. It exists
+    // so this repository can test unreleased builds through a mirror or
+    // `local_path`; combined with the *default* GitHub URL it would silently
+    // weaken "hashes come from the package", so that combination is refused
+    // and every use is announced.
+    final overrideUri = d.path('manifest_override');
+    if (overrideUri != null &&
+        chosen.isEmpty &&
+        d['url_pattern'] == null &&
+        !flag('local_build')) {
+      throw ArgumentError(
+        'openssl3: manifest_override only makes sense together with '
+        'url_pattern, local_path, local_build or test_directory. With the '
+        'default download URL the hashes compiled into the package are the '
+        'ones that apply.',
+      );
+    }
+    final Manifest manifest;
+    if (overrideUri == null) {
+      manifest = compiled.compiledInManifest;
+    } else {
+      stderr.writeln(
+        'openssl3: WARNING: manifest_override in effect; release hashes come '
+        'from ${overrideUri.toFilePath()}, not from the package.',
+      );
+      manifest = Manifest.parse(File.fromUri(overrideUri).readAsStringSync());
+    }
 
     switch (chosen.singleOrNull) {
       case 'system':

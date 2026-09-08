@@ -50,7 +50,7 @@ abstract final class Hkdf {
         ssl.OSSL_PARAM_BLD_push_octet_string(
           bld,
           cString(arena, 'key'),
-          toNative(arena, ikm).cast(),
+          secretToNative(arena, ikm).cast(),
           ikm.length,
         ),
         'OSSL_PARAM_BLD_push_octet_string(key)',
@@ -83,7 +83,7 @@ abstract final class Hkdf {
       );
       arena.onReleaseAll(() => ssl.OSSL_PARAM_free(params));
 
-      final out = arena<UnsignedChar>(length == 0 ? 1 : length);
+      final out = secretBuffer(arena, length);
       checkOne(
         ssl.EVP_KDF_derive(ctx, out, length, params),
         'EVP_KDF_derive(HKDF)',

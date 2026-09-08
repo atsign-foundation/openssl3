@@ -3,6 +3,29 @@
 Versions follow the bundled OpenSSL: `<openssl version>+<package build>`
 (ADR-0010). Pre-releases are `<openssl version>-dev.<n>`.
 
+## 3.5.8+3
+
+Security review follow-ups. Same OpenSSL 3.5.8.
+
+- Hook: downloads are bounded by the manifest's recorded size, time out
+  instead of hanging (30 s connect, 60 s idle), refuse `https` → `http`
+  redirects, use a unique temporary file so concurrent hooks cannot corrupt
+  each other, and leave nothing behind on failure. `manifest_override` is
+  refused with the default download URL and announced on stderr when used.
+- `evp.dart`: keys, seeds, IKM, shared secrets, derived keys and plaintext are
+  wiped from native memory (`OPENSSL_cleanse`) after every call;
+  `Hmac.verify` uses `CRYPTO_memcmp`. **Breaking:** `Aead.seal`/`open` reject
+  nonces shorter than 12 bytes (`Aead.minNonceLength`); `Cipher.named`
+  rejects AEAD modes and unknown names at construction.
+- Prebuilt Linux libraries are built with `-fstack-protector-strong
+  -D_FORTIFY_SOURCE=2`, Windows DLLs with Control Flow Guard; the build
+  verifier asserts both. Release pipeline: actions pinned to commit SHAs,
+  build images pinned by digest, provenance attestations verified before a
+  release is published, upstream tarball checked against its PGP signature
+  and the pinned submodule (ADR-0011).
+- Build tool: build-info JSON is embedded with octal escapes (a non-ASCII
+  compiler or host string no longer breaks the shim compile).
+
 ## 3.5.8+2
 
 - New prebuilt target `linux-arm` (32-bit ARMv7 hard-float glibc, glibc ≥ 2.35):
