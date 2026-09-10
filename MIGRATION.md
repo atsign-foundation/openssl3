@@ -4,6 +4,7 @@
 
 at_chops probes for an OpenSSL library at runtime:
 
+<!-- pyml disable-num-lines 4 md013-->
 ```dart
 final lib = tryLoadLibCrypto();            // DynamicLibrary.open('libcrypto.so.3'), Homebrew paths, ...
 if (lib != null && libCryptoSupportsMlKem768(lib)) MlKem768FfiAlgo.fromLib(lib) else pureDart;
@@ -15,6 +16,7 @@ With `openssl3` the library is bundled at build time and symbols are resolved
 by the Dart compiler through `@Native`, so there is no `DynamicLibrary` and no
 probe:
 
+<!-- pyml disable-num-lines 8 md013-->
 | Before | After |
 |---|---|
 | `tryLoadLibCrypto()` and `AT_CHOPS_LIBCRYPTO_PATH` | nothing; `dart pub add openssl3` bundles the library |
@@ -26,6 +28,7 @@ probe:
 
 Or skip the raw API and use `package:openssl3/evp.dart`:
 
+<!-- pyml disable-num-lines 7 md013-->
 | at_chops class | evp.dart |
 |---|---|
 | `AesGcm256FfiAlgo` | `Aead.aes256Gcm(key).seal/open` (`combined` = `ciphertext || tag`) |
@@ -64,6 +67,7 @@ Community install path. None of those downloads is hash-checked. `openssl3`
 downloads a prebuilt library that CI built from the pinned tag and verifies it
 against a sha256 compiled into the package (ADR-0001, ADR-0007).
 
+<!-- pyml disable-num-lines 12 md013-->
 | | `package:openssl` 1.0.1 | `openssl3` |
 |---|---|---|
 | OpenSSL | 3.5.4, hardcoded in the hook | 3.5.8 LTS; the package version *is* the OpenSSL version (ADR-0010) |

@@ -16,7 +16,7 @@ in [code_of_conduct.md](code_of_conduct.md); security reports go through
   `apt install libclang-dev` on Linux).
 
 ```sh
-git clone --recurse-submodules https://github.com/cconstab/openssl3
+git clone --recurse-submodules https://github.com/atsign-foundation/openssl3
 cd openssl3
 dart pub get
 dart run tool/bin/build_openssl.dart --list          # target ids
@@ -58,6 +58,7 @@ their generators.
 
 ## Repository tour
 
+<!-- pyml disable-num-lines 12 md013-->
 | Path | Purpose |
 |---|---|
 | `packages/openssl3/hook/build.dart` | the build hook: picks the target, obtains the library (download / local_path / system / test_directory), emits the code asset |
@@ -76,6 +77,7 @@ their generators.
 Normally the weekly `openssl-update.yml` workflow does this and opens a PR.
 By hand:
 
+<!-- pyml disable-num-lines 4 md013-->
 ```sh
 dart run tool/bin/check_upstream.dart                # report
 dart run tool/bin/check_upstream.dart --apply        # submodule, version, symbols, bindings, changelog
@@ -166,7 +168,9 @@ generator fails loudly rather than emitting wrong widths.
   known-answer vectors (GCM, ChaCha20-Poly1305, NIST CTR, RFC 7748) and
   ML-KEM-768 / ML-DSA-65 fixtures generated with python-cryptography
   (`test/evp/vectors/`).
-- `example/e2e` is the end-to-end test (`dart test`, then `dart run bin/openssl3_e2e.dart selftest`); CI also runs it as two processes from a `dart build cli` bundle
+- `example/e2e` is the end-to-end test (`dart test`, then
+  `dart run bin/openssl3_e2e.dart selftest`); CI also runs it as two processes
+  from a `dart build cli` bundle
 - `example/cli` and `example/flutter_app` are the consumer-side smoke tests
   used by `verify.yml`.
 - `upstream-tests.yml` runs OpenSSL's own `make test` (linux x64 and arm64)
