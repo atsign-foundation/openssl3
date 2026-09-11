@@ -1,6 +1,7 @@
-<a href="https://atsign.com#gh-light-mode-only"><img width=250px src="https://atsign.com/wp-content/uploads/2022/05/atsign-logo-horizontal-color2022.svg#gh-light-mode-only" alt="The Atsign Foundation"></a><a href="https://atsign.com#gh-dark-mode-only"><img width=250px src="https://atsign.com/wp-content/uploads/2023/08/atsign-logo-horizontal-reverse2022-Color.svg#gh-dark-mode-only" alt="The Atsign Foundation"></a>
-
 # openssl3
+
+<!-- pyml disable-num-lines 4 md013,md033-->
+<a href="https://atsign.com#gh-light-mode-only"><img width=250px src="https://atsign.com/wp-content/uploads/2022/05/atsign-logo-horizontal-color2022.svg#gh-light-mode-only" alt="The Atsign Foundation"></a><a href="https://atsign.com#gh-dark-mode-only"><img width=250px src="https://atsign.com/wp-content/uploads/2023/08/atsign-logo-horizontal-reverse2022-Color.svg#gh-dark-mode-only" alt="The Atsign Foundation"></a>
 
 Prebuilt OpenSSL 3.5 LTS `libcrypto` for Dart and Flutter, delivered as a
 [code asset](https://dart.dev/tools/hooks) by the `openssl3` pub package, with
@@ -10,6 +11,7 @@ Prebuilt OpenSSL 3.5 LTS `libcrypto` for Dart and Flutter, delivered as a
 
 ## Repository layout
 
+<!-- pyml disable-num-lines 9 md013-->
 | Path | What |
 |---|---|
 | [`packages/openssl3/`](packages/openssl3/) | the published package: `hook/build.dart`, generated bindings, `evp.dart`, the native build pipeline |
