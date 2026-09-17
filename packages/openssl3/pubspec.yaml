@@ -27,7 +27,7 @@ topics:
 dependencies:
   # hooks 2.0.x still resolves with Flutter 3.41/3.44 stable (meta 1.17/1.18);
   # 2.1+ needs meta 1.19 (Flutter >= 3.47). Keep the floor at 2.0.
-  code_assets: '>=1.1.0 <3.0.0'
+  code_assets: ^2.0.0
   crypto: ^3.0.6
   ffi: ^2.1.0
   hooks: '>=2.0.0 <3.0.0'
