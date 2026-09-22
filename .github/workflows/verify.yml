@@ -141,7 +141,7 @@ jobs:
           path: out/
           run-id: ${{ needs.fetch.outputs.run_id }}
           github-token: ${{ github.token }}
-      - uses: docker/setup-qemu-action@1f40c72289eff860ee54a304f1438e3cff362e0a # v4.3.0
+      - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
         with:
           platforms: arm
       # Resolve on the host into a pub cache inside the workspace; the container
