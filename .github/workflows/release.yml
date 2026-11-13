@@ -50,7 +50,7 @@ jobs:
         with:
           sdk: stable
       - run: dart pub get
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: openssl3-prebuilt
           path: out/
@@ -77,7 +77,7 @@ jobs:
             --notes "Draft: prebuilt OpenSSL libcrypto for package:openssl3 $TAG. Published once the release-hashes PR merges." \
             out/*.so out/*.dylib out/*.dll out/*.zip out/*.json out/*.sha256
       - name: Open the release-hashes PR
-        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        uses: peter-evans/create-pull-request@15733dbdfeedb4f7fdb73d13c6f5ac83b710fab8 # v8.1.2
         with:
           # The checkout is on a tag, so the action cannot infer the base.
           base: trunk
